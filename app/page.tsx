@@ -1,63 +1,83 @@
-import React from "react";
-import HeroSection from "./components/HeroSection";
-import TrustStats from "./components/TrustStats";
-import WhyChooseUs from "./components/WhyChooseUs";
-import CommercialModels from "./components/CommercialModels";
-import MushroomComparison from "./components/MushroomComparison";
-import ROICalculator from "./components/ROICalculator";
-import CriticalParameters from "./components/CriticalParameters";
-import ProductionSOP from "./components/ProductionSOP";
-import CompostUnits from "./components/CompostUnits";
-import TestimonialsSection from "./components/TestimonialsSection";
-import MarketplaceSection from "./components/MarketplaceSection";
-import ResourcesKnowledgeHub from "./components/ResourcesKnowledgeHub";
-import StatesSection from "./components/StatesSection";
-import CTASection from "./components/CTASection";
+"use client";
 
-export default function Home() {
+import React, { useEffect } from "react";
+import Link from "next/link";
+import { ArrowRight, BookOpen, Play, Quote } from "lucide-react";
+
+// Import your page components here:
+import { Hero } from "@/components/home/Hero";
+import { EcosystemFlow } from "@/components/home/EcosystemFlow";
+import { Timeline } from "@/components/home/Timeline";
+import { WhyChooseProgram } from "@/components/home/WhyChooseProgram";
+import { FarmingModels } from "@/components/home/FarmingModels";
+import { MushroomComparison } from "@/components/home/MushroomComparison";
+import { MushroomROICalculator } from "@/components/home/MushroomROICalculator";
+import { MushroomFarmSetupCostCalculator } from "@/components/home/MushroomFarmSetupCostCalculator";
+import { ROICalculator } from "@/components/home/ROICalculator";
+import CriticalParameters from "@/components/home/CriticalParameters";
+import { ProductionSOP } from "@/components/home/ProductionSOP";
+import MushroomSEOSections from "@/components/home/MushroomSEOSections";
+import { JourneyCTA } from "@/components/home/JourneyCTA";
+import { FAQSection } from "@/components/home/FAQSection";
+import { BenefitsCultivation } from "@/components/home/BenefitsCultivation";
+import ComparisonTable from "@/components/home/ComparisonTable";
+import { WhyChooseUs } from "@/components/home/WhyChooseUs";
+import { GlobalHubs } from "@/components/home/GlobalHubs";
+import CompostUnits from "@/components/home/CompostUnits";
+import Testimonials from "@/components/home/Testimonials";
+import Marketplace from "@/components/home/Marketplace";
+import ResourcesSection from "@/components/home/ResourcesSection";
+import { DirectInquiry } from "@/components/home/DirectInquiry";
+import { JsonLd } from "@/components/JsonLd";
+import { homepageWebPageSchema } from "@/lib/schema/homepage-webpage-schema";
+import { homepageImageSchema } from "@/lib/schema/homepage-image-schema";
+import EeatCompanyTrust from "@/components/EeatCompanyTrust";
+
+export default function HomePage() {
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      const element = document.querySelector(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, []);
+
   return (
-    <div className="relative min-h-screen">
-      {/* 1. Hero Section with Live 3D & Status Indicators */}
-      <HeroSection />
-
-      {/* 2. Key Trust Specifications & Stats */}
-      <TrustStats />
-
-      {/* 3. Why Choose Us & 360° Infrastructure Showcase */}
-      <WhyChooseUs />
-
-      {/* 4. Commercial Turnkey Models (Model A/B/C/D + Interactive Estimator) */}
-      <CommercialModels />
-
-      {/* 5. Mushroom Species Comparison (Button vs Oyster vs Milky vs Cordyceps) */}
-      <MushroomComparison />
-
-      {/* 6. Dynamic Financial ROI & CapEx/OpEx Calculator */}
+    <>
+      <JsonLd />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageWebPageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageImageSchema) }}
+      />
+      <Hero />
+      <EcosystemFlow />
       <ROICalculator />
-
-      {/* 7. Critical Microclimate Growth Parameters */}
+      <WhyChooseUs />
+      <FarmingModels />
+      <MushroomComparison />
       <CriticalParameters />
-
-      {/* 8. Step-by-Step Commercial Production SOP Timeline */}
       <ProductionSOP />
-
-      {/* 9. Commercial Compost Units & Pasteurization Tunnels */}
       <CompostUnits />
-
-      {/* 10. Verified Grower Testimonials & Case Studies */}
-      <TestimonialsSection />
-
-      {/* 11. B2B Spawn, Fresh Wholesale & Export Marketplace */}
-      <MarketplaceSection />
-
-      {/* 12. Knowledge Hub, Downloadable Guides & Agronomy FAQs */}
-      <ResourcesKnowledgeHub />
-
-      {/* 13. Pan-India 28 States & UTs Consultation Directory */}
-      <StatesSection />
-
-      {/* 14. Turnkey Consultation Request & Direct Advisory CTA */}
-      <CTASection />
-    </div>
+      <Marketplace />
+      <ResourcesSection />
+      
+      {/* Training / SEO Sections */}
+      <MushroomSEOSections />
+      <BenefitsCultivation />
+      <WhyChooseProgram />
+      <FAQSection />
+      <JourneyCTA />
+      
+      <ComparisonTable />
+      <GlobalHubs />
+      <DirectInquiry />
+      <EeatCompanyTrust />
+    </>
   );
 }
