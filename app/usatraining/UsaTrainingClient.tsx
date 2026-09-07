@@ -141,15 +141,15 @@ const UsaTrainingClient = () => {
                 />
               )}
               
-              <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              <div className="grid grid-cols-1 gap-4 max-w-lg mx-auto">
                 
                 {/* Plan 1 */}
-                <div className="glass border dark:border-white/10 border-black/10 rounded-3xl p-6 flex flex-col relative transition-transform hover:-translate-y-1">
+                <div className="flex flex-col p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-transparent transition-transform hover:-translate-y-1">
                   <div className="mb-4">
                     <span className="px-3 py-1 bg-blue-500/10 text-blue-500 rounded-full text-[10px] font-bold uppercase tracking-wider">Hobbyist / Home-Scale</span>
-                    <h3 className="text-xl font-black dark:text-white text-slate-900 mt-3">Basic Cultivation Training</h3>
+                    <h3 className="text-base font-black dark:text-white text-slate-900 mt-3">Basic Cultivation Training</h3>
                     <div className="flex items-baseline gap-1 mt-2">
-                      <span className="text-3xl font-black dark:text-white text-slate-900">$39</span>
+                      <span className="text-2xl font-black dark:text-white text-slate-900">$39</span>
                       <span className="text-sm dark:text-slate-400 text-slate-500 font-medium">USD</span>
                     </div>
                   </div>
@@ -175,23 +175,26 @@ const UsaTrainingClient = () => {
                   
                   <button 
                     onClick={() => setCheckoutPlan({name: "Basic Cultivation Training", price: "39.00"})}
-                    className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-3.5 rounded-xl text-sm transition-all hover:scale-[1.02]"
+                    className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2.5 rounded-xl text-xs transition-all hover:scale-[1.02] shadow-lg shadow-blue-500/25"
                   >
                     Enroll Now
                   </button>
+                  <div className="text-center mt-2 text-[10px] text-slate-500 dark:text-slate-400 font-medium flex items-center justify-center gap-1">
+                    <ShieldCheck size={12} /> Secured by PayPal
+                  </div>
                 </div>
 
                 {/* Plan 2 */}
-                <div className="glass border-2 border-blue-500/50 rounded-3xl p-6 flex flex-col relative transition-transform hover:-translate-y-1">
+                <div className="flex flex-col p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-transparent transition-transform hover:-translate-y-1">
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-4 py-1 rounded-full text-[10px] font-bold tracking-wider shadow-lg">
                     MOST POPULAR
                   </div>
                   
                   <div className="mb-4 mt-2">
                     <span className="px-3 py-1 bg-purple-500/10 text-purple-500 rounded-full text-[10px] font-bold uppercase tracking-wider">Industrial / Commercial</span>
-                    <h3 className="text-xl font-black dark:text-white text-slate-900 mt-3">Commercial Farm Advisory</h3>
+                    <h3 className="text-base font-black dark:text-white text-slate-900 mt-3">Commercial Farm Advisory</h3>
                     <div className="flex items-baseline gap-1 mt-2">
-                      <span className="text-3xl font-black dark:text-white text-slate-900">$97</span>
+                      <span className="text-2xl font-black dark:text-white text-slate-900">$97</span>
                       <span className="text-sm dark:text-slate-400 text-slate-500 font-medium">USD</span>
                     </div>
                   </div>
@@ -221,10 +224,13 @@ const UsaTrainingClient = () => {
                   
                   <button 
                     onClick={() => setCheckoutPlan({name: "Commercial Farm Advisory", price: "97.00"})}
-                    className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold py-3.5 rounded-xl text-sm transition-all hover:scale-[1.02] shadow-lg shadow-blue-500/25"
+                    className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-bold py-2.5 rounded-xl text-xs transition-all hover:scale-[1.02] shadow-lg shadow-blue-500/25"
                   >
                     Get Commercial Access
                   </button>
+                  <div className="text-center mt-2 text-[10px] text-slate-500 dark:text-slate-400 font-medium flex items-center justify-center gap-1">
+                    <ShieldCheck size={12} /> Secured by PayPal
+                  </div>
                 </div>
 
               </div>
@@ -235,11 +241,6 @@ const UsaTrainingClient = () => {
         {/* Info Grid */}
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-14">
           <div>
-            <img 
-              src="https://images.unsplash.com/photo-1605335198944-77e84cc419f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-              alt="Commercial Mushroom Farm" 
-              className="w-full h-48 md:h-64 object-cover rounded-3xl mb-6 shadow-xl"
-            />
             <h3 className="text-base md:text-lg font-bold dark:text-white text-slate-900 mb-3">Global Demand is Surging</h3>
             <p className="text-[11px] md:text-xs dark:text-slate-400 text-slate-600 leading-relaxed mb-4">
               Gourmet and medicinal mushrooms (like Oyster, Shiitake, and Milky) are seeing unprecedented demand across North America, Europe, and Asia. However, the supply chain is localized due to the highly perishable nature of fresh mushrooms.
@@ -252,7 +253,7 @@ const UsaTrainingClient = () => {
           <div className="space-y-3 md:space-y-4">
             <h3 className="text-base md:text-lg font-bold dark:text-white text-slate-900 mb-1">Why Choose Indoor Mushroom Cultivation?</h3>
             
-            <div className="flex gap-3 glass p-3 md:p-4 rounded-2xl border dark:border-white/5 border-black/5">
+            <div className="flex gap-3 mb-2">
               <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-500 shrink-0">
                 <ThermometerSnowflake size={16} />
               </div>
@@ -261,8 +262,7 @@ const UsaTrainingClient = () => {
                 <p className="text-[11px] md:text-xs dark:text-slate-400 text-slate-600 leading-relaxed">With the right indoor setup, you become completely independent of outside weather conditions. This allows for continuous, predictable income, whether you face freezing winters or scorching summers.</p>
               </div>
             </div>
-
-            <div className="flex gap-3 glass p-3 md:p-4 rounded-2xl border dark:border-white/5 border-black/5">
+            <div className="flex gap-3 mb-2">
               <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-green-500/10 flex items-center justify-center text-green-500 shrink-0">
                 <Home size={16} />
               </div>
@@ -271,8 +271,7 @@ const UsaTrainingClient = () => {
                 <p className="text-[11px] md:text-xs dark:text-slate-400 text-slate-600 leading-relaxed">You don't need acres of expensive agricultural land. Our training teaches you how to grow hundreds of pounds of mushrooms in a standard spare room, garage, or custom grow tent using vertical farming techniques.</p>
               </div>
             </div>
-
-            <div className="flex gap-3 glass p-3 md:p-4 rounded-2xl border dark:border-white/5 border-black/5">
+            <div className="flex gap-3 mb-2">
               <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-yellow-500/10 flex items-center justify-center text-yellow-500 shrink-0">
                 <DollarSign size={16} />
               </div>
@@ -291,7 +290,7 @@ const UsaTrainingClient = () => {
           </div>
           <div className="space-y-2 md:space-y-3">
             {faqs.map((faq, i) => (
-              <div key={i} className="glass p-3 rounded-2xl border dark:border-white/5 border-black/5">
+              <div key={i} className="mb-3">
                 <h4 className="text-xs md:text-sm font-bold dark:text-white text-slate-900 mb-1 flex items-start gap-1.5">
                   <span className="text-blue-500 mt-0.5 shrink-0">Q:</span>
                   {faq.q.replace('Q: ', '')}
