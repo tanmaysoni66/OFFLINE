@@ -137,7 +137,54 @@ export const TrainingModal = ({ isOpen, onClose }: TrainingModalProps) => {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 gap-4 items-stretch max-w-lg mx-auto">
+              {/* Quick Choice Buttons at the very top */}
+              <div className="grid grid-cols-2 gap-1.5 xs:gap-2.5 md:gap-4 max-w-2xl mx-auto mb-6">
+                <button
+                  onClick={() => {
+                    onClose();
+                    router.push("/training-checkout?type=basic");
+                  }}
+                  className="flex items-center justify-between p-1.5 xs:p-2.5 md:p-3.5 rounded-lg xs:rounded-xl md:rounded-2xl border border-blue-500/25 bg-blue-500/5 hover:bg-blue-500/10 transition-all text-left group/btn cursor-pointer"
+                >
+                  <div className="flex items-center gap-1.5 xs:gap-2 md:gap-3 overflow-hidden">
+                    <div className="w-5 h-5 xs:w-7 xs:h-7 md:w-8 md:h-8 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0">
+                      <Home size={11} className="xs:size-3.5 md:size-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-[7px] xs:text-[9px] md:text-[10px] uppercase font-black tracking-wider text-blue-500">Basic</div>
+                      <div className="text-[9px] xs:text-[11px] md:text-sm font-extrabold dark:text-white text-slate-900 leading-tight">Mushroom ₹299</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-0.5 font-bold text-[8px] xs:text-[10px] md:text-[11px] text-blue-600 dark:text-blue-400 shrink-0 ml-1">
+                    <span className="hidden sm:inline">Join</span>
+                    <ArrowRight size={10} className="group-hover/btn:translate-x-0.5 transition-transform" />
+                  </div>
+                </button>
+
+                <button
+                  onClick={() => {
+                    onClose();
+                    router.push("/training-checkout?type=advanced");
+                  }}
+                  className="flex items-center justify-between p-1.5 xs:p-2.5 md:p-3.5 rounded-lg xs:rounded-xl md:rounded-2xl border border-purple-500/30 bg-purple-500/5 hover:bg-purple-500/10 transition-all text-left group/btn cursor-pointer ring-1 ring-purple-500/20"
+                >
+                  <div className="flex items-center gap-1.5 xs:gap-2 md:gap-3 overflow-hidden">
+                    <div className="w-5 h-5 xs:w-7 xs:h-7 md:w-8 md:h-8 rounded-full bg-purple-500/10 text-purple-500 flex items-center justify-center shrink-0">
+                      <Sparkles size={11} className="xs:size-3.5 md:size-4 animate-pulse" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-[7px] xs:text-[9px] md:text-[10px] uppercase font-black tracking-wider text-purple-500">Advanced</div>
+                      <div className="text-[9px] xs:text-[11px] md:text-sm font-extrabold dark:text-white text-slate-900 leading-tight">Training ₹699</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-0.5 font-bold text-[8px] xs:text-[10px] md:text-[11px] text-purple-600 dark:text-purple-400 shrink-0 ml-1">
+                    <span className="hidden sm:inline">Join</span>
+                    <ArrowRight size={10} className="group-hover/btn:translate-x-0.5 transition-transform" />
+                  </div>
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
                 {/* Basic Card */}
                 <div className="flex flex-col p-3 md:p-3 rounded-2xl dark:bg-white/[0.02]  border dark:border-white/5 border-slate-200">
                   <span className="badge bg-blue-500/10 text-blue-500 text-[9px] font-bold uppercase tracking-widest mb-2 self-start py-0.5 px-2 rounded-full">
@@ -260,7 +307,54 @@ export const TrainingModal = ({ isOpen, onClose }: TrainingModalProps) => {
                 </h3>
               </div>
 
-              <div className="grid grid-cols-1 gap-4 items-stretch max-w-lg mx-auto">
+              {/* Quick Choice USA Buttons at the very top */}
+              <div className="grid grid-cols-2 gap-1.5 xs:gap-2.5 md:gap-4 max-w-2xl mx-auto mb-6">
+                <button
+                  onClick={() => {
+                    onClose();
+                    router.push("/usatraining?type=basic");
+                  }}
+                  className="flex items-center justify-between p-1.5 xs:p-2.5 md:p-3.5 rounded-lg xs:rounded-xl md:rounded-2xl border border-blue-500/25 bg-blue-500/5 hover:bg-blue-500/10 transition-all text-left group/btn cursor-pointer"
+                >
+                  <div className="flex items-center gap-1.5 xs:gap-2 md:gap-3 overflow-hidden">
+                    <div className="w-5 h-5 xs:w-7 xs:h-7 md:w-8 md:h-8 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0">
+                      <Home size={11} className="xs:size-3.5 md:size-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-[7px] xs:text-[9px] md:text-[10px] uppercase font-black tracking-wider text-blue-500">Basic</div>
+                      <div className="text-[9px] xs:text-[11px] md:text-sm font-extrabold dark:text-white text-slate-900 leading-tight">Training $39</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-0.5 font-bold text-[8px] xs:text-[10px] md:text-[11px] text-blue-600 dark:text-blue-400 shrink-0 ml-1">
+                    <span className="hidden sm:inline">Join</span>
+                    <ArrowRight size={10} className="group-hover/btn:translate-x-0.5 transition-transform" />
+                  </div>
+                </button>
+
+                <button
+                  onClick={() => {
+                    onClose();
+                    router.push("/usatraining?type=advanced");
+                  }}
+                  className="flex items-center justify-between p-1.5 xs:p-2.5 md:p-3.5 rounded-lg xs:rounded-xl md:rounded-2xl border border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 transition-all text-left group/btn cursor-pointer ring-1 ring-cyan-500/20"
+                >
+                  <div className="flex items-center gap-1.5 xs:gap-2 md:gap-3 overflow-hidden">
+                    <div className="w-5 h-5 xs:w-7 xs:h-7 md:w-8 md:h-8 rounded-full bg-cyan-500/10 text-cyan-500 flex items-center justify-center shrink-0">
+                      <TrendingUp size={11} className="xs:size-3.5 md:size-4 animate-pulse" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-[7px] xs:text-[9px] md:text-[10px] uppercase font-black tracking-wider text-cyan-500">Advanced</div>
+                      <div className="text-[9px] xs:text-[11px] md:text-sm font-extrabold dark:text-white text-slate-900 leading-tight">Training $97</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-0.5 font-bold text-[8px] xs:text-[10px] md:text-[11px] text-cyan-600 dark:text-cyan-400 shrink-0 ml-1">
+                    <span className="hidden sm:inline">Join</span>
+                    <ArrowRight size={10} className="group-hover/btn:translate-x-0.5 transition-transform" />
+                  </div>
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
                 {/* Basic Card */}
                 <div className="flex flex-col p-3 md:p-3 rounded-2xl dark:bg-white/[0.02]  border dark:border-white/5 border-slate-200">
                   <h3 className="text-sm md:text-xl font-bold dark:text-white text-slate-900 mb-1">
