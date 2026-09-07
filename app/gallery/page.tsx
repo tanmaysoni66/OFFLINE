@@ -79,6 +79,71 @@ const images = [
   },
 ];
 
+const SITE_URL = "https://organicmushroomsfarm.com";
+
+const galleryJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://organicmushroomsfarm.com/gallery#webpage",
+      url: "https://organicmushroomsfarm.com/gallery",
+      name: "Mushroom Farming Gallery",
+      description:
+        "Explore commercial mushroom farming images, mushroom cultivation, growing rooms, farm infrastructure, harvesting and mushroom farming training.",
+      isPartOf: {
+        "@id": "https://organicmushroomsfarm.com/#website",
+      },
+      breadcrumb: {
+        "@id": "https://organicmushroomsfarm.com/gallery#breadcrumb",
+      },
+      primaryImageOfPage: {
+        "@id":
+          "https://organicmushroomsfarm.com/images/mushroom360viewimage.jpeg#image",
+      },
+      image: [
+        {
+          "@id":
+            "https://organicmushroomsfarm.com/images/mushroom360viewimage.jpeg#image",
+        },
+      ],
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://organicmushroomsfarm.com/gallery#breadcrumb",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://organicmushroomsfarm.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Gallery",
+          item: "https://organicmushroomsfarm.com/gallery",
+        },
+      ],
+    },
+    {
+      "@type": "ImageObject",
+      "@id":
+        "https://organicmushroomsfarm.com/images/mushroom360viewimage.jpeg#image",
+      contentUrl:
+        "https://organicmushroomsfarm.com/images/mushroom360viewimage.jpeg",
+      url:
+        "https://organicmushroomsfarm.com/images/mushroom360viewimage.jpeg",
+      name: "Commercial Mushroom Growing Room",
+      caption:
+        "Commercial mushroom growing room with cultivation racks for indoor mushroom cultivation.",
+      description:
+        "Commercial mushroom farming facility showing an indoor mushroom growing room and cultivation racks.",
+      representativeOfPage: true,
+    },
+  ],
+};
+
 export default function GalleryPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -86,6 +151,13 @@ export default function GalleryPage() {
 
   return (
     <div className="min-h-screen pt-32 pb-16 relative">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(galleryJsonLd),
+        }}
+      />
+
       {/* Page Hero */}
       <section className="relative overflow-hidden mb-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
@@ -122,6 +194,7 @@ export default function GalleryPage() {
                 <Image
                   src={img.src}
                   alt={img.alt}
+                  title={img.alt}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-110 opacity-85 group-hover:opacity-100"
                   sizes="(max-width: 768px) 50vw, 33vw"
@@ -136,6 +209,85 @@ export default function GalleryPage() {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SEO Semantic Sections */}
+      <section className="py-12 dark:bg-black/20 bg-slate-100/50">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="prose prose-slate dark:prose-invert max-w-none">
+            {/* Mushroom cultivation */}
+            <div aria-labelledby="cultivation-images" className="mb-10">
+              <h2 id="cultivation-images" className="text-2xl font-bold mb-4">Mushroom Cultivation</h2>
+              <p className="text-sm leading-relaxed">
+                Mushroom cultivation requires suitable growing conditions,
+                correctly prepared cultivation material, appropriate
+                environmental control and careful crop management. Our gallery
+                shows different aspects of commercial mushroom production and
+                farm operations.
+              </p>
+            </div>
+
+            {/* Farm infrastructure */}
+            <div aria-labelledby="farm-infrastructure" className="mb-10">
+              <h2 id="farm-infrastructure" className="text-2xl font-bold mb-4">Mushroom Farm Infrastructure</h2>
+              <p className="text-sm leading-relaxed">
+                Commercial mushroom farms can include controlled growing rooms,
+                cultivation racks, ventilation systems, climate management,
+                harvesting areas and other production infrastructure.
+              </p>
+            </div>
+
+            {/* Training */}
+            <div aria-labelledby="training-images" className="mb-10">
+              <h2 id="training-images" className="text-2xl font-bold mb-4">Mushroom Farming Training</h2>
+              <p className="text-sm leading-relaxed mb-4">
+                Our mushroom farming training covers practical cultivation,
+                commercial farm planning, production systems and important
+                operational practices for people interested in starting or
+                expanding a mushroom farming project.
+              </p>
+              <Link href="/training" className="text-emerald-500 hover:text-emerald-400 font-bold text-sm underline decoration-emerald-500/30 underline-offset-4">
+                Explore Mushroom Farming Training
+              </Link>
+            </div>
+
+            {/* Harvesting */}
+            <div aria-labelledby="harvesting-images" className="mb-10">
+              <h2 id="harvesting-images" className="text-2xl font-bold mb-4">Mushroom Harvesting</h2>
+              <p className="text-sm leading-relaxed">
+                Harvesting is an important stage of mushroom production.
+                Commercial harvesting involves selecting mushrooms at the
+                appropriate stage and handling the crop carefully for further
+                packing, storage or distribution.
+              </p>
+            </div>
+
+            {/* Turnkey projects */}
+            <div aria-labelledby="turnkey-projects" className="mb-10">
+              <h2 id="turnkey-projects" className="text-2xl font-bold mb-4">Commercial Mushroom Farm Projects</h2>
+              <p className="text-sm leading-relaxed mb-4">
+                Explore our commercial mushroom farm project services for
+                planning, infrastructure, cultivation systems and turnkey farm
+                development.
+              </p>
+              <Link href="/turnkeyprojects" className="text-emerald-500 hover:text-emerald-400 font-bold text-sm underline decoration-emerald-500/30 underline-offset-4">
+                Explore Turnkey Mushroom Farm Projects
+              </Link>
+            </div>
+            
+            {/* Enquiry */}
+            <div aria-labelledby="start-project" className="mb-4">
+              <h2 id="start-project" className="text-2xl font-bold mb-4">
+                Start Your Commercial Mushroom Farming Project
+              </h2>
+              <p className="text-sm leading-relaxed mb-4">
+                If you are planning a mushroom farm or looking for commercial
+                mushroom cultivation guidance, you can contact our team for
+                project and training information.
+              </p>
+            </div>
           </div>
         </div>
       </section>

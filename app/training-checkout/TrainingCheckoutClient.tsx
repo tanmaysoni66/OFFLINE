@@ -1,208 +1,337 @@
 "use client";
-import { useState } from "react";
-import Script from "next/script";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from 'react';
+import { motion } from 'motion/react';
+import { User, Mail, Phone, Loader2, ArrowLeft, Sprout, Leaf, Sparkles, ShieldCheck } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { trackPaymentStep, pixelTrackCustom } from '@/src/utils/pixel';
+import { loadRazorpayScript } from '@/src/utils/razorpay';
+import { sendPaymentNotificationToFormspree } from '@/src/utils/formspree';
 
 export default function TrainingCheckoutClient({ type }: { type: "basic" | "advanced" | "offline-basic" | "offline-advanced" }) {
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
-    phone: "",
+    mobile: "",
+    email: ""
   });
 
-  const planDetails: Record<string, { amount: number, title: string }> = {
-    "basic": { amount: 299, title: "Basic Mushroom Farming" },
-    "advanced": { amount: 699, title: "Advanced Commercial Cultivation" },
-    "offline-basic": { amount: 3000, title: "Standard Button Mushroom Workshop" },
-    "offline-advanced": { amount: 6000, title: "Master Commercial Workshop" },
-  };
+  const selectedProductType = type.includes('advanced') ? 'training_advanced' : 'training_basic';
+  const selectedPrice = type.includes('advanced') ? '₹699' : '₹299';
+  const selectedTitle = type.includes('advanced') ? 'Advanced Commercial Cultivation' : 'Basic Mushroom Farming';
+  const isAdvancedTraining = type.includes('advanced');
 
-  const currentPlan = planDetails[type] || planDetails["basic"];
-  const amount = currentPlan.amount;
-  const title = currentPlan.title;
-  const CURRENCY = "INR";
+  useEffect(() => {
+    trackPaymentStep('CheckoutInitiated', { 
+      product_type: selectedProductType, 
+      price: selectedPrice,
+      currency: 'INR' 
+    });
+    // Load script on mount
+    loadRazorpayScript();
+  }, [selectedProductType, selectedPrice]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handlePayment = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.name || !formData.mobile || !formData.email) {
+      alert('Please fill in all details');
+      return;
+    }
+    if (formData.mobile.length !== 10) {
+      alert('Please enter a valid 10-digit mobile number');
+      return;
+    }
+
     setLoading(true);
+
     try {
+      trackPaymentStep('CheckoutSubmitDetails', { 
+        name: formData.name, 
+        email: formData.email, 
+        phone: formData.mobile 
+      });
+
       const res = await fetch("/api/razorpay/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          amount: amount,
-          currency: CURRENCY,
+          currency: 'INR',
           name: formData.name,
           email: formData.email,
+          phone: formData.mobile,
+          amount: type.includes('advanced') ? 699 : 299
         }),
       });
-
-      const order = await res.json();
-      if (order.error) {
-        alert("Failed to initiate payment. Check server logs.");
-        setLoading(false);
-        return;
+      
+      const text = await res.text();
+      let payload;
+      try {
+        payload = JSON.parse(text);
+      } catch (err) {
+        console.error("Failed to parse JSON response:", text);
+        throw new Error('Invalid JSON response from server');
       }
+      
+      if (!res.ok) throw new Error(payload?.error || 'Failed to fetch payload');
+
+      // Send INITIATED notification to Formspree
+      sendPaymentNotificationToFormspree({
+        name: formData.name,
+        phone: formData.mobile,
+        email: formData.email,
+        productType: `${selectedTitle} Training`,
+        amount: selectedPrice,
+        status: 'INITIATED',
+        orderId: payload.id
+      });
 
       const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-        amount: order.amount,
-        currency: order.currency,
-        name: "Organic Mushroom Farm",
-        description: `${title} Training`,
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || payload.key,
+        amount: payload.amount,
+        currency: payload.currency,
+        order_id: payload.id,
+        name: "Organic Mushrooms Farm",
+        description: selectedTitle + " Training",
         image: "https://res.cloudinary.com/dnw4fpk2y/image/upload/q_auto,f_auto/v1785226016/IMG-20260728-WA0000-removebg-preview_bztf7y.png",
-        order_id: order.id,
-        notes: {
-          name: formData.name,
-          type: type,
-        },
-        handler: async function (response: any) {
-          const query = new URLSearchParams({
-            type,
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            payment_id: response.razorpay_payment_id,
-            order_id: response.razorpay_order_id,
-            amount: amount.toString(),
-          }).toString();
-          router.push(`/training-checkout/registration?${query}`);
-        },
         prefill: {
           name: formData.name,
           email: formData.email,
-          contact: formData.phone,
+          contact: formData.mobile
         },
         theme: {
-          color: "#7e22ce",
+          color: "#4f46e5"
+        },
+        handler: function (response: any) {
+          // Notify Formspree that payment is successful
+          sendPaymentNotificationToFormspree({
+            name: formData.name,
+            phone: formData.mobile,
+            email: formData.email,
+            productType: `${selectedTitle} Training`,
+            amount: selectedPrice,
+            status: 'DONE',
+            orderId: payload.id,
+            paymentId: response.razorpay_payment_id
+          });
+
+          trackPaymentStep('PaymentSuccess', {
+            payment_id: response.razorpay_payment_id,
+            order_id: response.razorpay_order_id,
+            product: selectedProductType,
+            value: payload.amount / 100,
+            currency: payload.currency
+          });
+
+          // Redirect to success
+          setTimeout(() => {
+             router.push(`/training/success?id=${response.razorpay_payment_id}&name=${encodeURIComponent(formData.name)}&phone=${encodeURIComponent(formData.mobile)}&email=${encodeURIComponent(formData.email)}&type=${selectedProductType}`);
+          }, 400);
         },
         modal: {
-          ondismiss: async function () {
-            await fetch("/api/razorpay/cancel", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                amount: amount,
-                currency: CURRENCY,
-                name: formData.name,
-                email: formData.email,
-              }),
+          ondismiss: function() {
+            setLoading(false);
+            // Notify Formspree that payment form cancelled/not complete
+            sendPaymentNotificationToFormspree({
+              name: formData.name,
+              phone: formData.mobile,
+              email: formData.email,
+              productType: `${selectedTitle} Training`,
+              amount: selectedPrice,
+              status: 'CANCELLED',
+              orderId: payload.id
             });
-            router.push(`/training-checkout/cancel?type=${type}`);
-          },
-        },
+
+            trackPaymentStep('PaymentCancelled', {
+              order_id: payload.id,
+              product: selectedProductType
+            });
+            
+            // Redirect to cancel
+            router.push(`/training/cancel?type=${selectedProductType}&price=${selectedPrice}`);
+          }
+        }
       };
 
-      const rzp = new (window as any).Razorpay(options);
-      rzp.on("payment.failed", function () {
-        router.push(`/training-checkout/cancel?type=${type}`);
-      });
-      rzp.open();
-    } catch (error) {
-      console.error("Payment failed", error);
-      alert("Something went wrong");
-    } finally {
+      if (typeof window !== "undefined" && (window as any).Razorpay) {
+        pixelTrackCustom('InitiateCheckout', {
+          value: payload.amount / 100,
+          currency: payload.currency,
+          content_name: `Training - ${selectedTitle}`
+        });
+
+        const rzp = new (window as any).Razorpay(options);
+        rzp.on('payment.failed', function (response: any) {
+          console.error(response.error);
+          setLoading(false);
+          // Notify Formspree of failed payment
+          sendPaymentNotificationToFormspree({
+            name: formData.name,
+            phone: formData.mobile,
+            email: formData.email,
+            productType: `${selectedTitle} Training`,
+            amount: selectedPrice,
+            status: 'FAILED',
+            orderId: payload.id,
+            paymentId: response.error?.metadata?.payment_id
+          });
+
+          trackPaymentStep('PaymentFailed', {
+            error_code: response.error?.code,
+            error_description: response.error?.description,
+            order_id: response.error?.metadata?.order_id,
+            payment_id: response.error?.metadata?.payment_id
+          });
+          
+          router.push(`/training/cancel?type=${selectedProductType}&price=${selectedPrice}`);
+        });
+
+        rzp.open();
+      } else {
+        console.error("Razorpay script not loaded properly");
+        alert("Payment gateway not loaded. Please refresh the page.");
+        setLoading(false);
+      }
+    } catch (err: any) {
+      console.error(err);
+      alert(err.message || 'Something went wrong');
       setLoading(false);
     }
   };
 
   return (
-    <main className="relative flex flex-col items-center justify-center min-h-[100dvh] overflow-hidden bg-transparent">
-      <Script src="https://checkout.razorpay.com/v1/checkout.js" />
-      
-      <div className="z-10 w-full max-w-sm mx-auto px-4 py-8 flex flex-col h-[100dvh]">
-        <div className="flex justify-between items-center mb-6">
-          <Link href="/training" className="text-gray-300 hover:text-white transition-colors flex items-center gap-1 text-sm font-medium drop-shadow-md">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-            Back
-          </Link>
-        </div>
+    <div className="min-h-screen dark:bg-[#070707] bg-transparent flex flex-col items-center justify-center pt-24 pb-12 px-4 relative z-[99] overflow-hidden">
+      {/* Premium Background Effects */}
+      <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
+        <div className="absolute top-[10%] left-[10%] w-[30rem] h-[30rem] bg-indigo-500/20 dark:opacity-30 opacity-50 rounded-full blur-[100px] mix-blend-screen"></div>
+        <div className="absolute bottom-[10%] right-[10%] w-[30rem] h-[30rem] bg-green-500/20 dark:opacity-30 opacity-50 rounded-full blur-[100px] mix-blend-screen"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] dark:opacity-[0.05] pointer-events-none"></div>
+      </div>
 
-        <div className="flex-grow flex flex-col justify-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-sm mx-auto backdrop-blur-xl bg-black/30 border border-white/20 p-6 rounded-2xl shadow-2xl relative z-10">
-            <h2 className="text-xl font-bold text-center mb-1 text-white drop-shadow-md">
-              Enroll in Training
-            </h2>
-            <p className="text-xs text-center text-purple-300 mb-6 font-semibold drop-shadow-md">
-              {title} - ₹{amount}
-            </p>
+      {/* Floating 3D Elements for Desktop */}
+      <motion.div 
+        animate={{ y: [0, -15, 0], rotate: [0, 5, 0] }} 
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} 
+        className="absolute top-32 left-[15%] hidden lg:flex items-center justify-center w-16 h-16 rounded-2xl border dark:border-white/10 border-black/5 shadow-[0_20px_40px_-15px_rgba(37,211,102,0.3)] dark:bg-white/5 bg-white/60 backdrop-blur-xl"
+      >
+        <Sprout className="text-[#25D366] w-8 h-8 drop-shadow-[0_0_10px_rgba(37,211,102,0.5)]" />
+      </motion.div>
 
-            <form onSubmit={handlePayment} className="space-y-4">
-              <div>
-                <label className="block text-xs font-medium text-gray-200 mb-1 drop-shadow-sm">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  required
-                  className="w-full px-3 py-2 text-sm bg-white/10 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all text-white placeholder-gray-400 backdrop-blur-sm"
-                  placeholder="Enter your full name"
-                  value={formData.name}
-                  onChange={handleChange}
-                />
+      <motion.div 
+        animate={{ y: [0, 15, 0], rotate: [0, -5, 0] }} 
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }} 
+        className="absolute bottom-32 right-[15%] hidden lg:flex items-center justify-center w-20 h-20 rounded-[2rem] border dark:border-white/10 border-black/5 shadow-[0_20px_40px_-15px_rgba(79,70,229,0.3)] dark:bg-white/5 bg-white/60 backdrop-blur-xl"
+      >
+        <Leaf className="text-indigo-500 w-10 h-10 drop-shadow-[0_0_15px_rgba(79,70,229,0.5)]" />
+      </motion.div>
+
+      <motion.div 
+        animate={{ y: [0, -10, 0], scale: [1, 1.05, 1] }} 
+        transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }} 
+        className="absolute top-1/3 right-[20%] hidden lg:flex items-center justify-center w-12 h-12 rounded-full border dark:border-white/10 border-black/5 shadow-[0_15px_30px_-10px_rgba(234,179,8,0.3)] dark:bg-white/5 bg-white/60 backdrop-blur-xl"
+      >
+        <Sparkles className="text-yellow-500 w-6 h-6 drop-shadow-[0_0_10px_rgba(234,179,8,0.5)]" />
+      </motion.div>
+
+      <div className="w-full max-w-md relative z-10 my-auto">
+        <button 
+          onClick={() => router.back()}
+          className="flex items-center gap-2 dark:text-slate-400 text-slate-500 hover:dark:text-white hover:text-slate-900 transition-colors mb-6 font-medium text-sm w-fit group"
+        >
+          <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" /> Back
+        </button>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative rounded-2xl sm:rounded-[2rem] border dark:border-white/10 border-black/10 dark:bg-[#0c0c0c]/80 bg-white/80 backdrop-blur-2xl shadow-2xl overflow-hidden"
+        >
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-green-500"></div>
+          <div className="p-5 sm:p-8">
+            <div className="text-center mb-6 sm:mb-8">
+              <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full dark:bg-white/5 bg-black/5 dark:border-white/10 border-black/5 border mb-3 sm:mb-4">
+                <Sparkles className="text-yellow-500 w-3 h-3" />
+                <span className="text-[9px] font-bold uppercase tracking-widest dark:text-slate-300 text-slate-700">Access</span>
               </div>
-              <div>
-                <label className="block text-xs font-medium text-gray-200 mb-1 drop-shadow-sm">
-                  Mobile Number
-                </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  required
-                  className="w-full px-3 py-2 text-sm bg-white/10 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all text-white placeholder-gray-400 backdrop-blur-sm"
-                  placeholder="10-digit mobile number"
-                  value={formData.phone}
-                  onChange={handleChange}
-                />
+              <h1 className="text-xl sm:text-2xl font-black dark:text-white text-slate-900 mb-1.5 tracking-tight">Enroll in Training</h1>
+              <p className="text-xs sm:text-sm font-bold bg-gradient-to-r from-indigo-500 to-green-500 bg-clip-text text-transparent flex flex-wrap items-center justify-center gap-2">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-500 animate-pulse"></span>
+                {selectedTitle} - {selectedPrice}
+              </p>
+            </div>
+            
+            <form onSubmit={handleSubmit} className="flex flex-col space-y-3.5 sm:space-y-5">
+              <div className="group/input">
+                <label className="text-[10px] sm:text-[11px] font-bold dark:text-slate-400 text-slate-500 uppercase tracking-widest mb-1.5 block ml-1 transition-colors group-focus-within/input:text-indigo-500">Full Name</label>
+                <div className="relative">
+                  <User size={16} className="absolute left-4 top-1/2 -translate-y-1/2 dark:text-slate-400 text-slate-400 transition-colors group-focus-within/input:text-indigo-500 sm:w-[18px] sm:h-[18px]" />
+                  <input 
+                    type="text" 
+                    required
+                    value={formData.name}
+                    onChange={e => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full box-border dark:bg-black/40 bg-white/5 border dark:border-white/10 border-black/10 rounded-xl sm:rounded-2xl py-3 pl-10 pr-4 text-sm sm:pl-12 dark:text-white text-slate-900 placeholder:dark:text-slate-500 placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 ring-offset-0 transition-all shadow-sm hover:dark:bg-white/[0.02] hover:bg-white"
+                    placeholder="Enter your full name"
+                  />
+                </div>
               </div>
-              <div>
-                <label className="block text-xs font-medium text-gray-200 mb-1 drop-shadow-sm">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  required
-                  className="w-full px-3 py-2 text-sm bg-white/10 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all text-white placeholder-gray-400 backdrop-blur-sm"
-                  placeholder="Enter your email address"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
+              
+              <div className="group/input">
+                <label className="text-[10px] sm:text-[11px] font-bold dark:text-slate-400 text-slate-500 uppercase tracking-widest mb-1.5 block ml-1 transition-colors group-focus-within/input:text-indigo-500">Mobile Number</label>
+                <div className="relative">
+                  <Phone size={16} className="absolute left-4 top-1/2 -translate-y-1/2 dark:text-slate-400 text-slate-400 transition-colors group-focus-within/input:text-indigo-500 sm:w-[18px] sm:h-[18px]" />
+                  <input 
+                    type="tel" 
+                    required
+                    pattern="[0-9]{10}"
+                    value={formData.mobile}
+                    onChange={e => setFormData({ ...formData, mobile: e.target.value })}
+                    className="w-full box-border dark:bg-black/40 bg-white/5 border dark:border-white/10 border-black/10 rounded-xl sm:rounded-2xl py-3 pl-10 pr-4 text-sm sm:pl-12 dark:text-white text-slate-900 placeholder:dark:text-slate-500 placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 ring-offset-0 transition-all shadow-sm hover:dark:bg-white/[0.02] hover:bg-white"
+                    placeholder="10-digit mobile number"
+                  />
+                </div>
               </div>
 
-              <div className="pt-4">
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full py-3 px-4 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-bold transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
-                >
-                  {loading ? "Processing..." : "Complete Payment"}
-                </button>
+              <div className="group/input">
+                <label className="text-[10px] sm:text-[11px] font-bold dark:text-slate-400 text-slate-500 uppercase tracking-widest mb-1.5 block ml-1 transition-colors group-focus-within/input:text-indigo-500">Email Address</label>
+                <div className="relative">
+                  <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 dark:text-slate-400 text-slate-400 transition-colors group-focus-within/input:text-indigo-500 sm:w-[18px] sm:h-[18px]" />
+                  <input 
+                    type="email" 
+                    required
+                    value={formData.email}
+                    onChange={e => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full box-border dark:bg-black/40 bg-white/5 border dark:border-white/10 border-black/10 rounded-xl sm:rounded-2xl py-3 pl-10 pr-4 text-sm sm:pl-12 dark:text-white text-slate-900 placeholder:dark:text-slate-500 placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 ring-offset-0 transition-all shadow-sm hover:dark:bg-white/[0.02] hover:bg-white"
+                    placeholder="Enter your email address"
+                  />
+                </div>
               </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full mt-4 sm:mt-6 shrink-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-green-500 hover:shadow-[0_0_30px_rgba(99,102,241,0.4)] text-[14px] sm:text-[15px] text-white font-black tracking-wide py-3 sm:py-4 rounded-xl sm:rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95"
+              >
+                {loading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <Loader2 size={18} className="animate-spin sm:w-5 sm:h-5" /> <span>Processing...</span>
+                  </span>
+                ) : (
+                  <span className="flex items-center justify-center gap-2">
+                    <span>Complete Payment</span> <ArrowLeft size={14} className="rotate-180 sm:w-4 sm:h-4" />
+                  </span>
+                )}
+              </button>
             </form>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
 
-        <div className="text-center mt-6 flex flex-col items-center justify-center gap-2">
-          <p className="text-[10px] text-gray-300 flex items-center justify-center gap-1 font-medium tracking-wide uppercase drop-shadow-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-gray-300" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
-            </svg>
-            100% SECURED BY RAZORPAY
-          </p>
+        {/* Secure Checkout Badge */}
+        <div className="mt-8 flex items-center justify-center gap-2 dark:text-slate-500 text-slate-600 text-xs font-semibold uppercase tracking-widest">
+          <ShieldCheck size={16} className="text-[#25D366]" />
+          100% Secured by Razorpay
         </div>
       </div>
-    </main>
+    </div>
   );
 }
