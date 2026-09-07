@@ -50,10 +50,22 @@ export async function GET() {
     <priority>0.70</priority>
   </url>
   <url>
+    <loc>${baseUrl}/services/oyster-mushroom</loc>
+    <lastmod>${now}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
     <loc>${baseUrl}/spawn-seed</loc>
     <lastmod>${now}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>${baseUrl}/blog</loc>
+    <lastmod>${now}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>${baseUrl}/contact</loc>
