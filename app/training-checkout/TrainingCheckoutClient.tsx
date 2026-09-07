@@ -2,13 +2,16 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { User, Mail, Phone, Loader2, ArrowLeft, Sprout, Leaf, Sparkles, ShieldCheck } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { trackPaymentStep, pixelTrackCustom } from '@/src/utils/pixel';
 import { loadRazorpayScript } from '@/src/utils/razorpay';
 import { sendPaymentNotificationToFormspree } from '@/src/utils/formspree';
 
-export default function TrainingCheckoutClient({ type }: { type: "basic" | "advanced" | "offline-basic" | "offline-advanced" }) {
+export default function TrainingCheckoutClient() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const typeParam = searchParams.get('type') || 'basic';
+  const type = typeParam as "basic" | "advanced" | "offline-basic" | "offline-advanced";
   const [loading, setLoading] = useState(false);
   
   const [formData, setFormData] = useState({

@@ -2,16 +2,18 @@
 import React, { useEffect } from 'react';
 import { motion } from 'motion/react';
 import { CheckCircle, MessageCircle } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { pixelTrackCustom } from '@/src/utils/pixel';
 
-export default function TrainingSuccessClient({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
+export default function TrainingSuccessClient() {
   const router = useRouter();
-  const paymentId = searchParams.id || 'N/A';
-  const name = searchParams.name || 'N/A';
-  const phone = searchParams.phone || 'N/A';
-  const email = searchParams.email || 'N/A';
-  const type = searchParams.type || 'training_basic';
+  const searchParams = useSearchParams();
+  
+  const paymentId = searchParams.get('id') || 'N/A';
+  const name = searchParams.get('name') || 'N/A';
+  const phone = searchParams.get('phone') || 'N/A';
+  const email = searchParams.get('email') || 'N/A';
+  const type = searchParams.get('type') || 'training_basic';
 
   let messageText = '';
   let courseOrServiceName = '';

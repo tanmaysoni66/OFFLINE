@@ -23,11 +23,7 @@ try {
   console.error("Firebase init error:", error);
 }
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+
 
 const WEBHOOK_SECRET = process.env.RAZORPAY_WEBHOOK_SECRET || "Sonib491@";
 const META_PIXEL_ID = process.env.META_PIXEL_ID || "925374987123460";

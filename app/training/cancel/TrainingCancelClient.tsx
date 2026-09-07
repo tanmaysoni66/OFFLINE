@@ -2,12 +2,13 @@
 import React, { useEffect } from 'react';
 import { motion } from 'motion/react';
 import { AlertCircle, RefreshCw, Clock, Gift, Check, HeadphonesIcon } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { pixelTrackCustom } from '@/src/utils/pixel';
 
-export default function TrainingCancelClient({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
+export default function TrainingCancelClient() {
   const router = useRouter();
-  const type = searchParams.type === "training_advanced" ? "training_advanced" : "training_basic";
+  const searchParams = useSearchParams();
+  const type = searchParams.get('type') === "training_advanced" ? "training_advanced" : "training_basic";
   const isAdvancedTraining = type === "training_advanced";
   const isBasicTraining = type === "training_basic";
 

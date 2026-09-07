@@ -1,5 +1,6 @@
-import { Suspense } from "react";
-import { Metadata } from "next";
+const fs = require('fs');
+
+const checkout = `import { Metadata } from "next";
 import TrainingCheckoutClient from "./TrainingCheckoutClient";
 
 export const metadata: Metadata = {
@@ -7,9 +8,7 @@ export const metadata: Metadata = {
 };
 
 export default function TrainingCheckoutPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <TrainingCheckoutClient />
-    </Suspense>
-  );
+  return <TrainingCheckoutClient />;
 }
+`;
+fs.writeFileSync('app/training-checkout/page.tsx', checkout);
