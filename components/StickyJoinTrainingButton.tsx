@@ -45,16 +45,11 @@ export const StickyJoinTrainingButton = ({
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setShowModal(true)}
-              className={`cursor-pointer rounded-full bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 text-white font-bold shadow-[0_4px_25px_rgba(139,92,246,0.35)] hover:shadow-[0_4px_35px_rgba(139,92,246,0.55)] border border-purple-400/30 flex items-center gap-2 group backdrop-blur-md relative overflow-hidden ${
-                size === "small" ? "px-3 py-2 text-[11px]" : "px-4 py-2.5 sm:px-5 sm:py-3 text-xs sm:text-sm"
-              }`}
+              className={`cursor-pointer rounded-full bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 text-white font-bold shadow-[0_4px_25px_rgba(139,92,246,0.35)] hover:shadow-[0_4px_35px_rgba(139,92,246,0.55)] border border-purple-400/30 flex items-center gap-2 group backdrop-blur-md relative overflow-hidden px-3 py-2 text-[11px]`}
             >
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out rounded-full" />
-              <BookOpen size={size === "small" ? 14 : 16} className="text-purple-200 group-hover:-rotate-12 transition-transform duration-300 relative z-10" />
+              <BookOpen size={14} className="text-purple-200 group-hover:-rotate-12 transition-transform duration-300 relative z-10" />
               <span className="relative z-10 whitespace-nowrap">Join Training</span>
-              <span className="relative z-10 px-2 py-0.5 rounded-full bg-white/20 text-[9px] sm:text-[10px] uppercase font-black tracking-wider shadow-inner">
-                ₹199
-              </span>
             </motion.button>
           </motion.div>
         )}
