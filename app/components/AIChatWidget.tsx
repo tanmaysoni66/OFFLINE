@@ -141,7 +141,7 @@ export const AIChatWidget = () => {
   return (
     <>
       {/* Floating Chat Launcher Button (Left Side above sticky pills) */}
-      <div className="fixed left-3 sm:left-6 bottom-32 md:bottom-22 z-50 pointer-events-auto">
+      <div className="relative z-50 pointer-events-auto">
         <motion.button
           onClick={() => setIsOpen((prev) => !prev)}
           whileHover={{ scale: 1.08 }}

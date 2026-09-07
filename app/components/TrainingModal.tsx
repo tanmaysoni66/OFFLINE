@@ -45,7 +45,7 @@ export const TrainingModal = ({ isOpen, onClose }: TrainingModalProps) => {
           initial={{ scale: 0.95, opacity: 1, y: 15 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.95, opacity: 0, y: 15 }}
-          className="relative w-full max-w-4xl dark:bg-slate-950 bg-white border border-purple-500/20 rounded-[2rem] p-3 md:p-3 shadow-2xl max-h-[90vh] overflow-y-auto z-10"
+          className="relative w-full max-w-4xl dark:bg-slate-950 bg-white border border-purple-500/20 rounded-[2rem] p-3 md:p-4 pb-12 md:pb-12 shadow-2xl max-h-[90vh] overflow-y-auto z-10"
         >
           {/* Close button */}
           <button
@@ -228,7 +228,7 @@ export const TrainingModal = ({ isOpen, onClose }: TrainingModalProps) => {
                       onClose();
                       router.push("/training-checkout?type=basic");
                     }}
-                    className="w-full bg-slate-950 text-white hover:bg-slate-900 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 py-1.5 rounded-lg text-[11px] font-extrabold tracking-wide transition-all active:scale-95 hover:scale-[1.01] flex items-center justify-center gap-1"
+                    className="w-full bg-slate-950 text-white hover:bg-slate-900 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 py-3 rounded-xl text-sm font-extrabold tracking-wide transition-all active:scale-95 hover:scale-[1.01] flex items-center justify-center gap-1"
                   >
                     Join Mushroom Training <ArrowRight size={13} />
                   </button>
@@ -283,7 +283,7 @@ export const TrainingModal = ({ isOpen, onClose }: TrainingModalProps) => {
                       onClose();
                       router.push("/training-checkout?type=advanced");
                     }}
-                    className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] py-1.5 rounded-lg text-[11px] font-extrabold tracking-wide transition-all active:scale-95 hover:scale-[1.01] flex items-center justify-center gap-1"
+                    className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] py-3 rounded-xl text-sm font-extrabold tracking-wide transition-all active:scale-95 hover:scale-[1.01] flex items-center justify-center gap-1"
                   >
                     Join Mushroom Training <ArrowRight size={13} />
                   </button>
@@ -391,7 +391,7 @@ export const TrainingModal = ({ isOpen, onClose }: TrainingModalProps) => {
                       onClose();
                       router.push("/usatraining?type=basic");
                     }}
-                    className="w-full bg-slate-950 text-white hover:bg-slate-900 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 py-1.5 rounded-lg text-[11px] font-extrabold tracking-wide transition-all active:scale-95 hover:scale-[1.01] flex items-center justify-center gap-1"
+                    className="w-full bg-slate-950 text-white hover:bg-slate-900 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 py-3 rounded-xl text-sm font-extrabold tracking-wide transition-all active:scale-95 hover:scale-[1.01] flex items-center justify-center gap-1"
                   >
                     Enroll Now <ArrowRight size={13} />
                   </button>
@@ -437,7 +437,7 @@ export const TrainingModal = ({ isOpen, onClose }: TrainingModalProps) => {
                       onClose();
                       router.push("/usatraining?type=advanced");
                     }}
-                    className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:shadow-[0_0_15px_rgba(59,130,246,0.4)] py-1.5 rounded-lg text-[11px] font-extrabold tracking-wide transition-all active:scale-95 hover:scale-[1.01] flex items-center justify-center gap-1"
+                    className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:shadow-[0_0_15px_rgba(59,130,246,0.4)] py-3 rounded-xl text-sm font-extrabold tracking-wide transition-all active:scale-95 hover:scale-[1.01] flex items-center justify-center gap-1"
                   >
                     Enroll Now <ArrowRight size={13} />
                   </button>
