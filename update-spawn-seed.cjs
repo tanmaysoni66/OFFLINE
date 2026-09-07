@@ -1,4 +1,5 @@
-import React from 'react';
+const fs = require('fs');
+let code = `import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
@@ -160,7 +161,7 @@ const spawnSeedJsonLd = {
           "name": "How can I identify contaminated mushroom spawn?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Unusual green, pink, black or other abnormal growth can indicate contamination. Spawn should be inspected carefully before use."
+            "text": "Unusual green, pink, black or other abnormal growth can indicate contamination. Spawn should be inspected carefully before it is introduced into the cultivation substrate."
           }
         },
         {
@@ -168,7 +169,7 @@ const spawnSeedJsonLd = {
           "name": "How should mushroom spawn be selected?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Consider the mushroom species, spawn freshness, purity, cultivation method and compatibility with the intended substrate."
+            "text": "Consider the mushroom species, spawn freshness, purity, cultivation method and compatibility with the intended substrate before selecting mushroom spawn."
           }
         }
       ]
@@ -184,7 +185,7 @@ export default function SpawnSeedPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(spawnSeedJsonLd).replace(/</g, "\u003c"),
+          __html: JSON.stringify(spawnSeedJsonLd).replace(/</g, "\\u003c"),
         }}
       />
 
@@ -307,26 +308,31 @@ export default function SpawnSeedPage() {
               <Link href="/training" className="text-purple-600 dark:text-purple-400 font-semibold hover:underline">
                 mushroom farming training
               </Link>{" "}
-              programs.
+              programs and practical cultivation guidance.
             </p>
 
             <p>
-              For mushroom farm planning, explore our{" "}
-              <Link href="/mushroomfarmingcalculators" className="text-purple-600 dark:text-purple-400 font-semibold hover:underline">
-                mushroom farming calculators
+              If you are planning a commercial farm, explore our{" "}
+              <Link href="/mushroom-farming-business-plan" className="text-purple-600 dark:text-purple-400 font-semibold hover:underline">
+                mushroom farming business plan
               </Link>
               .
             </p>
 
             <p>
-              For commercial mushroom farming guidance,{" "}
-              <Link href="/enquiry" className="text-purple-600 dark:text-purple-400 font-semibold hover:underline">
-                send us an enquiry
-              </Link>.
+              You can also explore our{" "}
+              <Link href="/mushroomfarmingcalculators" className="text-purple-600 dark:text-purple-400 font-semibold hover:underline">
+                mushroom farming calculators
+              </Link>{" "}
+              for cultivation and farm planning.
             </p>
 
             <p>
-              Explore our <Link href="/gallery" className="text-purple-600 dark:text-purple-400 font-semibold hover:underline">mushroom farming gallery</Link> to see cultivation, farm infrastructure and harvesting images.
+              For commercial project guidance, visit our{" "}
+              <Link href="/enquiry" className="text-purple-600 dark:text-purple-400 font-semibold hover:underline">
+                mushroom farm enquiry
+              </Link>{" "}
+              page.
             </p>
           </div>
 
@@ -401,4 +407,6 @@ export default function SpawnSeedPage() {
       </article>
     </div>
   );
-}
+}`;
+fs.writeFileSync('app/spawn-seed/page.tsx', code);
+console.log('done');

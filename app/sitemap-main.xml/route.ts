@@ -58,8 +58,8 @@ export async function GET() {
   <url>
     <loc>${baseUrl}/spawn-seed</loc>
     <lastmod>${now}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.95</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>${baseUrl}/blog</loc>
