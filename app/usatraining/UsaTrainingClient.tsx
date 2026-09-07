@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { CheckCircle2, TrendingUp, DollarSign, Home, Award, ArrowRight, BookOpen, Clock, ShieldCheck, ThermometerSnowflake, Globe } from 'lucide-react';
 import InternationalCheckoutForm from "../components/InternationalCheckoutForm";
 
@@ -10,6 +10,23 @@ const UsaTrainingClient = () => {
   const router = useRouter();
   const [paymentSuccess, setPaymentSuccess] = useState<string | null>(null);
   const [checkoutPlan, setCheckoutPlan] = useState<{name: string, price: string} | null>(null);
+
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const type = searchParams.get('type');
+    if (type === 'basic') {
+      setCheckoutPlan({ name: "Basic Cultivation Mushroom Training", price: "39.00" });
+      setTimeout(() => {
+        document.getElementById('checkout-form-container')?.scrollIntoView({ behavior: 'smooth' });
+      }, 500);
+    } else if (type === 'advanced') {
+      setCheckoutPlan({ name: "Advanced Commercial Mushroom Training", price: "97.00" });
+      setTimeout(() => {
+        document.getElementById('checkout-form-container')?.scrollIntoView({ behavior: 'smooth' });
+      }, 500);
+    }
+  }, [searchParams]);
+
 
   const faqs = [
     {
