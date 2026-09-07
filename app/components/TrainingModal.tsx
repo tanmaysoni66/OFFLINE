@@ -291,18 +291,17 @@ export const TrainingModal = ({ isOpen, onClose }: TrainingModalProps) => {
                     </ul>
                   </div>
 
-                  <a
-                    href="https://wa.me/919203544140?text=Hi,%20I%20am%20from%20USA/International%20and%20want%20Mushroom%20Training."
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={onClose}
+                  <button
+                    onClick={() => {
+                      onClose();
+                      window.location.href = "/usatraining";
+                    }}
                     className="w-full py-3 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center gap-2 transition-all"
                   >
                     <span>Enroll ($39 USD)</span>
                     <ArrowRight size={14} />
-                  </a>
+                  </button>
                 </div>
-
                 <div className="p-5 rounded-3xl bg-linear-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 flex flex-col justify-between">
                   <div>
                     <div className="flex justify-between items-center mb-3">
@@ -330,17 +329,16 @@ export const TrainingModal = ({ isOpen, onClose }: TrainingModalProps) => {
                       </li>
                     </ul>
                   </div>
-
-                  <a
-                    href="https://wa.me/919203544140?text=Hi,%20I%20am%20interested%20in%20International%20Commercial%20Advisory%20($97)."
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={onClose}
+                  <button
+                    onClick={() => {
+                      onClose();
+                      window.location.href = "/usatraining";
+                    }}
                     className="w-full py-3 rounded-xl text-xs font-bold bg-linear-to-r from-cyan-600 to-blue-600 text-white flex items-center justify-center gap-2 transition-all shadow-lg"
                   >
                     <span>Enroll Commercial ($97 USD)</span>
                     <ArrowRight size={14} />
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
