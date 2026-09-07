@@ -5,7 +5,8 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function TrainingCheckoutPage({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
-  const type = (searchParams.type as "basic" | "advanced" | "offline-basic" | "offline-advanced") || "basic";
+export default async function TrainingCheckoutPage({ searchParams }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+  const params = await searchParams;
+  const type = (params.type as "basic" | "advanced" | "offline-basic" | "offline-advanced") || "basic";
   return <TrainingCheckoutClient type={type} />;
 }

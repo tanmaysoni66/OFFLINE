@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function TrainingCancelPage({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
-  return <TrainingCancelClient searchParams={searchParams} />;
+export default async function TrainingCancelPage({ searchParams }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+  const params = await searchParams;
+  return <TrainingCancelClient searchParams={params} />;
 }
