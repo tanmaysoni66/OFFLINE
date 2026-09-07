@@ -137,73 +137,26 @@ export const TrainingModal = ({ isOpen, onClose }: TrainingModalProps) => {
                 </p>
               </div>
 
-              {/* Quick Choice Buttons at the very top */}
-              <div className="grid grid-cols-2 gap-1.5 xs:gap-2.5 md:gap-4 max-w-2xl mx-auto mb-6">
-                <button
-                  onClick={() => {
-                    onClose();
-                    router.push("/training-checkout?type=basic");
-                  }}
-                  className="flex items-center justify-between p-1.5 xs:p-2.5 md:p-3.5 rounded-lg xs:rounded-xl md:rounded-2xl border border-blue-500/25 bg-blue-500/5 hover:bg-blue-500/10 transition-all text-left group/btn cursor-pointer"
-                >
-                  <div className="flex items-center gap-1.5 xs:gap-2 md:gap-3 overflow-hidden">
-                    <div className="w-5 h-5 xs:w-7 xs:h-7 md:w-8 md:h-8 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0">
-                      <Home size={11} className="xs:size-3.5 md:size-4" />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="text-[7px] xs:text-[9px] md:text-[10px] uppercase font-black tracking-wider text-blue-500">Basic</div>
-                      <div className="text-[9px] xs:text-[11px] md:text-sm font-extrabold dark:text-white text-slate-900 leading-tight">Mushroom ₹299</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-0.5 font-bold text-[8px] xs:text-[10px] md:text-[11px] text-blue-600 dark:text-blue-400 shrink-0 ml-1">
-                    <span className="hidden sm:inline">Join</span>
-                    <ArrowRight size={10} className="group-hover/btn:translate-x-0.5 transition-transform" />
-                  </div>
-                </button>
-
-                <button
-                  onClick={() => {
-                    onClose();
-                    router.push("/training-checkout?type=advanced");
-                  }}
-                  className="flex items-center justify-between p-1.5 xs:p-2.5 md:p-3.5 rounded-lg xs:rounded-xl md:rounded-2xl border border-purple-500/30 bg-purple-500/5 hover:bg-purple-500/10 transition-all text-left group/btn cursor-pointer ring-1 ring-purple-500/20"
-                >
-                  <div className="flex items-center gap-1.5 xs:gap-2 md:gap-3 overflow-hidden">
-                    <div className="w-5 h-5 xs:w-7 xs:h-7 md:w-8 md:h-8 rounded-full bg-purple-500/10 text-purple-500 flex items-center justify-center shrink-0">
-                      <Sparkles size={11} className="xs:size-3.5 md:size-4 animate-pulse" />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="text-[7px] xs:text-[9px] md:text-[10px] uppercase font-black tracking-wider text-purple-500">Advanced</div>
-                      <div className="text-[9px] xs:text-[11px] md:text-sm font-extrabold dark:text-white text-slate-900 leading-tight">Training ₹699</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-0.5 font-bold text-[8px] xs:text-[10px] md:text-[11px] text-purple-600 dark:text-purple-400 shrink-0 ml-1">
-                    <span className="hidden sm:inline">Join</span>
-                    <ArrowRight size={10} className="group-hover/btn:translate-x-0.5 transition-transform" />
-                  </div>
-                </button>
-              </div>
-
-              <div className="grid grid-cols-1 gap-4 items-stretch">
+              <div className="grid grid-cols-1 gap-4 items-stretch max-w-lg mx-auto">
                 {/* Basic Card */}
-                <div className="flex flex-col p-3 rounded-xl border border-slate-200 dark:border-white/10 bg-transparent">
+                <div className="flex flex-col p-3 md:p-3 rounded-2xl dark:bg-white/[0.02]  border dark:border-white/5 border-slate-200">
                   <span className="badge bg-blue-500/10 text-blue-500 text-[9px] font-bold uppercase tracking-widest mb-2 self-start py-0.5 px-2 rounded-full">
                     Beginner
                   </span>
-                  <h3 className="text-sm font-bold dark:text-white text-slate-900 mb-1">
+                  <h3 className="text-sm md:text-xl font-bold dark:text-white text-slate-900 mb-1">
                     Basic Cultivation Training
                   </h3>
                   <div className="flex items-baseline gap-1.5 mb-4">
-                    <span className="text-base font-black text-slate-900 dark:text-white">₹299</span>
+                    <span className="text-sm md:text-xl font-black gradient-text">₹299</span>
                     <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">One-Time Fee</span>
                   </div>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-3 min-h-[28px] leading-relaxed">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mb-4 min-h-[32px]">
                     Perfect for students and hobbyists looking to grow mushrooms at a small home scale.
                   </p>
 
                   <div className="flex-1 mb-6">
                     <h5 className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2.5">What's Included:</h5>
-                    <ul className="space-y-1.5 text-[11px]">
+                    <ul className="space-y-2 text-xs">
                       {[
                         "**Oyster & Button** cultivation step-by-step tutorial.",
                         "**Home Setup**: Perfect climate parameters for rooms/backyards.",
@@ -235,27 +188,27 @@ export const TrainingModal = ({ isOpen, onClose }: TrainingModalProps) => {
                 </div>
 
                 {/* Advanced Card */}
-                <div className="relative flex flex-col p-3 rounded-xl border border-purple-200 dark:border-purple-500/30 bg-transparent">
+                <div className="relative flex flex-col p-3 md:p-3 rounded-2xl dark:bg-purple-950/5 bg-purple-50/5 border-2 border-purple-500/80 shadow-[0_4px_25px_rgba(168,85,247,0.15)]">
                   <div className="absolute top-3 right-3 text-[10px] text-purple-500 font-extrabold tracking-widest uppercase flex items-center gap-0.5">
                     <Sparkles size={10} className="animate-pulse" /> RECOMMENDED
                   </div>
                   <span className="badge bg-purple-500/10 text-purple-400 text-[9px] font-bold uppercase tracking-widest mb-2 self-start py-0.5 px-2 rounded-full">
                     Entrepreneur
                   </span>
-                  <h3 className="text-sm font-bold dark:text-white text-slate-900 mb-1">
+                  <h3 className="text-sm md:text-xl font-bold dark:text-white text-slate-900 mb-1">
                     Advanced Commercial Training
                   </h3>
                   <div className="flex items-baseline gap-1.5 mb-4">
-                    <span className="text-base font-black text-purple-600 dark:text-purple-400">₹699</span>
+                    <span className="text-sm md:text-xl font-black text-purple-500">₹699</span>
                     <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">One-Time Fee</span>
                   </div>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-3 min-h-[28px] leading-relaxed">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mb-4 min-h-[32px]">
                     Ideal for entrepreneurs and farmers wanting to establish commercial operations and scale.
                   </p>
 
                   <div className="flex-1 mb-6">
                     <h5 className="text-[9px] font-black text-purple-400 uppercase tracking-widest mb-2.5">What's Included:</h5>
-                    <ul className="space-y-1.5 text-[11px]">
+                    <ul className="space-y-2 text-xs">
                       {[
                         "**Everything in Basic** plus additional advanced guides.",
                         "**Advanced Varieties**: Milky (Summer), Oyster & Button Mushrooms.",
@@ -307,72 +260,25 @@ export const TrainingModal = ({ isOpen, onClose }: TrainingModalProps) => {
                 </h3>
               </div>
 
-              {/* Quick Choice USA Buttons at the very top */}
-              <div className="grid grid-cols-2 gap-1.5 xs:gap-2.5 md:gap-4 max-w-2xl mx-auto mb-6">
-                <button
-                  onClick={() => {
-                    onClose();
-                    router.push("/usatraining?type=basic");
-                  }}
-                  className="flex items-center justify-between p-1.5 xs:p-2.5 md:p-3.5 rounded-lg xs:rounded-xl md:rounded-2xl border border-blue-500/25 bg-blue-500/5 hover:bg-blue-500/10 transition-all text-left group/btn cursor-pointer"
-                >
-                  <div className="flex items-center gap-1.5 xs:gap-2 md:gap-3 overflow-hidden">
-                    <div className="w-5 h-5 xs:w-7 xs:h-7 md:w-8 md:h-8 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0">
-                      <Home size={11} className="xs:size-3.5 md:size-4" />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="text-[7px] xs:text-[9px] md:text-[10px] uppercase font-black tracking-wider text-blue-500">Basic</div>
-                      <div className="text-[9px] xs:text-[11px] md:text-sm font-extrabold dark:text-white text-slate-900 leading-tight">Training $39</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-0.5 font-bold text-[8px] xs:text-[10px] md:text-[11px] text-blue-600 dark:text-blue-400 shrink-0 ml-1">
-                    <span className="hidden sm:inline">Join</span>
-                    <ArrowRight size={10} className="group-hover/btn:translate-x-0.5 transition-transform" />
-                  </div>
-                </button>
-
-                <button
-                  onClick={() => {
-                    onClose();
-                    router.push("/usatraining?type=advanced");
-                  }}
-                  className="flex items-center justify-between p-1.5 xs:p-2.5 md:p-3.5 rounded-lg xs:rounded-xl md:rounded-2xl border border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 transition-all text-left group/btn cursor-pointer ring-1 ring-cyan-500/20"
-                >
-                  <div className="flex items-center gap-1.5 xs:gap-2 md:gap-3 overflow-hidden">
-                    <div className="w-5 h-5 xs:w-7 xs:h-7 md:w-8 md:h-8 rounded-full bg-cyan-500/10 text-cyan-500 flex items-center justify-center shrink-0">
-                      <TrendingUp size={11} className="xs:size-3.5 md:size-4 animate-pulse" />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="text-[7px] xs:text-[9px] md:text-[10px] uppercase font-black tracking-wider text-cyan-500">Advanced</div>
-                      <div className="text-[9px] xs:text-[11px] md:text-sm font-extrabold dark:text-white text-slate-900 leading-tight">Training $97</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-0.5 font-bold text-[8px] xs:text-[10px] md:text-[11px] text-cyan-600 dark:text-cyan-400 shrink-0 ml-1">
-                    <span className="hidden sm:inline">Join</span>
-                    <ArrowRight size={10} className="group-hover/btn:translate-x-0.5 transition-transform" />
-                  </div>
-                </button>
-              </div>
-
-              <div className="grid grid-cols-1 gap-4 items-stretch">
+              <div className="grid grid-cols-1 gap-4 items-stretch max-w-lg mx-auto">
                 {/* Basic Card */}
-                <div className="flex flex-col p-3 rounded-xl border border-slate-200 dark:border-white/10 bg-transparent">
-                  <h3 className="text-sm font-bold dark:text-white text-slate-900 mb-1">
+                <div className="flex flex-col p-3 md:p-3 rounded-2xl dark:bg-white/[0.02]  border dark:border-white/5 border-slate-200">
+                  <h3 className="text-sm md:text-xl font-bold dark:text-white text-slate-900 mb-1">
                     Basic Cultivation Mushroom Training
                   </h3>
-                  <p className="text-[10px] dark:text-slate-400 text-slate-600 font-medium mb-2">(Home Scale)</p>
+                  <p className="text-[10px] md:text-xs dark:text-slate-400 text-slate-600 font-medium mb-3">(Home Scale)</p>
                   
                   <div className="flex items-baseline gap-1.5 mb-4">
-                    <span className="text-base font-black text-slate-900 dark:text-white">$39</span>
+                    <span className="text-sm md:text-xl font-black text-slate-900 dark:text-white">$39</span>
                     <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">(One-Time)</span>
                   </div>
-                  <p className="text-[11px] font-semibold text-blue-500 mb-3 flex items-center gap-1.5">
+                  <p className="text-xs font-semibold text-blue-500 mb-4 flex items-center gap-1.5">
                     <Home size={14} /> Ideal For: Beginners & Hobbyists
                   </p>
 
                   <div className="flex-1 mb-6">
                     <h5 className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2.5">Key Learnings:</h5>
-                    <ul className="space-y-1.5 text-[11px]">
+                    <ul className="space-y-2 text-xs">
                       {[
                         "Oyster & Button mushroom home setup.",
                         "Substrate boiling & basic sterilization.",
@@ -398,26 +304,26 @@ export const TrainingModal = ({ isOpen, onClose }: TrainingModalProps) => {
                 </div>
 
                 {/* Advanced Card */}
-                <div className="relative flex flex-col p-3 rounded-xl border border-blue-200 dark:border-blue-500/30 bg-transparent">
+                <div className="relative flex flex-col p-3 md:p-3 rounded-2xl dark:bg-blue-950/5 bg-blue-50/5 border-2 border-blue-500/80 shadow-[0_4px_25px_rgba(59,130,246,0.15)]">
                   <div className="absolute top-3 right-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full shadow-md">
                     ⭐ Best Value
                   </div>
-                  <h3 className="text-sm font-bold dark:text-white text-slate-900 mb-1">
+                  <h3 className="text-sm md:text-xl font-bold dark:text-white text-slate-900 mb-1">
                     Advanced Commercial Mushroom Training
                   </h3>
-                  <p className="text-[10px] dark:text-slate-400 text-slate-600 font-medium mb-2">(Business Scale)</p>
+                  <p className="text-[10px] md:text-xs dark:text-slate-400 text-slate-600 font-medium mb-3">(Business Scale)</p>
                   
                   <div className="flex items-baseline gap-1.5 mb-4">
-                    <span className="text-base font-black text-slate-900 dark:text-white">$97</span>
+                    <span className="text-sm md:text-xl font-black text-slate-900 dark:text-white">$97</span>
                     <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">(One-Time)</span>
                   </div>
-                  <p className="text-[11px] font-semibold text-blue-500 mb-3 flex items-center gap-1.5">
+                  <p className="text-xs font-semibold text-blue-500 mb-4 flex items-center gap-1.5">
                     <TrendingUp size={14} /> Ideal For: Entrepreneurs & Commercial Growers
                   </p>
 
                   <div className="flex-1 mb-6">
                     <h5 className="text-[9px] font-black text-blue-400 uppercase tracking-widest mb-2.5">Key Learnings:</h5>
-                    <ul className="space-y-1.5 text-[11px]">
+                    <ul className="space-y-2 text-xs">
                       {[
                         "Farm layout, vertical racks & HVAC setup.",
                         "High-yield varieties + Pest management.",

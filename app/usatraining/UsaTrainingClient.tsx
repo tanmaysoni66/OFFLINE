@@ -141,15 +141,15 @@ const UsaTrainingClient = () => {
                 />
               )}
               
-              <div className="grid grid-cols-1 gap-4 max-w-lg mx-auto">
+              <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
                 
                 {/* Plan 1 */}
-                <div className="flex flex-col p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-transparent transition-transform hover:-translate-y-1">
+                <div className="rounded-3xl p-4 md:p-6 flex flex-col relative transition-transform hover:-translate-y-1">
                   <div className="mb-4">
                     <span className="px-3 py-1 bg-blue-500/10 text-blue-500 rounded-full text-[10px] font-bold uppercase tracking-wider">Hobbyist / Home-Scale</span>
-                    <h3 className="text-base font-black dark:text-white text-slate-900 mt-3">Basic Cultivation Training</h3>
+                    <h3 className="text-xl font-black dark:text-white text-slate-900 mt-3">Basic Cultivation Training</h3>
                     <div className="flex items-baseline gap-1 mt-2">
-                      <span className="text-2xl font-black dark:text-white text-slate-900">$39</span>
+                      <span className="text-3xl font-black dark:text-white text-slate-900">$39</span>
                       <span className="text-sm dark:text-slate-400 text-slate-500 font-medium">USD</span>
                     </div>
                   </div>
@@ -185,16 +185,16 @@ const UsaTrainingClient = () => {
                 </div>
 
                 {/* Plan 2 */}
-                <div className="flex flex-col p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-transparent transition-transform hover:-translate-y-1">
+                <div className="rounded-3xl p-4 md:p-6 flex flex-col relative transition-transform hover:-translate-y-1">
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-4 py-1 rounded-full text-[10px] font-bold tracking-wider shadow-lg">
                     MOST POPULAR
                   </div>
                   
                   <div className="mb-4 mt-2">
                     <span className="px-3 py-1 bg-purple-500/10 text-purple-500 rounded-full text-[10px] font-bold uppercase tracking-wider">Industrial / Commercial</span>
-                    <h3 className="text-base font-black dark:text-white text-slate-900 mt-3">Commercial Farm Advisory</h3>
+                    <h3 className="text-xl font-black dark:text-white text-slate-900 mt-3">Commercial Farm Advisory</h3>
                     <div className="flex items-baseline gap-1 mt-2">
-                      <span className="text-2xl font-black dark:text-white text-slate-900">$97</span>
+                      <span className="text-3xl font-black dark:text-white text-slate-900">$97</span>
                       <span className="text-sm dark:text-slate-400 text-slate-500 font-medium">USD</span>
                     </div>
                   </div>
