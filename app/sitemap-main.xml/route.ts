@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { BLOG_POSTS } from '../../lib/blog-data';
 
 export async function GET() {
   const now = new Date().toISOString();
@@ -61,12 +62,7 @@ export async function GET() {
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>${baseUrl}/blog</loc>
-    <lastmod>${now}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
+  
   <url>
     <loc>${baseUrl}/contact</loc>
     <lastmod>${now}</lastmod>
@@ -79,6 +75,20 @@ export async function GET() {
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <url>
+    <loc>${baseUrl}/blog</loc>
+    <lastmod>${now}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  ${BLOG_POSTS.map(post => `
+  <url>
+    <loc>${baseUrl}/blog/${post.slug}</loc>
+    <lastmod>${now}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>`).join('')}
 </urlset>`;
 
   return new NextResponse(xml, {

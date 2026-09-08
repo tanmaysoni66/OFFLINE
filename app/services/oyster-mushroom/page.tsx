@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     type: "article",
     images: [
       {
-        url: "https://res.cloudinary.com/dnw4fpk2y/image/upload/v1787977978/buttonmushroomyield_gpbiqf.webp",
+        url: "https://res.cloudinary.com/dnw4fpk2y/image/upload/v1787977978/mushroomcultivationarea_j6tozj.webp",
         alt: "Mushroom cultivation and commercial mushroom farming",
       },
     ],
@@ -78,6 +78,9 @@ const oysterMushroomJsonLd = {
       },
       "breadcrumb": {
         "@id": "https://organicmushroomsfarm.com/services/oyster-mushroom#breadcrumb"
+      },
+      "primaryImageOfPage": {
+        "@id": "https://res.cloudinary.com/dnw4fpk2y/image/upload/v1787977978/mushroomcultivationarea_j6tozj.webp#image"
       }
     },
     {
@@ -149,6 +152,15 @@ const oysterMushroomJsonLd = {
           }
         }
       ]
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://res.cloudinary.com/dnw4fpk2y/image/upload/v1787977978/mushroomcultivationarea_j6tozj.webp#image",
+      "contentUrl": "https://res.cloudinary.com/dnw4fpk2y/image/upload/v1787977978/mushroomcultivationarea_j6tozj.webp",
+      "url": "https://res.cloudinary.com/dnw4fpk2y/image/upload/v1787977978/mushroomcultivationarea_j6tozj.webp",
+      "name": "Oyster Mushroom Cultivation",
+      "description": "Oyster mushroom cultivation and farming area.",
+      "representativeOfPage": true
     }
   ]
 };
@@ -198,6 +210,17 @@ export default function ArticleOysterMushroom() {
           <p>
             Here is why everyone is falling in love with them—and why you should too!
           </p>
+
+          
+          <Image
+            src="https://res.cloudinary.com/dnw4fpk2y/image/upload/v1787977978/mushroomcultivationarea_j6tozj.webp"
+            alt="Oyster mushroom farming and cultivation"
+            width={1200}
+            height={800}
+            priority
+            referrerPolicy="no-referrer"
+            className="rounded-2xl shadow-lg my-6 w-full object-cover"
+          />
 
           <h2 className="text-lg md:text-xl font-bold dark:text-white text-slate-900 mt-8 mb-3 border-l-4 border-purple-500 pl-3">
             Why Oyster Mushrooms Are Popular
