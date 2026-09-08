@@ -25,6 +25,15 @@ export const BLOG_POSTS = [
     imageAlt: "Oyster Mushroom Cultivation Process",
     datePublished: "2024-01-20T08:00:00+08:00",
     dateModified: "2024-01-20T08:00:00+08:00",
+  },
+  {
+    slug: "mushroom-farming-business-plan-india",
+    title: "Starting a Profitable Mushroom Farming Business in India: Where to Begin?",
+    description: "Learn how to start a profitable mushroom farming business in India with practical guidance on infrastructure, budgeting, raw materials, cultivation and marketing.",
+    image: "",
+    imageAlt: "Mushroom Farming Business Plan in India",
+    datePublished: "2026-03-01T08:00:00+05:30",
+    dateModified: "2026-03-01T08:00:00+05:30",
   }
 ];
 

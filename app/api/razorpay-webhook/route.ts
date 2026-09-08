@@ -25,7 +25,7 @@ try {
 
 
 
-const WEBHOOK_SECRET = process.env.RAZORPAY_WEBHOOK_SECRET || "Sonib491@";
+const WEBHOOK_SECRET = process.env.RAZORPAY_WEBHOOK_SECRET;
 const META_PIXEL_ID = process.env.META_PIXEL_ID || "925374987123460";
 const META_CAPI_TOKEN = process.env.META_CAPI_TOKEN || "";
 
@@ -255,6 +255,11 @@ export async function POST(req: NextRequest) {
 
     if (!signature) {
       return NextResponse.json({ error: 'Signature missing' }, { status: 400 });
+    }
+
+    if (!WEBHOOK_SECRET) {
+      console.error("RAZORPAY_WEBHOOK_SECRET is not configured");
+      return NextResponse.json({ error: 'Webhook secret not configured' }, { status: 500 });
     }
 
     const expectedSignature = crypto
