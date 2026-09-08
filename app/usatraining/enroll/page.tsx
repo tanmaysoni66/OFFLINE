@@ -56,7 +56,7 @@ export default function USATrainingEnrollPage({ searchParams }: { searchParams: 
              </span>
            </div>
 
-           <USATrainingPayment title={plan.title} amount={plan.price} />
+           <USATrainingPayment title={plan.title} amount={plan.price} planId={plan.id} />
         </div>
 
         {/* Footer */}

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev -H 0.0.0.0 -p 3000",
-    "build": "next build",
+    "build": "NODE_ENV=production next build",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
     "start": "next start -H 0.0.0.0 -p 3000"
@@ -30,6 +30,7 @@
     "razorpay": "^2.9.8",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
+    "react-markdown": "^10.1.0",
     "tailwind-merge": "^3.6.0",
     "three": "^0.185.1"
   },

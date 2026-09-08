@@ -130,7 +130,7 @@ const DynamicGreeting = () => {
     { id: 'dew', content: <>Dew Point: {weather.dewPoint}°C <span className="inline-block">🌫️</span></> },
     { id: 'wind', content: <>Wind Speed: {weather.windSpeed} km/h <span className="inline-block">💨</span></> },
     { id: 'uv', content: <>UV Index: {weather.uvIndex} <span className="inline-block">☀️</span></> },
-    weather.rain > 0 ? { id: 'rain', content: <>Rain: {weather.rain} mm <span className="inline-block">🌧️</span></> } : null,
+    (weather.rain ?? 0) > 0 ? { id: 'rain', content: <>Rain: {weather.rain} mm <span className="inline-block">🌧️</span></> } : null,
     { id: 'pressure', content: <>Air Pressure: {weather.airPressure} hPa <span className="inline-block">📉</span></> },
     { id: 'suggestion', content: <>{weather.temp !== undefined ? getSuggestion(weather.temp) : ''}</> }
   ] : [

@@ -2,8 +2,14 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from "next";
-import { getBlogPost } from "../../../lib/blog-data";
+import { getBlogPost, BLOG_POSTS } from "../../../lib/blog-data";
 import { notFound } from "next/navigation";
+
+export async function generateStaticParams() {
+  return BLOG_POSTS.map((post) => ({
+    slug: post.slug,
+  }));
+}
 
 export async function generateMetadata({
   params,

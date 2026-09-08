@@ -13,7 +13,7 @@ const UsaTrainingClient = () => {
 
   const searchParams = useSearchParams();
   useEffect(() => {
-    const type = searchParams.get('type');
+    const type = searchParams?.get('type');
     if (type === 'basic') {
       setCheckoutPlan({ name: "Basic Cultivation Mushroom Training", price: "39.00" });
       setTimeout(() => {

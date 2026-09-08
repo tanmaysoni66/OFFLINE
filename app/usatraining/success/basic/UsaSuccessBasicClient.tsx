@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 function SuccessContent() {
   const searchParams = useSearchParams();
-  const transactionId = searchParams.get("id");
+  const transactionId = searchParams?.get("id");
 
   return (
     <div className="max-w-xl mx-auto glass border border-green-500/50 rounded-3xl p-8 text-center bg-green-500/5">

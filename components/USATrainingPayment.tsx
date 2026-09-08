@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
-export default function USATrainingPayment({ title, amount }: { title: string; amount: number }) {
+export default function USATrainingPayment({ title, amount, planId }: { title: string; amount: number; planId?: string }) {
   const router = useRouter();
   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
   const [errorMsg, setErrorMsg] = useState("");
@@ -107,7 +107,8 @@ export default function USATrainingPayment({ title, amount }: { title: string; a
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
-                amount: amount,
+                planId: planId || (amount === 97 ? 'advanced-us' : 'basic-us'),
+                planName: title,
                 currency: CURRENCY,
                 name: formData.name,
                 email: formData.email,

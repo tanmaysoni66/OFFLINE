@@ -8,7 +8,7 @@ import { pixelTrackCustom } from '@/src/utils/pixel';
 export default function TrainingCancelClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const type = searchParams.get('type') === "training_advanced" ? "training_advanced" : "training_basic";
+  const type = searchParams?.get('type') === "training_advanced" ? "training_advanced" : "training_basic";
   const isAdvancedTraining = type === "training_advanced";
   const isBasicTraining = type === "training_basic";
 

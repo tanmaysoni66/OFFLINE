@@ -9,11 +9,11 @@ export default function TrainingSuccessClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
   
-  const paymentId = searchParams.get('id') || 'N/A';
-  const name = searchParams.get('name') || 'N/A';
-  const phone = searchParams.get('phone') || 'N/A';
-  const email = searchParams.get('email') || 'N/A';
-  const type = searchParams.get('type') || 'training_basic';
+  const paymentId = searchParams?.get('id') || 'N/A';
+  const name = searchParams?.get('name') || 'N/A';
+  const phone = searchParams?.get('phone') || 'N/A';
+  const email = searchParams?.get('email') || 'N/A';
+  const type = searchParams?.get('type') || 'training_basic';
 
   let messageText = '';
   let courseOrServiceName = '';

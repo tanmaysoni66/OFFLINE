@@ -26,10 +26,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#faf5ff" },
-    { media: "(prefers-color-scheme: dark)", color: "#1C1936" },
-  ],
+  themeColor: "#1C1936",
 };
 
 export const metadata: Metadata = {
@@ -93,10 +90,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en-IN" className={`${inter.variable} ${poppins.variable} scroll-smooth`}>
-      <head>
-        <link rel="preconnect" href="https://res.cloudinary.com" />
-        <link rel="preconnect" href="https://api.open-meteo.com" />
-      </head>
       <body className="antialiased min-h-screen flex flex-col relative overflow-x-hidden">
         {/* Animated Canvas Background */}
         <MyceliumBackground />

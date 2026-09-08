@@ -45,7 +45,7 @@ export default function FloatingButtons() {
       <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-gradient-to-t from-white via-white/95 to-transparent dark:from-slate-950 dark:via-slate-950/95 lg:hidden">
         <div className="flex items-center justify-between gap-2 max-w-md mx-auto">
           {navItems.map((item, i) => {
-            if (item.hideOn.includes(pathname)) return null;
+            if (pathname && item.hideOn.includes(pathname)) return null;
             const className = "flex-1 flex items-center justify-center gap-2 py-3 px-2 rounded-2xl glass border dark:border-white/10 border-black/10 active:scale-95 transition-transform bg-white/50 dark:bg-slate-900/50";
             return (
               <Link key={i} href={item.href} className={className}>

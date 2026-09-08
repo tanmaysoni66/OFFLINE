@@ -10,7 +10,7 @@ import { sendPaymentNotificationToFormspree } from '@/src/utils/formspree';
 export default function TrainingCheckoutClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const typeParam = searchParams.get('type') || 'basic';
+  const typeParam = searchParams ? (searchParams.get('type') || 'basic') : 'basic';
   const type = typeParam as "basic" | "advanced" | "offline-basic" | "offline-advanced";
   const [loading, setLoading] = useState(false);
   
@@ -26,9 +26,9 @@ export default function TrainingCheckoutClient() {
   const isAdvancedTraining = type.includes('advanced');
 
   useEffect(() => {
-    trackPaymentStep('CheckoutInitiated', { 
-      product_type: selectedProductType, 
-      price: selectedPrice,
+    trackPaymentStep('InitiateCheckout', { 
+      content_name: selectedProductType, 
+      value: parseInt(selectedPrice.replace(/[^\d]/g, '')) || 299,
       currency: 'INR' 
     });
     // Load script on mount
@@ -49,21 +49,23 @@ export default function TrainingCheckoutClient() {
     setLoading(true);
 
     try {
-      trackPaymentStep('CheckoutSubmitDetails', { 
-        name: formData.name, 
-        email: formData.email, 
-        phone: formData.mobile 
+      trackPaymentStep('AddPaymentInfo', { 
+        content_name: selectedProductType,
+        user_email: formData.email, 
+        user_phone: formData.mobile 
       });
 
       const res = await fetch("/api/razorpay/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          planId: isAdvancedTraining ? 'advanced' : 'basic',
+          productId: selectedProductType,
+          type: type,
           currency: 'INR',
           name: formData.name,
           email: formData.email,
           phone: formData.mobile,
-          amount: type.includes('advanced') ? 699 : 299
         }),
       });
       
@@ -121,7 +123,7 @@ export default function TrainingCheckoutClient() {
           trackPaymentStep('PaymentSuccess', {
             payment_id: response.razorpay_payment_id,
             order_id: response.razorpay_order_id,
-            product: selectedProductType,
+            content_name: selectedProductType,
             value: payload.amount / 100,
             currency: payload.currency
           });
@@ -147,7 +149,7 @@ export default function TrainingCheckoutClient() {
 
             trackPaymentStep('PaymentCancelled', {
               order_id: payload.id,
-              product: selectedProductType
+              content_name: selectedProductType
             });
             
             // Redirect to cancel
@@ -180,8 +182,7 @@ export default function TrainingCheckoutClient() {
           });
 
           trackPaymentStep('PaymentFailed', {
-            error_code: response.error?.code,
-            error_description: response.error?.description,
+            content_name: `PaymentFailed: ${response.error?.code || 'error'}`,
             order_id: response.error?.metadata?.order_id,
             payment_id: response.error?.metadata?.payment_id
           });

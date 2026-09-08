@@ -30,7 +30,8 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "strictNullChecks": true
   },
   "include": [
     "next-env.d.ts",
@@ -38,9 +39,18 @@
     ".next/types/**/*.ts",
     "**/*.mts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "src",
+    "api",
+    "server",
+    "server.ts",
+    "scripts",
+    "test-helmet.ts",
+    "test-ssr.ts",
+    "vite.config.ts"
   ]
 }

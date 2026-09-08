@@ -26,11 +26,13 @@ export default function TrainingPayment({ title, amount }: { title: string; amou
 
     try {
       // 1. Create order on our server
+      const planId = title?.toLowerCase().includes('advance') || amount === 699 ? 'advanced' : 'basic';
       const res = await fetch("/api/razorpay/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          amount: amount,
+          planId: planId,
+          planName: title,
           currency: CURRENCY,
           name: formData.name,
           email: formData.email,
