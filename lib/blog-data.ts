@@ -34,6 +34,15 @@ export const BLOG_POSTS = [
     imageAlt: "Mushroom Farming Business Plan in India",
     datePublished: "2026-03-01T08:00:00+05:30",
     dateModified: "2026-03-01T08:00:00+05:30",
+  },
+  {
+    slug: "button-mushroom-farming-guide",
+    title: "Button Mushroom Farming: From Spawn Preparation to Farm Setup",
+    description: "Learn the complete process of organic button mushroom farming, from grain spawn preparation to advanced indoor climate control and harvesting.",
+    image: "https://res.cloudinary.com/dnw4fpk2y/image/upload/c_fill,w_1200,ar_16:9,f_auto,q_auto/v1788255569/organic-button-mushroom-farm-setup_kwlyo0.png",
+    imageAlt: "Organic Button Mushroom Farm Setup",
+    datePublished: "2026-03-05T08:00:00+05:30",
+    dateModified: "2026-03-05T08:00:00+05:30",
   }
 ];
 

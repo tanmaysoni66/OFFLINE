@@ -6,7 +6,11 @@ import { getBlogPost, BLOG_POSTS } from "../../../lib/blog-data";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
-  return BLOG_POSTS.map((post) => ({
+  return BLOG_POSTS.filter(
+    (post) =>
+      post.slug !== "mushroom-farming-business-plan-india" &&
+      post.slug !== "button-mushroom-farming-guide"
+  ).map((post) => ({
     slug: post.slug,
   }));
 }
