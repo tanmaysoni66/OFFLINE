@@ -4,24 +4,28 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Markdown from "react-markdown";
 import {
+  MessageSquare,
   X,
   Send,
   Sparkles,
+  Bot,
   User,
   RefreshCw,
   Copy,
   Check,
+  PhoneCall,
+  Sprout,
+  HelpCircle,
+  TrendingUp,
   Maximize2,
-  Minimize2,
+  Minimize2
 } from "lucide-react";
-import { RobotAvatar, type BotAnimationState } from "./RobotAvatar";
 
 interface ChatMessage {
   id: string;
   role: "user" | "assistant";
   content: string;
   timestamp: string;
-  isTyping?: boolean;
 }
 
 const QUICK_PROMPTS = [
@@ -29,7 +33,7 @@ const QUICK_PROMPTS = [
   "🍄 Button vs Oyster Farming?",
   "🎓 Training Masterclass (₹199)?",
   "🌡️ Ideal Temperature & Humidity?",
-  "📦 How to buy F1 Spawn?",
+  "📦 How to buy F1 Spawn?"
 ];
 
 export const AIChatWidget = () => {
@@ -37,11 +41,7 @@ export const AIChatWidget = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [inputMessage, setInputMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [botState, setBotState] = useState<BotAnimationState>("idle");
   const [copiedId, setCopiedId] = useState<string | null>(null);
-  const [typingMessageId, setTypingMessageId] = useState<string | null>(null);
-  const [displayedTypingText, setDisplayedTypingText] = useState<string>("");
-
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: "welcome-1",
@@ -54,7 +54,6 @@ export const AIChatWidget = () => {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const typingTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -65,76 +64,22 @@ export const AIChatWidget = () => {
       scrollToBottom();
       inputRef.current?.focus();
     }
-  }, [isOpen, messages, isLoading, displayedTypingText]);
-
-  // Clean up any ongoing typing timers on unmount
-  useEffect(() => {
-    return () => {
-      if (typingTimerRef.current) {
-        clearInterval(typingTimerRef.current);
-      }
-    };
-  }, []);
-
-  // Typewriter effect function for streaming response text with mouth wave
-  const startTypewriterEffect = (fullText: string, messageId: string) => {
-    if (typingTimerRef.current) {
-      clearInterval(typingTimerRef.current);
-    }
-
-    setTypingMessageId(messageId);
-    setDisplayedTypingText("");
-    setBotState("talking"); // Talking / Answering state: Visor lip/mouth wave activates!
-
-    let currentIndex = 0;
-    const chunkSize = 3; // Type 3 characters per tick for smooth fast typing
-    const intervalMs = 18; // 18ms per tick for natural speech rhythm
-
-    typingTimerRef.current = setInterval(() => {
-      currentIndex += chunkSize;
-      if (currentIndex >= fullText.length) {
-        // Typing finished!
-        if (typingTimerRef.current) clearInterval(typingTimerRef.current);
-        setDisplayedTypingText(fullText);
-        setTypingMessageId(null);
-        setBotState("idle"); // Returns to idle friendly state
-
-        // Finalize message content in state
-        setMessages((prev) =>
-          prev.map((msg) =>
-            msg.id === messageId ? { ...msg, content: fullText, isTyping: false } : msg
-          )
-        );
-      } else {
-        setDisplayedTypingText(fullText.slice(0, currentIndex));
-      }
-    }, intervalMs);
-  };
+  }, [isOpen, messages, isLoading]);
 
   const handleSendMessage = async (textToSend?: string) => {
     const messageContent = (textToSend || inputMessage).trim();
     if (!messageContent || isLoading) return;
 
-    // If currently typing, instantly complete it before sending new one
-    if (typingMessageId && typingTimerRef.current) {
-      clearInterval(typingTimerRef.current);
-      setTypingMessageId(null);
-    }
-
     const userMessage: ChatMessage = {
       id: `user-${Date.now()}`,
       role: "user",
       content: messageContent,
-      timestamp: new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
+      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     };
 
     setMessages((prev) => [...prev, userMessage]);
     setInputMessage("");
     setIsLoading(true);
-    setBotState("thinking"); // Thinking State: Antenna glows brightly & eyes start calculating!
 
     try {
       const response = await fetch("/api/chat", {
@@ -142,54 +87,36 @@ export const AIChatWidget = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: messageContent,
-          history: [...messages, userMessage].map((m) => ({
+          messages: [...messages, userMessage].map((m) => ({
             role: m.role,
-            text: m.content,
+            content: m.content,
           })),
         }),
       });
 
       const data = await response.json();
-      const replyText =
-        data.text ||
-        data.reply ||
-        "Thank you for reaching out. Please connect directly on WhatsApp: +91 9203544140.";
+      const replyText = data.reply || data.text || "Thank you for reaching out. Please connect directly on WhatsApp: +91 9203544140.";
 
-      setIsLoading(false);
-
-      const assistantMsgId = `ai-${Date.now()}`;
       const assistantMessage: ChatMessage = {
-        id: assistantMsgId,
+        id: `ai-${Date.now()}`,
         role: "assistant",
         content: replyText,
-        timestamp: new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-        isTyping: true,
+        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       };
 
-      // Add to messages list
       setMessages((prev) => [...prev, assistantMessage]);
-
-      // Start the dynamic typewriter typing display and mouth animation!
-      startTypewriterEffect(replyText, assistantMsgId);
     } catch (error) {
       console.error("Chat error:", error);
-      setIsLoading(false);
-      setBotState("idle");
-
       const errorMessage: ChatMessage = {
         id: `error-${Date.now()}`,
         role: "assistant",
         content:
           "I experienced a slight connection delay. You can also chat directly with our head agronomist on WhatsApp at **+91 9203544140**.",
-        timestamp: new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
+        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       };
       setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -200,9 +127,6 @@ export const AIChatWidget = () => {
   };
 
   const resetChat = () => {
-    if (typingTimerRef.current) clearInterval(typingTimerRef.current);
-    setTypingMessageId(null);
-    setBotState("idle");
     setMessages([
       {
         id: `welcome-${Date.now()}`,
@@ -216,108 +140,43 @@ export const AIChatWidget = () => {
 
   return (
     <>
-      {/* ================= STICKY LAUNCHER BUTTON WITH ROBOT ANIMATIONS ================= */}
-      <div className="relative z-50 pointer-events-auto flex items-center gap-2.5">
+      {/* Floating Chat Launcher Button (Left Side above sticky pills) */}
+      <div className="relative z-50 pointer-events-auto">
         <motion.button
           onClick={() => setIsOpen((prev) => !prev)}
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.94 }}
-          className={`relative w-13 h-13 sm:w-15 sm:h-15 rounded-full text-white shadow-2xl flex items-center justify-center cursor-pointer transition-all duration-300 ${
-            botState === "thinking"
-              ? "bg-gradient-to-tr from-cyan-900 via-slate-900 to-indigo-900 border-2 border-cyan-400 shadow-[0_0_35px_rgba(6,182,212,0.65)]"
-              : botState === "talking"
-              ? "bg-gradient-to-tr from-purple-900 via-indigo-900 to-pink-900 border-2 border-purple-400 shadow-[0_0_35px_rgba(168,85,247,0.65)]"
-              : "bg-gradient-to-tr from-purple-700 via-indigo-700 to-slate-950 border border-purple-400/50 shadow-[0_8px_30px_rgba(147,51,234,0.5)]"
-          }`}
+          className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-linear-to-tr from-purple-600 via-indigo-600 to-purple-800 text-white shadow-[0_8px_30px_rgba(147,51,234,0.5)] border border-purple-400/40 flex items-center justify-center cursor-pointer group"
           aria-label="Open AI Mushroom Advisor"
         >
-          {/* Subtle Energy Halo */}
-          <div
-            className={`absolute inset-0 rounded-full transition-all duration-300 pointer-events-none ${
-              botState === "thinking"
-                ? "bg-cyan-500/25 animate-ping"
-                : botState === "talking"
-                ? "bg-purple-500/25 animate-pulse"
-                : "bg-purple-500/15"
-            }`}
-          />
-
+          <div className="absolute inset-0 rounded-full bg-purple-500 animate-ping opacity-25" />
           <AnimatePresence mode="wait">
             {isOpen ? (
               <motion.div
                 key="close-icon"
-                initial={{ rotate: -90, opacity: 0, scale: 0.8 }}
-                animate={{ rotate: 0, opacity: 1, scale: 1 }}
-                exit={{ rotate: 90, opacity: 0, scale: 0.8 }}
-                className="text-white"
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
               >
-                <X size={26} />
+                <X size={24} />
               </motion.div>
             ) : (
               <motion.div
-                key="robot-icon"
-                initial={{ rotate: 45, opacity: 0, scale: 0.8 }}
-                animate={{ rotate: 0, opacity: 1, scale: 1 }}
-                exit={{ rotate: -45, opacity: 0, scale: 0.8 }}
-                className="flex items-center justify-center"
+                key="bot-icon"
+                initial={{ rotate: 90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: -90, opacity: 0 }}
+                className="relative"
               >
-                {/* Custom Animated Robot Avatar on the Sticky Button */}
-                <RobotAvatar state={botState} size="lg" showAntenna={true} />
+                <Bot size={26} className="group-hover:rotate-12 transition-transform" />
+                <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 border-2 border-slate-900 rounded-full animate-pulse" />
               </motion.div>
             )}
           </AnimatePresence>
         </motion.button>
-
-        {/* Dynamic Status Badges Floating Beside the Sticky Button */}
-        {!isOpen && (
-          <AnimatePresence mode="wait">
-            {botState === "thinking" ? (
-              <motion.div
-                key="status-thinking"
-                initial={{ opacity: 0, x: -10, scale: 0.9 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, x: -10, scale: 0.9 }}
-                className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-950/95 border border-cyan-400/80 shadow-[0_0_20px_rgba(6,182,212,0.4)] backdrop-blur-md"
-              >
-                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping shrink-0" />
-                <span className="text-[11px] font-bold text-cyan-200 tracking-wide">
-                  Calculating parameters...
-                </span>
-              </motion.div>
-            ) : botState === "talking" ? (
-              <motion.div
-                key="status-talking"
-                initial={{ opacity: 0, x: -10, scale: 0.9 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, x: -10, scale: 0.9 }}
-                className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-950/95 border border-purple-400/80 shadow-[0_0_20px_rgba(168,85,247,0.4)] backdrop-blur-md"
-              >
-                <div className="flex items-end gap-[2px] h-3 shrink-0">
-                  <span className="w-0.5 h-3 bg-purple-400 rounded-full animate-bounce" />
-                  <span className="w-0.5 h-2 bg-pink-400 rounded-full animate-bounce [animation-delay:0.15s]" />
-                  <span className="w-0.5 h-3.5 bg-cyan-400 rounded-full animate-bounce [animation-delay:0.3s]" />
-                </div>
-                <span className="text-[11px] font-bold text-purple-200 tracking-wide">
-                  Answering your query...
-                </span>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="status-idle"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/90 hover:bg-slate-900 text-slate-200 border border-purple-500/30 text-xs shadow-lg backdrop-blur-md transition-all cursor-pointer"
-                onClick={() => setIsOpen(true)}
-              >
-                <Sparkles className="w-3.5 h-3.5 text-emerald-400 animate-pulse shrink-0" />
-                <span className="font-semibold text-[11px]">Ask AI Agronomist</span>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        )}
       </div>
 
-      {/* ================= FLOATING CHAT WINDOW ================= */}
+      {/* Floating Chat Window */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -325,59 +184,29 @@ export const AIChatWidget = () => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 30 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className={`fixed z-50 left-3 sm:left-6 bottom-36 md:bottom-24 bg-slate-950/95 backdrop-blur-2xl border rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.85)] flex flex-col overflow-hidden transition-all duration-300 ${
-              botState === "thinking"
-                ? "border-cyan-500/40"
-                : botState === "talking"
-                ? "border-purple-500/40"
-                : "border-slate-800"
-            } ${
+            className={`fixed z-50 left-3 sm:left-6 bottom-36 md:bottom-24 bg-slate-950/95 backdrop-blur-2xl border border-purple-500/30 rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] flex flex-col overflow-hidden transition-all duration-300 ${
               isExpanded
                 ? "w-[calc(100vw-24px)] sm:w-[600px] h-[80vh] max-h-[700px]"
-                : "w-[calc(100vw-24px)] sm:w-[400px] h-[540px]"
+                : "w-[calc(100vw-24px)] sm:w-[390px] h-[540px]"
             }`}
           >
-            {/* Header with Robot Avatar displaying Live Animation State */}
-            <div className="p-3.5 sm:p-4 bg-gradient-to-r from-purple-950/70 via-slate-900/90 to-slate-950 border-b border-purple-500/20 flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                {/* Robot Avatar in Header */}
-                <div className="relative p-1 rounded-2xl bg-purple-950/40 border border-purple-400/30 flex items-center justify-center shrink-0">
-                  <RobotAvatar state={botState} size="md" showAntenna={true} />
+            {/* Header */}
+            <div className="p-4 bg-linear-to-r from-purple-900/60 via-slate-900/80 to-slate-950 border-b border-purple-500/20 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="relative w-10 h-10 rounded-2xl bg-purple-600/30 border border-purple-400/30 flex items-center justify-center">
+                  <Bot size={22} className="text-purple-300" />
+                  <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 rounded-full border border-slate-900" />
                 </div>
                 <div>
                   <div className="flex items-center gap-1.5">
                     <h4 className="text-sm font-black text-white">MycoBot Advisor</h4>
-                    <span
-                      className={`px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider transition-colors ${
-                        botState === "thinking"
-                          ? "bg-cyan-500/20 text-cyan-300 border border-cyan-400/40"
-                          : botState === "talking"
-                          ? "bg-purple-500/20 text-purple-300 border border-purple-400/40"
-                          : "bg-emerald-500/20 text-emerald-300"
-                      }`}
-                    >
-                      {botState === "thinking"
-                        ? "Thinking..."
-                        : botState === "talking"
-                        ? "Talking..."
-                        : "Online"}
+                    <span className="px-1.5 py-0.2 rounded bg-purple-500/20 text-[9px] font-bold text-purple-300 uppercase tracking-wider">
+                      Gemini 3.8
                     </span>
                   </div>
-                  <p className="text-[11px] text-slate-400 flex items-center gap-1 mt-0.5">
-                    <span
-                      className={`w-1.5 h-1.5 rounded-full inline-block ${
-                        botState === "thinking"
-                          ? "bg-cyan-400 animate-ping"
-                          : botState === "talking"
-                          ? "bg-purple-400 animate-pulse"
-                          : "bg-emerald-400"
-                      }`}
-                    />
-                    {botState === "thinking"
-                      ? "Calculating formula & genetics..."
-                      : botState === "talking"
-                      ? "Speaking & delivering answer..."
-                      : "Jabalpur Head Agronomist AI"}
+                  <p className="text-[11px] text-slate-400 flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse" />
+                    Online • Jabalpur Farm Agronomist
                   </p>
                 </div>
               </div>
@@ -412,7 +241,7 @@ export const AIChatWidget = () => {
                 <button
                   key={i}
                   onClick={() => handleSendMessage(prompt)}
-                  disabled={isLoading || botState === "talking"}
+                  disabled={isLoading}
                   className="shrink-0 text-[11px] font-medium px-2.5 py-1 rounded-full bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/40 text-slate-300 hover:text-purple-200 transition-all active:scale-95 disabled:opacity-50"
                 >
                   {prompt}
@@ -421,45 +250,27 @@ export const AIChatWidget = () => {
             </div>
 
             {/* Chat Body */}
-            <div className="flex-1 p-3.5 sm:p-4 overflow-y-auto space-y-3.5 scrollbar-thin text-xs sm:text-sm">
+            <div className="flex-1 p-4 overflow-y-auto space-y-3.5 scrollbar-thin text-xs sm:text-sm">
               {messages.map((msg) => {
                 const isUser = msg.role === "user";
-                const isCurrentlyTyping = msg.id === typingMessageId;
-                const messageText = isCurrentlyTyping
-                  ? displayedTypingText
-                  : msg.content;
-
                 return (
                   <motion.div
                     key={msg.id}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className={`flex items-start gap-2.5 ${
-                      isUser ? "flex-row-reverse" : "flex-row"
-                    }`}
+                    className={`flex items-start gap-2.5 ${isUser ? "flex-row-reverse" : "flex-row"}`}
                   >
-                    {/* Message Avatar */}
-                    <div className="shrink-0">
-                      {isUser ? (
-                        <div className="w-7 h-7 rounded-full bg-indigo-600 text-white flex items-center justify-center">
-                          <User size={14} />
-                        </div>
-                      ) : (
-                        <div className="w-7 h-7 rounded-full bg-slate-900 border border-purple-500/40 flex items-center justify-center">
-                          <RobotAvatar
-                            state={isCurrentlyTyping ? "talking" : "idle"}
-                            size="sm"
-                            showAntenna={false}
-                          />
-                        </div>
-                      )}
-                    </div>
-
                     <div
-                      className={`max-w-[84%] relative group ${
-                        isUser ? "text-right" : "text-left"
+                      className={`w-7 h-7 rounded-full shrink-0 flex items-center justify-center text-xs ${
+                        isUser
+                          ? "bg-indigo-600 text-white"
+                          : "bg-purple-600/30 border border-purple-500/30 text-purple-300"
                       }`}
                     >
+                      {isUser ? <User size={14} /> : <Bot size={14} />}
+                    </div>
+
+                    <div className={`max-w-[82%] relative group ${isUser ? "text-right" : "text-left"}`}>
                       <div
                         className={`p-3 rounded-2xl leading-relaxed ${
                           isUser
@@ -468,27 +279,19 @@ export const AIChatWidget = () => {
                         }`}
                       >
                         <div className="markdown-body text-xs sm:text-[13px] text-slate-100 dark:text-slate-100">
-                          <Markdown>{messageText}</Markdown>
-                          {/* Blinking Typewriter Cursor during streaming */}
-                          {isCurrentlyTyping && (
-                            <span className="inline-block w-1.5 h-3.5 bg-purple-400 ml-1 animate-pulse align-middle" />
-                          )}
+                          <Markdown>{msg.content}</Markdown>
                         </div>
                       </div>
 
                       <div className="flex items-center gap-2 mt-1 px-1 text-[10px] text-slate-500">
                         <span>{msg.timestamp}</span>
-                        {!isUser && !isCurrentlyTyping && (
+                        {!isUser && (
                           <button
                             onClick={() => copyMessage(msg.id, msg.content)}
                             className="opacity-0 group-hover:opacity-100 transition-opacity hover:text-slate-300"
                             title="Copy reply"
                           >
-                            {copiedId === msg.id ? (
-                              <Check size={11} className="text-emerald-400" />
-                            ) : (
-                              <Copy size={11} />
-                            )}
+                            {copiedId === msg.id ? <Check size={11} className="text-emerald-400" /> : <Copy size={11} />}
                           </button>
                         )}
                       </div>
@@ -497,25 +300,19 @@ export const AIChatWidget = () => {
                 );
               })}
 
-              {/* Thinking State Indicator Bubble inside Chat Body */}
               {isLoading && (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="flex items-start gap-2.5"
+                  className="flex items-center gap-2.5"
                 >
-                  <div className="w-7 h-7 rounded-full bg-slate-900 border border-cyan-400/50 flex items-center justify-center shrink-0">
-                    <RobotAvatar state="thinking" size="sm" showAntenna={false} />
+                  <div className="w-7 h-7 rounded-full bg-purple-600/30 border border-purple-500/30 text-purple-300 flex items-center justify-center">
+                    <Bot size={14} />
                   </div>
-                  <div className="p-3 rounded-2xl bg-cyan-950/30 border border-cyan-500/30 rounded-tl-xs flex items-center gap-2">
-                    <div className="flex items-center gap-1">
-                      <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-                      <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse [animation-delay:0.2s]" />
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse [animation-delay:0.4s]" />
-                    </div>
-                    <span className="text-xs text-cyan-200 font-medium">
-                      Calculating & analyzing farm parameters...
-                    </span>
+                  <div className="p-3 rounded-2xl bg-white/5 border border-white/10 rounded-tl-xs flex items-center gap-1.5">
+                    <div className="w-2 h-2 rounded-full bg-purple-400 animate-bounce" />
+                    <div className="w-2 h-2 rounded-full bg-purple-400 animate-bounce [animation-delay:0.2s]" />
+                    <div className="w-2 h-2 rounded-full bg-purple-400 animate-bounce [animation-delay:0.4s]" />
                   </div>
                 </motion.div>
               )}
@@ -524,9 +321,7 @@ export const AIChatWidget = () => {
 
             {/* WhatsApp Fallback Bar */}
             <div className="px-3 py-1.5 bg-emerald-950/30 border-t border-emerald-500/10 flex items-center justify-between text-[11px]">
-              <span className="text-emerald-300 font-medium">
-                Need instant human agronomist?
-              </span>
+              <span className="text-emerald-300 font-medium">Need instant human agronomist?</span>
               <a
                 href="https://wa.me/919203544140?text=Hi,%20I%20was%20chatting%20with%20AI%20Advisor%20and%20need%20farm%20guidance."
                 target="_blank"
@@ -551,14 +346,13 @@ export const AIChatWidget = () => {
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 placeholder="Ask about spawn, cost, setup, climate..."
-                disabled={isLoading || botState === "talking"}
-                className="flex-1 bg-white/5 border border-white/10 focus:border-purple-500 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-purple-500 transition-all disabled:opacity-60"
+                disabled={isLoading}
+                className="flex-1 bg-white/5 border border-white/10 focus:border-purple-500 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-purple-500 transition-all"
               />
               <button
                 type="submit"
-                disabled={!inputMessage.trim() || isLoading || botState === "talking"}
+                disabled={!inputMessage.trim() || isLoading}
                 className="w-10 h-10 rounded-xl bg-purple-600 hover:bg-purple-500 disabled:opacity-40 disabled:cursor-not-allowed text-white flex items-center justify-center transition-all cursor-pointer shrink-0"
-                aria-label="Send message"
               >
                 <Send size={16} />
               </button>
