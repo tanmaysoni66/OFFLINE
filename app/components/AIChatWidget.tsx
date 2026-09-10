@@ -33,6 +33,28 @@ export const AIChatWidget = () => {
   const [hasMounted, setHasMounted] = useState(false);
   const dragControls = useDragControls();
 
+  const [dragUnlocked, setDragUnlocked] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragTimer = useRef<NodeJS.Timeout | null>(null);
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    const ev = e; 
+    if (dragTimer.current) clearTimeout(dragTimer.current);
+    
+    dragTimer.current = setTimeout(() => {
+      setDragUnlocked(true);
+      dragControls.start(ev);
+      if (typeof window !== "undefined" && navigator.vibrate) {
+        navigator.vibrate(50);
+      }
+    }, 2000);
+  };
+
+  const handlePointerUp = () => {
+    if (dragTimer.current) clearTimeout(dragTimer.current);
+    setTimeout(() => setDragUnlocked(false), 200);
+  };
+
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: "welcome-1",
@@ -61,6 +83,8 @@ export const AIChatWidget = () => {
     const newPos = { x: position.x + info.offset.x, y: position.y + info.offset.y };
     setPosition(newPos);
     localStorage.setItem("chatWidgetPosition_v2", JSON.stringify(newPos));
+    setIsDragging(false);
+    setDragUnlocked(false);
   };
 
   const scrollToBottom = () => {
@@ -154,6 +178,7 @@ export const AIChatWidget = () => {
       dragControls={dragControls}
       dragListener={false} // Only allow drag via pointer down (hold)
       dragMomentum={false}
+      onDragStart={() => setIsDragging(true)}
       onDragEnd={handleDragEnd}
       initial={{ x: position.x, y: position.y }}
       animate={{ x: position.x, y: position.y }}
@@ -342,53 +367,64 @@ export const AIChatWidget = () => {
 
       {/* THE STICKY BUTTON: Face Animation & Hold to Drag (iPhone Style) */}
       <motion.div
-        onPointerDown={(e) => {
-          // Allow dragging only via holding (like iPhone lock screen)
-          dragControls.start(e);
-        }}
+        onPointerDown={handlePointerDown}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
         whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.9 }} // Squeeze effect on hold indicating drag/open
-        onClick={() => !isOpen && setIsOpen(true)}
-        className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-tr from-emerald-600 to-teal-500 border border-emerald-400/30 rounded-full shadow-[0_8px_30px_rgba(16,185,129,0.5)] flex items-center justify-center cursor-pointer relative"
+        whileTap={!dragUnlocked ? { scale: 0.95 } : { scale: 1.1 }} // Squeeze effect on hold indicating drag/open
+        onClick={(e) => {
+          if (isDragging || dragUnlocked) return;
+          setIsOpen(!isOpen);
+        }}
+        animate={dragUnlocked ? { scale: 1.1, boxShadow: "0 0 40px rgba(16,185,129,0.8)" } : { scale: 1 }}
+        className={`w-14 h-14 sm:w-16 sm:h-16 border rounded-full flex items-center justify-center cursor-pointer relative touch-none transition-colors duration-300 ${dragUnlocked ? 'bg-teal-500 border-teal-400 shadow-[0_0_40px_rgba(20,184,166,0.8)]' : 'bg-gradient-to-tr from-emerald-600 to-teal-500 border-emerald-400/30 shadow-[0_8px_30px_rgba(16,185,129,0.5)]'}`}
       >
         {/* Glow behind */}
-        <div className="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-20 pointer-events-none" />
+        <div className={`absolute inset-0 rounded-full bg-emerald-400 opacity-20 pointer-events-none ${isLoading ? 'animate-pulse' : 'animate-ping'}`} />
         
-        {isOpen ? (
-          <motion.div initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }}>
-            <X size={26} className="text-white" />
-          </motion.div>
-        ) : (
-          <motion.svg viewBox="0 0 100 100" className="w-10 h-10 text-white relative z-10 pointer-events-none">
-            {/* Eyes */}
-            <motion.circle 
-              cx="35" cy="40" r="5.5" fill="currentColor"
-              animate={
-                isLoading ? { cx: [30, 40, 35, 30], cy: [35, 35, 45, 35] } : // AI thinking (Darting eyes)
-                userIsTyping ? { cx: 35, cy: 45 } : // User typing (Looking down)
-                { scaleY: [1, 0.1, 1], transition: { repeat: Infinity, repeatDelay: 3.5 } } // Normal blinking
-              }
-            />
-            <motion.circle 
-              cx="65" cy="40" r="5.5" fill="currentColor"
-              animate={
-                isLoading ? { cx: [60, 70, 65, 60], cy: [35, 35, 45, 35] } :
-                userIsTyping ? { cx: 65, cy: 45 } :
-                { scaleY: [1, 0.1, 1], transition: { repeat: Infinity, repeatDelay: 3.5 } }
-              }
-            />
-            
-            {/* Mouth */}
-            <motion.path
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="5"
-              strokeLinecap="round"
-              d={isLoading ? "M 42 68 Q 50 68 58 68" : "M 35 65 Q 50 78 65 65"}
-              animate={{ d: isLoading ? "M 42 68 Q 50 68 58 68" : "M 35 65 Q 50 78 65 65" }}
-            />
-          </motion.svg>
-        )}
+        {/* Close badge when open */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0 }} 
+              animate={{ opacity: 1, scale: 1 }} 
+              exit={{ opacity: 0, scale: 0 }}
+              className="absolute -top-1 -right-1 bg-red-500 rounded-full p-1 shadow-lg z-20 border border-white"
+            >
+              <X size={12} className="text-white" />
+            </motion.div>
+          )}
+        </AnimatePresence>
+        
+        <motion.svg viewBox="0 0 100 100" className="w-10 h-10 text-white relative z-10 pointer-events-none">
+          {/* Eyes */}
+          <motion.circle 
+            cx="35" cy="40" r="5.5" fill="currentColor"
+            animate={
+              isLoading ? { cx: [30, 40, 35, 30], cy: [35, 35, 45, 35] } : // AI thinking (Darting eyes)
+              userIsTyping ? { cx: 35, cy: 45 } : // User typing (Looking down)
+              { scaleY: [1, 0.1, 1], transition: { repeat: Infinity, repeatDelay: 3.5 } } // Normal blinking
+            }
+          />
+          <motion.circle 
+            cx="65" cy="40" r="5.5" fill="currentColor"
+            animate={
+              isLoading ? { cx: [60, 70, 65, 60], cy: [35, 35, 45, 35] } :
+              userIsTyping ? { cx: 65, cy: 45 } :
+              { scaleY: [1, 0.1, 1], transition: { repeat: Infinity, repeatDelay: 3.5 } }
+            }
+          />
+          
+          {/* Mouth */}
+          <motion.path
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="5"
+            strokeLinecap="round"
+            d={isLoading ? "M 42 68 Q 50 68 58 68" : "M 35 65 Q 50 78 65 65"}
+            animate={{ d: isLoading ? "M 42 68 Q 50 68 58 68" : "M 35 65 Q 50 78 65 65" }}
+          />
+        </motion.svg>
       </motion.div>
     </motion.div>
   );
