@@ -2,456 +2,498 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { X, Send, Maximize2, Minimize2, Sparkles, RefreshCw } from "lucide-react";
+import {
+  X,
+  Send,
+  Loader2,
+  Maximize2,
+  Minimize2,
+  Sparkles,
+  Bot,
+  User,
+  RefreshCw,
+  Copy,
+  Check,
+} from "lucide-react";
 
-export type RobotState = "idle" | "thinking" | "talking";
+export type BotState = "idle" | "thinking" | "talking";
 
 type Message = {
   id: string;
   role: "user" | "model";
   text: string;
+  isTyping?: boolean;
 };
 
-// ==========================================
-// ADVANCED ROBOT AVATAR COMPONENT
-// ==========================================
+const QUICK_PROMPTS = [
+  "💰 Commercial Farm Setup Cost?",
+  "🍄 Button vs Oyster Farming?",
+  "🎓 Training Masterclass (₹199)?",
+  "🌡️ Ideal Temperature & Humidity?",
+  "📦 How to buy F1 Spawn?",
+];
+
+// =========================================================================
+// HIGH-TECH ANIMATED ROBOT AVATAR (SVG)
+// Supports:
+// 1. Idle: Blinking friendly eyes, soft hover, calm breathing
+// 2. Thinking: Glowing radiant antenna with radio wave pulses, scanning laser visor & calculating eye matrix
+// 3. Talking: Attentive eyes, dynamic visor lip/mouth equalizer wave, voice energy aura
+// =========================================================================
 export const BotAvatar = ({
-  state = "idle",
-  className = "",
+  botState = "idle",
+  className = "w-full h-full",
 }: {
-  state?: RobotState;
+  botState?: BotState;
   className?: string;
 }) => {
-  const isThinking = state === "thinking";
-  const isTalking = state === "talking";
+  const isThinking = botState === "thinking";
+  const isTalking = botState === "talking";
 
   return (
-    <div className={`relative w-full h-full flex items-center justify-center select-none ${className}`}>
-      {/* Radiating Sonar / Thought Wave Rings for Thinking State */}
-      {isThinking && (
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1 pointer-events-none">
-          <motion.div
-            initial={{ scale: 0.5, opacity: 0.9 }}
-            animate={{ scale: [0.5, 2.2, 2.8], opacity: [0.9, 0.4, 0] }}
-            transition={{ duration: 1.3, repeat: Infinity, ease: "easeOut" }}
-            className="w-4 h-4 rounded-full border-2 border-cyan-400 bg-cyan-400/20 shadow-[0_0_12px_#22d3ee]"
+    <svg
+      viewBox="0 0 100 100"
+      className={`${className} drop-shadow-xl overflow-visible select-none`}
+      aria-label={`AI Robot - State: ${botState}`}
+    >
+      <defs>
+        {/* Head Gradient */}
+        <linearGradient id="robotHeadGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor={isThinking ? "#06b6d4" : isTalking ? "#a855f7" : "#34d399"} />
+          <stop offset="100%" stopColor={isThinking ? "#3b82f6" : isTalking ? "#ec4899" : "#3b82f6"} />
+        </linearGradient>
+
+        {/* Body Gradient */}
+        <linearGradient id="robotBodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#1e293b" />
+          <stop offset="100%" stopColor="#0f172a" />
+        </linearGradient>
+
+        {/* Thruster Gradient */}
+        <radialGradient id="thrusterGrad">
+          <stop
+            offset="0%"
+            stopColor={isThinking ? "#22d3ee" : isTalking ? "#e879f9" : "#38bdf8"}
+            stopOpacity="0.9"
           />
-          <motion.div
-            initial={{ scale: 0.5, opacity: 0.9 }}
-            animate={{ scale: [0.5, 1.9, 2.5], opacity: [0.9, 0.4, 0] }}
-            transition={{ duration: 1.3, repeat: Infinity, ease: "easeOut", delay: 0.45 }}
-            className="absolute inset-0 w-4 h-4 rounded-full border-2 border-amber-400 bg-amber-400/20 shadow-[0_0_12px_#f59e0b]"
+          <stop
+            offset="100%"
+            stopColor={isThinking ? "#22d3ee" : isTalking ? "#e879f9" : "#38bdf8"}
+            stopOpacity="0"
           />
-        </div>
-      )}
+        </radialGradient>
 
-      <svg viewBox="0 0 100 105" className="w-full h-full drop-shadow-xl overflow-visible">
-        <defs>
-          <linearGradient id="headGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#10b981" />
-            <stop offset="50%" stopColor="#3b82f6" />
-            <stop offset="100%" stopColor="#8b5cf6" />
-          </linearGradient>
+        {/* Antenna Glow Filter */}
+        <filter id="antennaGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
 
-          <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#3b82f6" />
-            <stop offset="100%" stopColor="#10b981" />
-          </linearGradient>
+      {/* Thruster / Hover Aura Under Robot */}
+      <motion.ellipse
+        cx="50"
+        cy="92"
+        rx="15"
+        ry="4"
+        fill="url(#thrusterGrad)"
+        animate={
+          isThinking
+            ? { scale: [1, 1.8, 1], opacity: [0.6, 1, 0.6] }
+            : isTalking
+            ? { scale: [1, 1.5, 1], opacity: [0.5, 0.9, 0.5] }
+            : { scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }
+        }
+        transition={{
+          duration: isThinking ? 0.8 : isTalking ? 0.7 : 2,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        style={{ filter: "blur(2px)" }}
+      />
 
-          <linearGradient id="visorGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#030712" />
-            <stop offset="100%" stopColor="#0f172a" />
-          </linearGradient>
+      {/* Main Floating Robot Body Group */}
+      <motion.g
+        animate={
+          isThinking
+            ? { y: [0, -4, 0], rotate: [-1, 1, -1] }
+            : isTalking
+            ? { y: [0, -3, 0], scale: [1, 1.02, 1] }
+            : { y: [0, -2.5, 0], rotate: [0, -0.8, 0.8, 0] }
+        }
+        transition={{
+          duration: isThinking ? 1 : isTalking ? 0.8 : 3.5,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        {/* ================= 1. ANTENNA SYSTEM ================= */}
+        <g style={{ transformOrigin: "50px 20px" }}>
+          {/* Antenna Stem */}
+          <line
+            x1="50"
+            y1="20"
+            x2="50"
+            y2="4"
+            stroke={isThinking ? "#22d3ee" : isTalking ? "#c084fc" : "#10b981"}
+            strokeWidth="3"
+            strokeLinecap="round"
+          />
 
-          <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#22d3ee" />
-            <stop offset="50%" stopColor="#10b981" />
-            <stop offset="100%" stopColor="#c084fc" />
-          </linearGradient>
+          {/* THINKING STATE: Concentric Radiating Wave Rings */}
+          {isThinking && (
+            <>
+              <motion.circle
+                cx="50"
+                cy="4"
+                r="4"
+                fill="none"
+                stroke="#22d3ee"
+                strokeWidth="1.5"
+                initial={{ r: 4, opacity: 1 }}
+                animate={{ r: 16, opacity: 0 }}
+                transition={{ duration: 1, repeat: Infinity, ease: "easeOut" }}
+              />
+              <motion.circle
+                cx="50"
+                cy="4"
+                r="4"
+                fill="none"
+                stroke="#a855f7"
+                strokeWidth="1.5"
+                initial={{ r: 4, opacity: 1 }}
+                animate={{ r: 16, opacity: 0 }}
+                transition={{ duration: 1, repeat: Infinity, delay: 0.45, ease: "easeOut" }}
+              />
+            </>
+          )}
 
-          <radialGradient id="thrusterGrad">
-            <stop offset="0%" stopColor={isThinking ? "#38bdf8" : isTalking ? "#a855f7" : "#10b981"} stopOpacity="0.9" />
-            <stop offset="100%" stopColor="#38bdf8" stopOpacity="0" />
-          </radialGradient>
-        </defs>
+          {/* Antenna Glowing Beacon Orb / Tip */}
+          <motion.circle
+            cx="50"
+            cy="4"
+            r="4.5"
+            fill={isThinking ? "#22d3ee" : isTalking ? "#e879f9" : "#10b981"}
+            filter="url(#antennaGlow)"
+            animate={
+              isThinking
+                ? {
+                    fill: ["#22d3ee", "#a855f7", "#38bdf8", "#22d3ee"],
+                    scale: [1, 1.7, 1],
+                    opacity: [0.85, 1, 0.85],
+                  }
+                : isTalking
+                ? {
+                    fill: ["#c084fc", "#f472b6", "#38bdf8", "#c084fc"],
+                    scale: [1, 1.3, 1],
+                  }
+                : {
+                    fill: ["#10b981", "#34d399", "#10b981"],
+                    scale: [1, 1.1, 1],
+                  }
+            }
+            transition={{
+              duration: isThinking ? 0.6 : isTalking ? 0.8 : 2.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        </g>
 
-        {/* Thruster / Hover Aura */}
-        <motion.ellipse
-          cx="50"
-          cy="98"
-          rx="16"
-          ry="4.5"
-          fill="url(#thrusterGrad)"
-          animate={
-            isThinking
-              ? { scale: [1, 1.8, 1], opacity: [0.6, 1, 0.6] }
-              : isTalking
-              ? { scale: [1, 1.5, 1], opacity: [0.5, 0.9, 0.5] }
-              : { scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }
-          }
-          transition={{ duration: isThinking ? 0.8 : isTalking ? 0.6 : 2.5, repeat: Infinity, ease: "easeInOut" }}
-          style={{ filter: "blur(2.5px)" }}
+        {/* Lower Body Shell */}
+        <motion.path
+          d="M 30 50 Q 50 60 70 50 L 75 75 Q 50 95 25 75 Z"
+          fill="url(#robotBodyGrad)"
+          stroke="#334155"
+          strokeWidth="1.5"
         />
 
-        {/* Main Floating Robot Group */}
-        <motion.g
+        {/* Chest Core Pulse */}
+        <motion.circle
+          cx="50"
+          cy="65"
+          r="6"
+          fill={isThinking ? "#22d3ee" : isTalking ? "#e879f9" : "#38bdf8"}
           animate={
             isThinking
-              ? { y: [0, -6, 0], rotate: [0, -1.5, 1.5, 0] }
+              ? { scale: [1, 1.6, 1], opacity: [0.6, 1, 0.6] }
               : isTalking
-              ? { y: [0, -5, 0], rotate: [0, 1, -1, 0] }
-              : { y: [0, -3, 0], rotate: [0, -0.8, 0.8, 0] }
+              ? { scale: [1, 1.4, 1], opacity: [0.5, 0.9, 0.5] }
+              : { scale: [1, 1.2, 1], opacity: [0.4, 0.7, 0.4] }
           }
           transition={{
-            duration: isThinking ? 1.4 : isTalking ? 1.2 : 3.5,
+            duration: isThinking ? 0.7 : isTalking ? 0.8 : 2,
             repeat: Infinity,
             ease: "easeInOut",
           }}
-        >
-          {/* ================= 1. ANTENNA SYSTEM (Thinking State Glow) ================= */}
-          <g id="antenna-system">
-            <line x1="50" y1="20" x2="50" y2="4" stroke={isThinking ? "#38bdf8" : isTalking ? "#a855f7" : "#10b981"} strokeWidth="3" strokeLinecap="round" />
+        />
+        <circle cx="50" cy="65" r="3" fill="#ffffff" />
 
-            {/* Glowing Antenna Tip Orb */}
-            <motion.circle
-              cx="50"
-              cy="4"
-              r={isThinking ? 6.5 : isTalking ? 5.5 : 4.5}
-              fill={isThinking ? "#38bdf8" : isTalking ? "#a855f7" : "#10b981"}
-              animate={
-                isThinking
-                  ? {
-                      scale: [1, 1.45, 1],
-                      fill: ["#38bdf8", "#f59e0b", "#38bdf8"],
-                      filter: [
-                        "drop-shadow(0 0 5px #38bdf8)",
-                        "drop-shadow(0 0 16px #f59e0b)",
-                        "drop-shadow(0 0 5px #38bdf8)",
-                      ],
-                    }
-                  : isTalking
-                  ? {
-                      scale: [1, 1.25, 1],
-                      fill: ["#10b981", "#38bdf8", "#c084fc", "#10b981"],
-                      filter: [
-                        "drop-shadow(0 0 4px #10b981)",
-                        "drop-shadow(0 0 10px #38bdf8)",
-                        "drop-shadow(0 0 4px #10b981)",
-                      ],
-                    }
-                  : {
-                      scale: [1, 1.1, 1],
-                      fill: ["#10b981", "#34d399", "#10b981"],
-                      filter: ["drop-shadow(0 0 3px #10b981)", "drop-shadow(0 0 6px #34d399)", "drop-shadow(0 0 3px #10b981)"],
-                    }
-              }
-              transition={{
-                duration: isThinking ? 0.7 : isTalking ? 0.8 : 2.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-            {/* Center bright spark */}
-            <circle cx="50" cy="4" r="2.2" fill="#ffffff" />
-          </g>
+        {/* ================= 2. ROBOT HEAD & VISOR ================= */}
+        <g style={{ transformOrigin: "50px 40px" }}>
+          {/* Ear Bolts */}
+          <rect x="15" y="32" width="6" height="16" rx="3" fill="#0f172a" stroke="#334155" strokeWidth="1" />
+          <rect x="79" y="32" width="6" height="16" rx="3" fill="#0f172a" stroke="#334155" strokeWidth="1" />
 
-          {/* ================= 2. ROBOT BODY & CHEST ================= */}
-          <path
-            d="M 30 50 Q 50 60 70 50 L 75 75 Q 50 95 25 75 Z"
-            fill="url(#bodyGrad)"
-            stroke="#1e293b"
-            strokeWidth="1.5"
-          />
+          {/* Head Chassis */}
+          <rect x="20" y="20" width="60" height="40" rx="20" fill="url(#robotHeadGrad)" />
 
-          {/* Chest Core Indicator */}
-          <motion.circle
-            cx="50"
-            cy="68"
-            r="6"
-            fill="#ffffff"
-            opacity="0.8"
-            animate={
-              isThinking
-                ? { scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }
-                : isTalking
-                ? { scale: [1, 1.35, 1], opacity: [0.6, 1, 0.6] }
-                : { scale: [1, 1.15, 1], opacity: [0.4, 0.7, 0.4] }
-            }
-            transition={{ duration: isThinking ? 0.9 : isTalking ? 0.8 : 2, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.circle
-            cx="50"
-            cy="68"
-            r="3.5"
-            fill={isThinking ? "#38bdf8" : isTalking ? "#a855f7" : "#10b981"}
-          />
+          {/* Dark Glass Visor Screen */}
+          <rect x="25" y="30" width="50" height="20" rx="10" fill="#020617" stroke="#1e293b" strokeWidth="1.5" />
 
-          {/* ================= 3. ROBOT HEAD & VISOR ================= */}
-          <g id="robot-head">
-            {/* Ear Modules */}
-            <rect x="14" y="32" width="6" height="16" rx="3" fill="#0f172a" stroke="#334155" strokeWidth="1" />
-            <circle cx="17" cy="40" r="1.8" fill={isThinking ? "#38bdf8" : isTalking ? "#c084fc" : "#10b981"} />
+          {/* Top Visor Glare */}
+          <path d="M 28 32 Q 50 36 72 32" stroke="#ffffff" strokeWidth="1" opacity="0.3" fill="none" />
 
-            <rect x="80" y="32" width="6" height="16" rx="3" fill="#0f172a" stroke="#334155" strokeWidth="1" />
-            <circle cx="83" cy="40" r="1.8" fill={isThinking ? "#38bdf8" : isTalking ? "#c084fc" : "#10b981"} />
+          {/* ================= 3. VISOR INTERNALS BY STATE ================= */}
+          {isThinking ? (
+            /* ===== THINKING STATE: CALCULATION & SCANNING ANIMATION ===== */
+            <g>
+              {/* Sweeping Laser Scan Line */}
+              <motion.line
+                x1="28"
+                y1="30"
+                x2="28"
+                y2="50"
+                stroke="#22d3ee"
+                strokeWidth="2"
+                strokeLinecap="round"
+                animate={{
+                  x1: [28, 72, 28],
+                  x2: [28, 72, 28],
+                  opacity: [0.4, 1, 0.4],
+                }}
+                transition={{
+                  duration: 0.9,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                style={{ filter: "drop-shadow(0 0 4px #22d3ee)" }}
+              />
 
-            {/* Main Outer Helmet */}
-            <rect x="20" y="20" width="60" height="42" rx="21" fill="url(#headGrad)" stroke="#1e293b" strokeWidth="1.5" />
+              {/* Left Eye: Calculating Matrix Box */}
+              <motion.g
+                animate={{
+                  scale: [0.9, 1.2, 0.9],
+                  rotate: [0, 90, 180, 270, 360],
+                }}
+                style={{ transformOrigin: "38px 40px" }}
+                transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
+              >
+                <rect x="34" y="36" width="8" height="8" rx="1.5" fill="#083344" stroke="#22d3ee" strokeWidth="1" />
+                <circle cx="38" cy="40" r="2" fill="#22d3ee" />
+              </motion.g>
 
-            {/* Inner Dark Visor Screen */}
-            <rect x="25" y="29" width="50" height="26" rx="13" fill="url(#visorGrad)" stroke="#334155" strokeWidth="1.2" />
+              {/* Center Micro Processing Dot */}
+              <motion.circle
+                cx="50"
+                cy="40"
+                r="1.8"
+                fill="#34d399"
+                animate={{ scale: [0.8, 1.4, 0.8], opacity: [0.3, 1, 0.3] }}
+                transition={{ duration: 0.4, repeat: Infinity }}
+              />
 
-            {/* Subtle Helmet Top Reflection */}
-            <path d="M 32 23 Q 50 26 68 23" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" opacity="0.4" />
+              {/* Right Eye: Calculating Matrix Box */}
+              <motion.g
+                animate={{
+                  scale: [1.2, 0.9, 1.2],
+                  rotate: [360, 270, 180, 90, 0],
+                }}
+                style={{ transformOrigin: "62px 40px" }}
+                transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
+              >
+                <rect x="58" y="36" width="8" height="8" rx="1.5" fill="#083344" stroke="#22d3ee" strokeWidth="1" />
+                <circle cx="62" cy="40" r="2" fill="#22d3ee" />
+              </motion.g>
 
-            {/* ================= 4. EYES (Calculation / Thinking Animation) ================= */}
-            <g id="visor-eyes">
-              {isThinking ? (
-                /* --- THINKING STATE: HUD CALCULATION & MATRIX SCANNER EYES --- */
-                <g id="calculation-eyes">
-                  {/* Rotating Calculation Reticle - Left Eye */}
-                  <motion.g
-                    animate={{ rotate: [0, 360] }}
-                    transition={{ duration: 1.8, repeat: Infinity, ease: "linear" }}
-                    style={{ originX: "38px", originY: "39px" }}
-                  >
-                    <circle cx="38" cy="39" r="5" stroke="#38bdf8" strokeWidth="1.5" strokeDasharray="3 2" fill="none" />
-                    <circle cx="38" cy="39" r="2" fill="#38bdf8" />
-                  </motion.g>
-
-                  {/* Rotating Calculation Reticle - Right Eye */}
-                  <motion.g
-                    animate={{ rotate: [360, 0] }}
-                    transition={{ duration: 1.8, repeat: Infinity, ease: "linear" }}
-                    style={{ originX: "62px", originY: "39px" }}
-                  >
-                    <circle cx="62" cy="39" r="5" stroke="#38bdf8" strokeWidth="1.5" strokeDasharray="3 2" fill="none" />
-                    <circle cx="62" cy="39" r="2" fill="#38bdf8" />
-                  </motion.g>
-
-                  {/* Data Matrix Scanner Beam Sweeping across Visor */}
-                  <motion.line
-                    x1="28"
-                    y1="39"
-                    x2="72"
-                    y2="39"
-                    stroke="#22d3ee"
-                    strokeWidth="1.4"
-                    strokeDasharray="4 2 1 2"
-                    animate={{ y: [-3.5, 3.5, -3.5], opacity: [0.3, 1, 0.3] }}
-                    transition={{ duration: 0.75, repeat: Infinity, ease: "easeInOut" }}
-                  />
-                </g>
-              ) : isTalking ? (
-                /* --- TALKING STATE: ENGAGED EXPRESSIVE WIDE EYES --- */
-                <g id="talking-eyes">
-                  <motion.ellipse
-                    cx="38"
-                    cy="39"
-                    rx="4.5"
-                    ry="5"
-                    fill="#38bdf8"
-                    animate={{ ry: [5, 5, 1.2, 5, 5.5, 5] }}
-                    transition={{ duration: 2.2, repeat: Infinity, times: [0, 0.45, 0.5, 0.55, 0.8, 1] }}
-                  />
-                  <circle cx="36.5" cy="37.5" r="1.5" fill="#ffffff" />
-
-                  <motion.ellipse
-                    cx="62"
-                    cy="39"
-                    rx="4.5"
-                    ry="5"
-                    fill="#38bdf8"
-                    animate={{ ry: [5, 5, 1.2, 5, 5.5, 5] }}
-                    transition={{ duration: 2.2, repeat: Infinity, times: [0, 0.45, 0.5, 0.55, 0.8, 1] }}
-                  />
-                  <circle cx="60.5" cy="37.5" r="1.5" fill="#ffffff" />
-                </g>
-              ) : (
-                /* --- IDLE STATE: FRIENDLY GLOWING CYBER EYES WITH NATURAL BLINK --- */
-                <g id="idle-eyes">
-                  <motion.ellipse
-                    cx="38"
-                    cy="39"
-                    rx="4"
-                    ry="4.5"
-                    fill="#38bdf8"
-                    animate={{ ry: [4.5, 4.5, 0.5, 4.5, 4.5] }}
-                    transition={{ duration: 3.5, repeat: Infinity, times: [0, 0.85, 0.9, 0.95, 1] }}
-                  />
-                  <circle cx="37" cy="37.8" r="1.3" fill="#ffffff" />
-
-                  <motion.ellipse
-                    cx="62"
-                    cy="39"
-                    rx="4"
-                    ry="4.5"
-                    fill="#38bdf8"
-                    animate={{ ry: [4.5, 4.5, 0.5, 4.5, 4.5] }}
-                    transition={{ duration: 3.5, repeat: Infinity, times: [0, 0.85, 0.9, 0.95, 1] }}
-                  />
-                  <circle cx="61" cy="37.8" r="1.3" fill="#ffffff" />
-                </g>
-              )}
+              {/* Bottom Calculating Tick Grid */}
+              <motion.line
+                x1="36"
+                y1="46"
+                x2="64"
+                y2="46"
+                stroke="#22d3ee"
+                strokeWidth="1"
+                strokeDasharray="2, 2"
+                animate={{ strokeDashoffset: [0, 8] }}
+                transition={{ duration: 0.6, repeat: Infinity, ease: "linear" }}
+              />
             </g>
+          ) : isTalking ? (
+            /* ===== TALKING STATE: LIP/MOUTH WAVE ANIMATION ===== */
+            <g>
+              {/* Alert Attentive Glowing Eyes */}
+              <motion.circle
+                cx="38"
+                cy="37"
+                r="3.5"
+                fill="#e879f9"
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 0.6, repeat: Infinity }}
+              />
+              <motion.circle
+                cx="62"
+                cy="37"
+                r="3.5"
+                fill="#e879f9"
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 0.6, repeat: Infinity, delay: 0.1 }}
+              />
 
-            {/* ================= 5. VISOR LIP / MOUTH ANIMATION WAVE ================= */}
-            <g id="visor-mouth">
-              {isTalking ? (
-                /* --- TALKING STATE: LIP / MOUTH AUDIO EQUALIZER SPEECH WAVE --- */
-                <g id="talking-mouth-wave">
-                  {/* Wave Bar 1 */}
-                  <motion.rect
-                    x="37"
-                    y="47"
-                    width="2.5"
-                    height="6"
-                    rx="1.25"
-                    fill="url(#waveGrad)"
-                    animate={{ height: [3, 8, 4, 7, 3], y: [48.5, 46, 48, 46.5, 48.5] }}
-                    transition={{ duration: 0.35, repeat: Infinity, ease: "easeInOut" }}
-                  />
-                  {/* Wave Bar 2 */}
-                  <motion.rect
-                    x="42"
-                    y="46"
-                    width="2.5"
-                    height="9"
-                    rx="1.25"
-                    fill="url(#waveGrad)"
-                    animate={{ height: [4, 11, 5, 10, 4], y: [48, 44.5, 47.5, 45, 48] }}
-                    transition={{ duration: 0.4, repeat: Infinity, ease: "easeInOut", delay: 0.08 }}
-                  />
-                  {/* Wave Bar 3 (Center) */}
-                  <motion.rect
-                    x="47"
-                    y="45"
-                    width="3"
-                    height="12"
-                    rx="1.5"
-                    fill="url(#waveGrad)"
-                    animate={{ height: [5, 13, 6, 12, 5], y: [47.5, 43.5, 47, 44, 47.5] }}
-                    transition={{ duration: 0.38, repeat: Infinity, ease: "easeInOut", delay: 0.15 }}
-                  />
-                  {/* Wave Bar 4 */}
-                  <motion.rect
-                    x="53"
-                    y="46"
-                    width="2.5"
-                    height="9"
-                    rx="1.25"
-                    fill="url(#waveGrad)"
-                    animate={{ height: [4, 11, 6, 9, 4], y: [48, 44.5, 47, 45.5, 48] }}
-                    transition={{ duration: 0.42, repeat: Infinity, ease: "easeInOut", delay: 0.05 }}
-                  />
-                  {/* Wave Bar 5 */}
-                  <motion.rect
-                    x="58"
-                    y="47"
-                    width="2.5"
-                    height="6"
-                    rx="1.25"
-                    fill="url(#waveGrad)"
-                    animate={{ height: [3, 8, 4, 7, 3], y: [48.5, 46, 48, 46.5, 48.5] }}
-                    transition={{ duration: 0.36, repeat: Infinity, ease: "easeInOut", delay: 0.12 }}
-                  />
-                </g>
-              ) : isThinking ? (
-                /* --- THINKING STATE: DIGITAL PROGRESS DOTS ON VISOR --- */
-                <g id="thinking-mouth-dots">
-                  <motion.circle
-                    cx="41"
-                    cy="48"
-                    r="1.8"
-                    fill="#38bdf8"
-                    animate={{ scale: [1, 1.8, 1], opacity: [0.4, 1, 0.4] }}
-                    transition={{ duration: 0.7, repeat: Infinity, delay: 0 }}
-                  />
-                  <motion.circle
-                    cx="47"
-                    cy="48"
-                    r="1.8"
-                    fill="#38bdf8"
-                    animate={{ scale: [1, 1.8, 1], opacity: [0.4, 1, 0.4] }}
-                    transition={{ duration: 0.7, repeat: Infinity, delay: 0.2 }}
-                  />
-                  <motion.circle
-                    cx="53"
-                    cy="48"
-                    r="1.8"
-                    fill="#38bdf8"
-                    animate={{ scale: [1, 1.8, 1], opacity: [0.4, 1, 0.4] }}
-                    transition={{ duration: 0.7, repeat: Infinity, delay: 0.4 }}
-                  />
-                  <motion.circle
-                    cx="59"
-                    cy="48"
-                    r="1.8"
-                    fill="#38bdf8"
-                    animate={{ scale: [1, 1.8, 1], opacity: [0.4, 1, 0.4] }}
-                    transition={{ duration: 0.7, repeat: Infinity, delay: 0.6 }}
-                  />
-                </g>
-              ) : (
-                /* --- IDLE STATE: CALM DIGITAL SMILE --- */
-                <g id="idle-mouth">
-                  <path
-                    d="M 43 47 Q 50 51 57 47"
-                    stroke="#38bdf8"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    fill="none"
-                    opacity="0.85"
-                  />
-                  <circle cx="42" cy="46.5" r="1" fill="#38bdf8" opacity="0.9" />
-                  <circle cx="58" cy="46.5" r="1" fill="#38bdf8" opacity="0.9" />
-                </g>
-              )}
+              {/* Visor Lip / Mouth Equalizer Audio Waveform (5 Vertical Bouncing Bars) */}
+              {/* Bar 1 */}
+              <motion.line
+                x1="42"
+                y1="45"
+                x2="42"
+                y2="45"
+                stroke="#22d3ee"
+                strokeWidth="2"
+                strokeLinecap="round"
+                animate={{ y1: [46, 43, 47, 44, 46], y2: [47, 49, 46, 48, 47] }}
+                transition={{ duration: 0.45, repeat: Infinity, ease: "easeInOut" }}
+              />
+              {/* Bar 2 */}
+              <motion.line
+                x1="46"
+                y1="44"
+                x2="46"
+                y2="48"
+                stroke="#c084fc"
+                strokeWidth="2"
+                strokeLinecap="round"
+                animate={{ y1: [46, 41, 45, 42, 46], y2: [47, 50, 47, 49, 47] }}
+                transition={{ duration: 0.5, repeat: Infinity, delay: 0.08, ease: "easeInOut" }}
+              />
+              {/* Bar 3 (Center Lip Wave) */}
+              <motion.line
+                x1="50"
+                y1="43"
+                x2="50"
+                y2="49"
+                stroke="#6ee7b7"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                animate={{ y1: [46, 40, 45, 41, 46], y2: [47, 51, 47, 50, 47] }}
+                transition={{ duration: 0.42, repeat: Infinity, delay: 0.15, ease: "easeInOut" }}
+              />
+              {/* Bar 4 */}
+              <motion.line
+                x1="54"
+                y1="44"
+                x2="54"
+                y2="48"
+                stroke="#c084fc"
+                strokeWidth="2"
+                strokeLinecap="round"
+                animate={{ y1: [46, 42, 45, 43, 46], y2: [47, 49, 47, 50, 47] }}
+                transition={{ duration: 0.48, repeat: Infinity, delay: 0.22, ease: "easeInOut" }}
+              />
+              {/* Bar 5 */}
+              <motion.line
+                x1="58"
+                y1="45"
+                x2="58"
+                y2="45"
+                stroke="#22d3ee"
+                strokeWidth="2"
+                strokeLinecap="round"
+                animate={{ y1: [46, 44, 47, 43, 46], y2: [47, 48, 46, 49, 47] }}
+                transition={{ duration: 0.46, repeat: Infinity, delay: 0.12, ease: "easeInOut" }}
+              />
             </g>
-          </g>
+          ) : (
+            /* ===== IDLE STATE: FRIENDLY BLINKING EYES ===== */
+            <g>
+              {/* Left Eye with Natural Periodic Blink */}
+              <motion.circle
+                cx="38"
+                cy="40"
+                r="4"
+                fill="#38bdf8"
+                animate={{
+                  scaleY: [1, 1, 0.1, 1, 1],
+                  cx: [38, 38, 36, 40, 38],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  times: [0, 0.88, 0.92, 0.96, 1],
+                }}
+              />
 
-          {/* ================= 6. ARMS ================= */}
-          <motion.path
-            d="M 72 55 Q 85 60 80 75"
-            fill="none"
-            stroke="url(#bodyGrad)"
-            strokeWidth="7"
-            strokeLinecap="round"
-            style={{ transformOrigin: "72px 55px" }}
-            animate={
-              isThinking
-                ? { rotate: [0, 10, -5, 0] }
-                : isTalking
-                ? { rotate: [0, -12, 4, 0] }
-                : { rotate: [0, 6, -2, 0] }
-            }
-            transition={{ duration: isTalking ? 1.5 : 3.5, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.path
-            d="M 28 55 Q 15 60 20 75"
-            fill="none"
-            stroke="url(#bodyGrad)"
-            strokeWidth="7"
-            strokeLinecap="round"
-            style={{ transformOrigin: "28px 55px" }}
-            animate={
-              isThinking
-                ? { rotate: [0, -10, 5, 0] }
-                : isTalking
-                ? { rotate: [0, 12, -4, 0] }
-                : { rotate: [0, -6, 2, 0] }
-            }
-            transition={{ duration: isTalking ? 1.5 : 3.5, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </motion.g>
-      </svg>
-    </div>
+              {/* Right Eye with Natural Periodic Blink */}
+              <motion.circle
+                cx="62"
+                cy="40"
+                r="4"
+                fill="#38bdf8"
+                animate={{
+                  scaleY: [1, 1, 0.1, 1, 1],
+                  cx: [62, 62, 60, 64, 62],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  times: [0, 0.88, 0.92, 0.96, 1],
+                }}
+              />
+
+              {/* Gentle Calm Smile */}
+              <motion.rect
+                x="45"
+                y="46"
+                width="10"
+                height="2.5"
+                rx="1.2"
+                fill="#38bdf8"
+                opacity="0.8"
+              />
+            </g>
+          )}
+        </g>
+
+        {/* Arms */}
+        <motion.path
+          d="M 72 55 Q 85 60 80 75"
+          fill="none"
+          stroke="url(#robotHeadGrad)"
+          strokeWidth="6"
+          strokeLinecap="round"
+          style={{ transformOrigin: "72px 55px" }}
+          animate={
+            isThinking
+              ? { rotate: [0, -10, 5, 0] }
+              : isTalking
+              ? { rotate: [0, 12, -4, 0] }
+              : { rotate: [0, 6, -2, 0] }
+          }
+          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.path
+          d="M 28 55 Q 15 60 20 75"
+          fill="none"
+          stroke="url(#robotHeadGrad)"
+          strokeWidth="6"
+          strokeLinecap="round"
+          style={{ transformOrigin: "28px 55px" }}
+          animate={
+            isThinking
+              ? { rotate: [0, 10, -5, 0] }
+              : isTalking
+              ? { rotate: [0, -12, 4, 0] }
+              : { rotate: [0, -6, 2, 0] }
+          }
+          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </motion.g>
+    </svg>
   );
 };
 
-// ==========================================
-// MAIN AIChatWidget COMPONENT
-// ==========================================
 export const AIChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
   const chatRef = useRef<HTMLDivElement>(null);
@@ -459,19 +501,23 @@ export const AIChatWidget = () => {
   const [isGreeting, setIsGreeting] = useState(false);
   const [greetingText, setGreetingText] = useState("Hello! 👋");
 
+  const [botState, setBotState] = useState<BotState>("idle");
+  const [typingMessageId, setTypingMessageId] = useState<string | null>(null);
+  const [displayedTypingText, setDisplayedTypingText] = useState<string>("");
+  const typingTimerRef = useRef<NodeJS.Timeout | null>(null);
+
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
       role: "model",
-      text: "Namaste! I'm your AI Mushroom Farm Advisor. Ask me about setup costs, spawn, temperature, or commercial ROI!",
+      text: "Namaste! I am your AI Mushroom Farm Advisor. Ask me anything about commercial setups, spawn, subsidies, climate, or ROI!",
     },
   ]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [robotState, setRobotState] = useState<RobotState>("idle");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [isHidden, setIsHidden] = useState(false);
-  const typingIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
   useEffect(() => {
     const handleMobileMenuToggle = (e: CustomEvent) => {
@@ -489,7 +535,6 @@ export const AIChatWidget = () => {
 
     return () => {
       window.removeEventListener("mobileMenuToggle", handleMobileMenuToggle as EventListener);
-      if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
     };
   }, []);
 
@@ -533,7 +578,7 @@ export const AIChatWidget = () => {
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isLoading, robotState]);
+  }, [messages, displayedTypingText, isLoading]);
 
   useEffect(() => {
     const hour = new Date().getHours();
@@ -545,13 +590,55 @@ export const AIChatWidget = () => {
     setGreetingText(text);
 
     const timer1 = setTimeout(() => setIsGreeting(true), 1500);
-    const timer2 = setTimeout(() => setIsGreeting(false), 6000);
+    const timer2 = setTimeout(() => setIsGreeting(false), 5500);
 
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
     };
   }, []);
+
+  // Clean up typing animation timers on unmount
+  useEffect(() => {
+    return () => {
+      if (typingTimerRef.current) {
+        clearInterval(typingTimerRef.current);
+      }
+    };
+  }, []);
+
+  // Starts the typewriter stream with the talking mouth wave on the robot visor!
+  const startTypewriterStream = (fullText: string, messageId: string) => {
+    if (typingTimerRef.current) {
+      clearInterval(typingTimerRef.current);
+    }
+
+    setTypingMessageId(messageId);
+    setDisplayedTypingText("");
+    setBotState("talking"); // Visor Lip/Mouth Wave activates!
+
+    let currentIndex = 0;
+    const chunkSize = 3; // 3 characters per step for fast natural speech typing
+    const intervalSpeed = 18; // 18ms per step
+
+    typingTimerRef.current = setInterval(() => {
+      currentIndex += chunkSize;
+      if (currentIndex >= fullText.length) {
+        if (typingTimerRef.current) clearInterval(typingTimerRef.current);
+        setDisplayedTypingText(fullText);
+        setTypingMessageId(null);
+        setBotState("idle"); // Transitions back to idle
+
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === messageId ? { ...m, text: fullText, isTyping: false } : m
+          )
+        );
+      } else {
+        setDisplayedTypingText(fullText.slice(0, currentIndex));
+      }
+    }, intervalSpeed);
+  };
 
   const handleOpenClick = () => {
     if (isOpen) {
@@ -565,121 +652,90 @@ export const AIChatWidget = () => {
     }, 400);
   };
 
-  const handleSendMessage = async (e?: React.FormEvent, customPrompt?: string) => {
-    e?.preventDefault();
-    const promptToSend = (customPrompt || inputValue).trim();
-    if (!promptToSend || isLoading) return;
+  const handleSendMessage = async (customPrompt?: string) => {
+    const textToSend = (customPrompt || inputValue).trim();
+    if (!textToSend || isLoading) return;
 
-    if (typingIntervalRef.current) {
-      clearInterval(typingIntervalRef.current);
-      typingIntervalRef.current = null;
+    if (typingMessageId && typingTimerRef.current) {
+      clearInterval(typingTimerRef.current);
+      setTypingMessageId(null);
     }
 
-    const userMsg: Message = {
-      id: Date.now().toString(),
-      role: "user",
-      text: promptToSend,
-    };
-
+    const userMsg: Message = { id: Date.now().toString(), role: "user", text: textToSend };
     setMessages((prev) => [...prev, userMsg]);
     setInputValue("");
     setIsLoading(true);
-
-    // 1. THINKING STATE: Trigger antenna glow & calculation eyes!
-    setRobotState("thinking");
+    setBotState("thinking"); // Antenna glows intensely & eyes start calculating!
 
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          message: userMsg.text,
-          history: messages.map((m) => ({ role: m.role, text: m.text })),
+          message: textToSend,
+          history: [...messages, userMsg].map((m) => ({ role: m.role, text: m.text })),
         }),
       });
 
       if (!response.ok) throw new Error("Failed to get response");
 
       const data = await response.json();
-      const replyText =
-        data.text ||
-        data.reply ||
-        "Thank you for contacting us. For instant commercial consultation, call/WhatsApp: +91 9203544140.";
+      const replyText = data.text || "Thank you for contacting us. WhatsApp: +91 9203544140";
+      const botMsgId = (Date.now() + 1).toString();
 
       setIsLoading(false);
 
-      // 2. TALKING / ANSWERING STATE: Visor voice wave active & streaming typing message!
-      setRobotState("talking");
-
-      const botMsgId = (Date.now() + 1).toString();
-      const initialBotMsg: Message = {
+      const botMessage: Message = {
         id: botMsgId,
         role: "model",
-        text: "",
+        text: replyText,
+        isTyping: true,
       };
 
-      setMessages((prev) => [...prev, initialBotMsg]);
+      setMessages((prev) => [...prev, botMessage]);
 
-      // Progressive typing message display
-      let currentLength = 0;
-      const totalLength = replyText.length;
-      // Step size so it types smoothly in ~1.5 - 2.5s
-      const step = Math.max(3, Math.ceil(totalLength / 45));
-      const intervalMs = 22;
-
-      typingIntervalRef.current = setInterval(() => {
-        currentLength = Math.min(totalLength, currentLength + step);
-        const partialText = replyText.slice(0, currentLength);
-
-        setMessages((prev) =>
-          prev.map((m) => (m.id === botMsgId ? { ...m, text: partialText } : m))
-        );
-
-        if (currentLength >= totalLength) {
-          if (typingIntervalRef.current) {
-            clearInterval(typingIntervalRef.current);
-            typingIntervalRef.current = null;
-          }
-          // Let mouth animation finish smoothly
-          setTimeout(() => {
-            setRobotState("idle");
-          }, 700);
-        }
-      }, intervalMs);
+      // Start typewriter stream and talking visor lip wave
+      startTypewriterStream(replyText, botMsgId);
     } catch (error) {
       setIsLoading(false);
-      setRobotState("idle");
+      setBotState("idle");
       setMessages((prev) => [
         ...prev,
         {
           id: (Date.now() + 1).toString(),
           role: "model",
-          text: "I experienced a slight connection delay. You can connect directly with our agronomist on WhatsApp: +91 9203544140.",
+          text: "I experienced a slight delay. You can connect directly with our head agronomist on WhatsApp: +91 9203544140.",
         },
       ]);
     }
   };
 
-  const resetChat = () => {
-    if (typingIntervalRef.current) {
-      clearInterval(typingIntervalRef.current);
-      typingIntervalRef.current = null;
-    }
-    setRobotState("idle");
-    setMessages([
+  const copyText = (id: string, text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
+
+  const resetHistory = () => {
+    if (typingTimerRef.current) clearInterval(typingTimerRef.current);
+    setTypingMessageId(null);
+    setBotState("idle");
+    const fresh: Message[] = [
       {
         id: Date.now().toString(),
         role: "model",
-        text: "Chat refreshed! How can I assist your mushroom farming venture today?",
+        text: "Chat cleared! How can I assist your mushroom cultivation journey today?",
       },
-    ]);
+    ];
+    setMessages(fresh);
+    localStorage.setItem("ai-chat-history", JSON.stringify(fresh));
   };
 
   return (
     <AnimatePresence>
       {!isHidden && (
         <div className="relative z-[99999]">
-          {/* ================= CHAT POPUP WINDOW ================= */}
+          {/* ================= CHAT DIALOG WINDOW ================= */}
           <AnimatePresence>
             {isOpen && (
               <motion.div
@@ -688,184 +744,229 @@ export const AIChatWidget = () => {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 20, scale: 0.95 }}
                 transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                className={`absolute z-[100000] bg-slate-950/95 backdrop-blur-xl flex flex-col overflow-hidden shadow-2xl border border-purple-500/30 ${
+                className={`absolute z-[100000] bg-white dark:bg-slate-950 flex flex-col overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.85)] border border-slate-200 dark:border-white/10 ${
                   isFullScreen
                     ? "fixed inset-0 w-full h-full rounded-none"
-                    : "bottom-[75px] left-0 w-[320px] sm:w-[380px] rounded-3xl"
+                    : "bottom-[70px] left-0 w-[320px] sm:w-[390px] rounded-3xl"
                 }`}
                 style={{
                   transformOrigin: "bottom left",
-                  ...(isFullScreen
-                    ? {}
-                    : { maxHeight: "calc(100vh - 140px)", height: "490px" }),
+                  ...(isFullScreen ? {} : { maxHeight: "calc(100vh - 120px)", height: "540px" }),
                 }}
               >
-                {/* Header with Live Synchronized Bot Avatar */}
-                <div className="bg-linear-to-r from-emerald-600 via-teal-700 to-indigo-800 p-3.5 text-white flex items-center justify-between shadow-md z-10 shrink-0">
+                {/* Header with Active State Robot Avatar */}
+                <div
+                  className={`p-3.5 sm:p-4 text-white flex items-center justify-between shadow-md z-10 shrink-0 transition-colors duration-300 ${
+                    botState === "thinking"
+                      ? "bg-gradient-to-r from-cyan-900 via-slate-900 to-indigo-950 border-b border-cyan-500/30"
+                      : botState === "talking"
+                      ? "bg-gradient-to-r from-purple-900 via-slate-900 to-pink-950 border-b border-purple-500/30"
+                      : "bg-gradient-to-r from-emerald-600 via-teal-700 to-slate-900 border-b border-emerald-500/20"
+                  }`}
+                >
                   <div className="flex items-center gap-2.5">
-                    <div className="w-9 h-9 rounded-2xl bg-black/30 border border-white/20 p-1 flex items-center justify-center">
-                      <BotAvatar state={robotState} />
+                    <div className="w-10 h-10 rounded-2xl bg-black/30 border border-white/20 p-1 flex items-center justify-center shrink-0">
+                      <BotAvatar botState={botState} />
                     </div>
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <span className="font-bold text-sm text-white">
+                        <span className="font-extrabold text-sm sm:text-base tracking-tight text-white">
                           MycoBot Advisor
                         </span>
-                        <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-white/20 text-white">
-                          Gemini 3.8
+                        <span
+                          className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wider ${
+                            botState === "thinking"
+                              ? "bg-cyan-400/20 text-cyan-200 border border-cyan-400/50"
+                              : botState === "talking"
+                              ? "bg-purple-400/20 text-purple-200 border border-purple-400/50"
+                              : "bg-emerald-400/20 text-emerald-200 border border-emerald-400/50"
+                          }`}
+                        >
+                          {botState === "thinking"
+                            ? "Calculating..."
+                            : botState === "talking"
+                            ? "Talking..."
+                            : "Online"}
                         </span>
                       </div>
-                      <p className="text-[10.5px] text-white/80 flex items-center gap-1">
-                        {robotState === "thinking" ? (
-                          <>
-                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-300 inline-block animate-ping" />
-                            <span className="text-cyan-200 font-semibold">
-                              Thinking & Calculating...
-                            </span>
-                          </>
-                        ) : robotState === "talking" ? (
-                          <>
-                            <span className="w-1.5 h-1.5 rounded-full bg-purple-300 inline-block animate-bounce" />
-                            <span className="text-purple-200 font-semibold">
-                              Speaking via Visor Waves...
-                            </span>
-                          </>
-                        ) : (
-                          <>
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 inline-block animate-pulse" />
-                            <span>Online • Farm Agronomist</span>
-                          </>
-                        )}
+                      <p className="text-[10px] sm:text-[11px] text-slate-200/90 flex items-center gap-1">
+                        <span
+                          className={`w-1.5 h-1.5 rounded-full inline-block ${
+                            botState === "thinking"
+                              ? "bg-cyan-400 animate-ping"
+                              : botState === "talking"
+                              ? "bg-purple-400 animate-pulse"
+                              : "bg-emerald-400"
+                          }`}
+                        />
+                        {botState === "thinking"
+                          ? "Antenna beaming • Processing formula"
+                          : botState === "talking"
+                          ? "Visor wave • Speaking answer"
+                          : "Jabalpur Commercial Farm AI"}
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-1">
                     <button
-                      onClick={resetChat}
-                      title="Reset Chat"
-                      className="p-1.5 hover:bg-white/20 rounded-lg text-white/80 hover:text-white transition-colors cursor-pointer"
+                      onClick={resetHistory}
+                      title="Reset chat"
+                      className="p-1.5 hover:bg-white/20 rounded-lg transition-colors text-white/80 hover:text-white"
                     >
-                      <RefreshCw size={14} />
+                      <RefreshCw size={15} />
                     </button>
                     <button
                       onClick={() => setIsFullScreen(!isFullScreen)}
-                      className="p-1.5 hover:bg-white/20 rounded-lg text-white/80 hover:text-white transition-colors hidden sm:block cursor-pointer"
+                      title={isFullScreen ? "Minimize" : "Full screen"}
+                      className="p-1.5 hover:bg-white/20 rounded-lg transition-colors text-white/80 hover:text-white hidden sm:block"
                     >
-                      {isFullScreen ? (
-                        <Minimize2 size={16} />
-                      ) : (
-                        <Maximize2 size={16} />
-                      )}
+                      {isFullScreen ? <Minimize2 size={15} /> : <Maximize2 size={15} />}
                     </button>
                     <button
                       onClick={() => {
                         setIsOpen(false);
                         setIsFullScreen(false);
                       }}
-                      className="p-1.5 hover:bg-white/20 rounded-lg text-white/80 hover:text-white transition-colors cursor-pointer"
+                      className="p-1.5 hover:bg-white/20 rounded-lg transition-colors text-white/80 hover:text-white"
                     >
-                      <X size={17} />
+                      <X size={18} />
                     </button>
                   </div>
                 </div>
 
-                {/* Quick Prompt Chips */}
-                <div className="p-2 bg-purple-950/30 border-b border-purple-500/20 overflow-x-auto scrollbar-hide flex items-center gap-1.5 shrink-0">
-                  {[
-                    "💰 Setup Cost?",
-                    "🍄 Button vs Oyster?",
-                    "🎓 Workshop ₹199?",
-                    "🌡️ Temp & Humidity?",
-                  ].map((chip, idx) => (
+                {/* Quick Prompts Bar */}
+                <div className="p-2 bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-white/5 overflow-x-auto scrollbar-hide flex items-center gap-1.5 shrink-0">
+                  {QUICK_PROMPTS.map((prompt, idx) => (
                     <button
                       key={idx}
-                      onClick={() => handleSendMessage(undefined, chip)}
-                      disabled={isLoading}
-                      className="shrink-0 text-[11px] font-medium px-2.5 py-1 rounded-full bg-white/5 hover:bg-emerald-500/20 border border-white/10 hover:border-emerald-400/40 text-slate-200 transition-all active:scale-95 disabled:opacity-50 cursor-pointer whitespace-nowrap"
+                      onClick={() => handleSendMessage(prompt)}
+                      disabled={isLoading || botState === "talking"}
+                      className="shrink-0 text-[11px] font-medium px-2.5 py-1 rounded-full bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-purple-900/30 border border-slate-200 dark:border-white/10 transition-all active:scale-95 disabled:opacity-50"
                     >
-                      {chip}
+                      {prompt}
                     </button>
                   ))}
                 </div>
 
-                {/* Chat Message Stream */}
-                <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-3 bg-slate-950/80 text-xs sm:text-[13px] scrollbar-thin">
-                  {messages.map((msg) => (
-                    <div
-                      key={msg.id}
-                      className={`flex ${
-                        msg.role === "user" ? "justify-end" : "justify-start"
-                      }`}
-                    >
-                      <div
-                        className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 leading-relaxed ${
-                          msg.role === "user"
-                            ? "bg-indigo-600 text-white rounded-br-xs"
-                            : "bg-slate-900 border border-slate-800 text-slate-200 rounded-bl-xs shadow-md"
-                        }`}
-                      >
-                        {msg.text === "" && msg.role === "model" ? (
-                          /* Initial Live Typing indicator pulse */
-                          <div className="flex items-center gap-1 py-1">
-                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse [animation-delay:0.2s]" />
-                            <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse [animation-delay:0.4s]" />
-                          </div>
-                        ) : (
-                          <div className="whitespace-pre-wrap">{msg.text}</div>
-                        )}
-                      </div>
-                    </div>
-                  ))}
+                {/* Messages Chat Area */}
+                <div className="flex-1 overflow-y-auto p-3.5 sm:p-4 flex flex-col gap-3.5 bg-slate-50/50 dark:bg-slate-950/60 scrollbar-thin">
+                  {messages.map((msg) => {
+                    const isUser = msg.role === "user";
+                    const isCurrentlyTyping = msg.id === typingMessageId;
+                    const textToDisplay = isCurrentlyTyping ? displayedTypingText : msg.text;
 
-                  {/* Thinking State Loading Box */}
+                    return (
+                      <div
+                        key={msg.id}
+                        className={`flex items-start gap-2 ${isUser ? "flex-row-reverse" : "flex-row"}`}
+                      >
+                        {/* Mini Avatar */}
+                        <div className="w-7 h-7 shrink-0 rounded-full flex items-center justify-center text-xs overflow-hidden mt-0.5">
+                          {isUser ? (
+                            <div className="w-full h-full bg-blue-600 text-white flex items-center justify-center">
+                              <User size={14} />
+                            </div>
+                          ) : (
+                            <div className="w-full h-full bg-slate-800 border border-purple-400/30 flex items-center justify-center p-0.5">
+                              <BotAvatar botState={isCurrentlyTyping ? "talking" : "idle"} />
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Speech Bubble */}
+                        <div className={`max-w-[82%] relative group ${isUser ? "text-right" : "text-left"}`}>
+                          <div
+                            className={`rounded-2xl px-3.5 py-2.5 text-xs sm:text-[13px] leading-relaxed shadow-sm ${
+                              isUser
+                                ? "bg-blue-600 text-white rounded-tr-xs"
+                                : "bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-white/10 rounded-tl-xs"
+                            }`}
+                          >
+                            <span className="whitespace-pre-wrap">{textToDisplay}</span>
+                            {/* Blinking Typewriter Cursor */}
+                            {isCurrentlyTyping && (
+                              <span className="inline-block w-1.5 h-3.5 bg-purple-400 ml-1 animate-pulse align-middle" />
+                            )}
+                          </div>
+
+                          {!isUser && !isCurrentlyTyping && (
+                            <div className="flex items-center gap-1.5 mt-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                              <button
+                                onClick={() => copyText(msg.id, msg.text)}
+                                className="text-[10px] text-slate-400 hover:text-slate-200 flex items-center gap-1"
+                              >
+                                {copiedId === msg.id ? (
+                                  <Check size={11} className="text-emerald-400" />
+                                ) : (
+                                  <Copy size={11} />
+                                )}
+                                <span>Copy</span>
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+
+                  {/* Thinking State Bubble in Chat */}
                   {isLoading && (
-                    <div className="flex justify-start">
-                      <div className="bg-slate-900/90 border border-cyan-500/40 rounded-2xl rounded-bl-xs px-3.5 py-2.5 shadow-md flex items-center gap-2.5 text-cyan-300 text-xs font-medium">
-                        <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-                        <span>Antenna active: Calculating climate & economics...</span>
+                    <div className="flex items-start gap-2">
+                      <div className="w-7 h-7 shrink-0 rounded-full bg-slate-800 border border-cyan-400/50 p-0.5 flex items-center justify-center">
+                        <BotAvatar botState="thinking" />
+                      </div>
+                      <div className="bg-cyan-950/40 border border-cyan-500/30 rounded-2xl rounded-tl-xs px-3.5 py-2.5 flex items-center gap-2 text-cyan-200 text-xs">
+                        <div className="flex items-center gap-1">
+                          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+                          <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse [animation-delay:0.15s]" />
+                          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse [animation-delay:0.3s]" />
+                        </div>
+                        <span className="font-medium">Calculating response parameters...</span>
                       </div>
                     </div>
                   )}
+
                   <div ref={messagesEndRef} />
                 </div>
 
-                {/* WhatsApp Direct Ag-Support */}
-                <div className="px-3 py-1 bg-emerald-950/40 border-t border-emerald-500/20 flex items-center justify-between text-[11px] shrink-0">
-                  <span className="text-emerald-300 font-medium">Direct Agronomist:</span>
+                {/* WhatsApp Help Strip */}
+                <div className="px-3 py-1.5 bg-emerald-500/10 border-t border-emerald-500/20 flex items-center justify-between text-[11px] shrink-0">
+                  <span className="text-emerald-600 dark:text-emerald-300 font-medium">
+                    Need instant human agronomist?
+                  </span>
                   <a
-                    href="https://wa.me/919203544140?text=Hi,%20I%20was%20chatting%20with%20AI%20Advisor."
+                    href="https://wa.me/919203544140?text=Hi,%20I%20was%20chatting%20with%20AI%20Advisor%20and%20need%20farm%20guidance."
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-emerald-400 hover:text-emerald-300 font-bold underline"
+                    className="text-emerald-600 dark:text-emerald-400 font-bold hover:underline"
                   >
                     WhatsApp (+91 9203544140)
                   </a>
                 </div>
 
-                {/* Input Form */}
-                <div className="p-2.5 bg-slate-900 border-t border-slate-800 shrink-0">
+                {/* Input Area */}
+                <div className="p-3 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-white/10 shrink-0">
                   <form
-                    onSubmit={handleSendMessage}
-                    className="flex items-center gap-2 bg-slate-950 rounded-2xl px-3 py-1.5 border border-slate-800 focus-within:border-emerald-500 transition-colors"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      handleSendMessage();
+                    }}
+                    className="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 rounded-full pr-1.5 pl-4 py-1 border border-slate-200 dark:border-white/10"
                   >
                     <input
                       type="text"
                       value={inputValue}
                       onChange={(e) => setInputValue(e.target.value)}
-                      placeholder="Ask about spawn, cost, climate, training..."
-                      disabled={isLoading}
-                      className="flex-1 bg-transparent border-none outline-none text-xs sm:text-sm text-slate-100 placeholder-slate-500 py-1"
+                      placeholder="Ask about spawn, cost, setup, climate..."
+                      disabled={isLoading || botState === "talking"}
+                      className="flex-1 bg-transparent border-none outline-none text-xs sm:text-sm text-slate-800 dark:text-slate-200 py-1.5 disabled:opacity-60"
                     />
                     <button
                       type="submit"
-                      disabled={!inputValue.trim() || isLoading}
-                      className={`p-2 rounded-xl text-white transition-all cursor-pointer shrink-0 ${
-                        isLoading
-                          ? "bg-cyan-600/50 cursor-not-allowed"
-                          : "bg-emerald-600 hover:bg-emerald-500 active:scale-95"
-                      }`}
+                      disabled={!inputValue.trim() || isLoading || botState === "talking"}
+                      className="w-8 h-8 bg-blue-600 text-white rounded-full hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center transition-colors shrink-0 cursor-pointer"
+                      aria-label="Send message"
                     >
                       <Send size={14} />
                     </button>
@@ -875,79 +976,105 @@ export const AIChatWidget = () => {
             )}
           </AnimatePresence>
 
-          {/* ================= STICKY LAUNCHER BUTTON & DYNAMIC STATUS BADGE ================= */}
-          <div className="relative flex items-center gap-2.5">
-            {/* Dynamic Interactive Speech Bubble (Thinking / Talking / Idle) */}
+          {/* ================= STICKY LAUNCHER BUTTON WITH DYNAMIC STATES ================= */}
+          <div className="relative flex items-center gap-2">
+            {/* Dynamic Status Badges / Tooltips beside Button */}
             <AnimatePresence>
-              {isGreeting && !isOpen && robotState === "idle" && (
+              {isGreeting && !isOpen && botState === "idle" && (
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.6, y: 15 }}
+                  initial={{ opacity: 0, scale: 0.5, y: 15 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.8 }}
-                  className="absolute -top-10 left-2 bg-slate-950 text-emerald-400 font-bold px-3 py-1.5 text-xs rounded-2xl rounded-bl-none shadow-[0_4px_20px_rgba(16,185,129,0.3)] border border-emerald-500/40 whitespace-nowrap z-10 flex items-center gap-1.5"
+                  className="absolute -top-10 left-2 bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 font-bold px-3 py-1.5 text-xs rounded-2xl rounded-bl-none shadow-lg border border-emerald-100 dark:border-emerald-800/80 whitespace-nowrap z-10"
                 >
-                  <Sparkles size={12} className="text-emerald-400 animate-spin" />
-                  <span>{greetingText}</span>
+                  {greetingText}
                 </motion.div>
               )}
 
-              {robotState === "thinking" && !isOpen && (
+              {botState === "thinking" && !isOpen && (
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.7, x: -10 }}
-                  animate={{ opacity: 1, scale: 1, x: 0 }}
-                  exit={{ opacity: 0, scale: 0.7 }}
-                  className="hidden sm:flex items-center px-3 py-1.5 rounded-full bg-slate-950/95 border border-cyan-400 text-cyan-300 text-xs font-semibold shadow-[0_0_20px_rgba(34,211,238,0.5)] backdrop-blur-md gap-2"
+                  key="thinking-badge"
+                  initial={{ opacity: 0, x: -10, scale: 0.85 }}
+                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  exit={{ opacity: 0, x: -10, scale: 0.85 }}
+                  className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950/95 border border-cyan-400/90 shadow-[0_0_20px_rgba(6,182,212,0.5)] backdrop-blur-md"
                 >
                   <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-                  <span>Antenna Glowing: Calculating...</span>
+                  <span className="text-[11px] font-bold text-cyan-200">
+                    Antenna Glowing • Thinking...
+                  </span>
                 </motion.div>
               )}
 
-              {robotState === "talking" && !isOpen && (
+              {botState === "talking" && !isOpen && (
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.7, x: -10 }}
-                  animate={{ opacity: 1, scale: 1, x: 0 }}
-                  exit={{ opacity: 0, scale: 0.7 }}
-                  className="hidden sm:flex items-center px-3 py-1.5 rounded-full bg-slate-950/95 border border-purple-400 text-purple-200 text-xs font-semibold shadow-[0_0_20px_rgba(168,85,247,0.5)] backdrop-blur-md gap-2"
+                  key="talking-badge"
+                  initial={{ opacity: 0, x: -10, scale: 0.85 }}
+                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  exit={{ opacity: 0, x: -10, scale: 0.85 }}
+                  className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-slate-950/95 border border-purple-400/90 shadow-[0_0_20px_rgba(168,85,247,0.5)] backdrop-blur-md"
                 >
-                  <span className="flex items-center gap-0.5">
-                    <span className="w-1 h-3 bg-purple-400 animate-bounce" />
-                    <span className="w-1 h-4 bg-purple-300 animate-bounce [animation-delay:0.15s]" />
-                    <span className="w-1 h-2 bg-purple-400 animate-bounce [animation-delay:0.3s]" />
+                  <div className="flex items-end gap-0.5 h-3">
+                    <span className="w-0.5 h-2.5 bg-purple-400 rounded-full animate-bounce" />
+                    <span className="w-0.5 h-3.5 bg-emerald-400 rounded-full animate-bounce [animation-delay:0.15s]" />
+                    <span className="w-0.5 h-2 bg-cyan-400 rounded-full animate-bounce [animation-delay:0.3s]" />
+                  </div>
+                  <span className="text-[11px] font-bold text-purple-200">
+                    Visor Wave • Answering...
                   </span>
-                  <span>Visor Wave: Answering...</span>
                 </motion.div>
               )}
             </AnimatePresence>
 
-            {/* The Sticky Animated Robot Button */}
+            {/* Sticky Launcher Button */}
             <motion.button
               onClick={handleOpenClick}
               aria-label="Toggle AI Assistant"
-              className={`relative w-13 h-13 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center cursor-pointer transition-all outline-none ${
-                robotState === "thinking"
-                  ? "bg-slate-950/90 border-2 border-cyan-400 shadow-[0_0_25px_rgba(34,211,238,0.7)]"
-                  : robotState === "talking"
-                  ? "bg-slate-950/90 border-2 border-purple-400 shadow-[0_0_25px_rgba(168,85,247,0.7)]"
-                  : "bg-slate-950/80 border border-emerald-500/40 hover:border-emerald-400 shadow-[0_8px_24px_rgba(16,185,129,0.3)]"
+              className={`relative w-13 h-13 sm:w-14 sm:h-14 flex items-center justify-center cursor-pointer transition-all outline-none rounded-full ${
+                botState === "thinking"
+                  ? "shadow-[0_0_35px_rgba(6,182,212,0.7)]"
+                  : botState === "talking"
+                  ? "shadow-[0_0_35px_rgba(168,85,247,0.7)]"
+                  : "shadow-[0_0_25px_rgba(16,185,129,0.5)]"
               }`}
-              whileHover={{ scale: 1.12 }}
+              whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.92 }}
               animate={
-                robotState === "thinking"
-                  ? { y: [0, -6, 0] }
-                  : robotState === "talking"
-                  ? { y: [0, -5, 0] }
-                  : { y: [0, -4, 0] }
+                botState === "thinking"
+                  ? {
+                      filter: [
+                        "drop-shadow(0px 0px 10px rgba(6, 182, 212, 0.7))",
+                        "drop-shadow(0px 0px 22px rgba(168, 85, 247, 0.9))",
+                        "drop-shadow(0px 0px 10px rgba(6, 182, 212, 0.7))",
+                      ],
+                      y: [0, -6, 0],
+                    }
+                  : botState === "talking"
+                  ? {
+                      filter: [
+                        "drop-shadow(0px 0px 12px rgba(168, 85, 247, 0.8))",
+                        "drop-shadow(0px 0px 25px rgba(236, 72, 153, 0.9))",
+                        "drop-shadow(0px 0px 12px rgba(168, 85, 247, 0.8))",
+                      ],
+                      y: [0, -5, 0],
+                    }
+                  : {
+                      filter: [
+                        "drop-shadow(0px 0px 8px rgba(16, 185, 129, 0.4))",
+                        "drop-shadow(0px 0px 16px rgba(59, 130, 246, 0.6))",
+                        "drop-shadow(0px 0px 8px rgba(16, 185, 129, 0.4))",
+                      ],
+                      y: [0, -4, 0],
+                    }
               }
               transition={{
-                duration: robotState === "thinking" ? 1.2 : robotState === "talking" ? 1.4 : 3,
+                duration: botState === "thinking" ? 1 : botState === "talking" ? 0.9 : 3.5,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
             >
-              <div className="w-10 h-10 sm:w-11 sm:h-11">
-                <BotAvatar state={robotState} />
+              <div className="w-full h-full p-1 flex items-center justify-center">
+                <BotAvatar botState={botState} />
               </div>
             </motion.button>
           </div>
