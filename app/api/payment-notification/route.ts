@@ -7,7 +7,10 @@ const pendingPayments = new Map<string, NodeJS.Timeout>();
 export async function POST(req: NextRequest) {
   try {
     const payload = await req.json();
-    await handlePaymentNotification(payload);
+    // Dispatch notification process asynchronously in background
+    handlePaymentNotification(payload).catch((err) => {
+      console.error('Background payment notification processing error:', err);
+    });
     return NextResponse.json({ success: true });
   } catch (err: any) {
     console.error('Error in payment notification:', err);
@@ -31,22 +34,26 @@ export async function handlePaymentNotification(payload: any) {
 
   if (status === 'INITIATED') {
     // 1. Send Admin Email
-    const adminHtml = `
-      <h2>Payment Initiated</h2>
-      <p><strong>Name:</strong> ${name || 'N/A'}</p>
-      <p><strong>Email:</strong> ${customerEmail}</p>
-      <p><strong>Phone:</strong> ${phone || 'N/A'}</p>
-      <p><strong>Product/Training:</strong> ${productType}</p>
-      <p><strong>Amount:</strong> ${amount}</p>
-      <p><strong>Status:</strong> ${status}</p>
-      <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
-    `;
-    await transporter.sendMail({
-      from: adminEmail,
-      to: adminEmail,
-      subject: `Payment Initiated: ${productType} by ${name || 'Customer'}`,
-      html: adminHtml,
-    });
+    try {
+      const adminHtml = `
+        <h2>Payment Initiated</h2>
+        <p><strong>Name:</strong> ${name || 'N/A'}</p>
+        <p><strong>Email:</strong> ${customerEmail}</p>
+        <p><strong>Phone:</strong> ${phone || 'N/A'}</p>
+        <p><strong>Product/Training:</strong> ${productType}</p>
+        <p><strong>Amount:</strong> ${amount}</p>
+        <p><strong>Status:</strong> ${status}</p>
+        <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
+      `;
+      await transporter.sendMail({
+        from: adminEmail,
+        to: adminEmail,
+        subject: `Payment Initiated: ${productType} by ${name || 'Customer'}`,
+        html: adminHtml,
+      });
+    } catch (adminMailErr) {
+      console.error("Admin initiated mail send warning:", adminMailErr);
+    }
 
     // 2. Set timeout for 10 minutes to send repayment email if abandoned
     if (!pendingPayments.has(trackingKey)) {
@@ -83,24 +90,28 @@ export async function handlePaymentNotification(payload: any) {
   }
 
   // 1. Send Admin Email for DONE / CANCELLED
-  const adminHtml = `
-    <h2>Payment ${status}</h2>
-    <p><strong>Name:</strong> ${name || 'N/A'}</p>
-    <p><strong>Email:</strong> ${customerEmail}</p>
-    <p><strong>Phone:</strong> ${phone || 'N/A'}</p>
-    <p><strong>Product/Training:</strong> ${productType}</p>
-    <p><strong>Amount:</strong> ${amount}</p>
-    <p><strong>Status:</strong> ${status}</p>
-    <p><strong>Payment ID:</strong> ${paymentId || 'N/A'}</p>
-    <p><strong>Order ID:</strong> ${orderId || 'N/A'}</p>
-    <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
-  `;
-  await transporter.sendMail({
-    from: adminEmail,
-    to: adminEmail,
-    subject: `Payment ${status}: ${productType} by ${name || 'Customer'}`,
-    html: adminHtml,
-  });
+  try {
+    const adminHtml = `
+      <h2>Payment ${status}</h2>
+      <p><strong>Name:</strong> ${name || 'N/A'}</p>
+      <p><strong>Email:</strong> ${customerEmail}</p>
+      <p><strong>Phone:</strong> ${phone || 'N/A'}</p>
+      <p><strong>Product/Training:</strong> ${productType}</p>
+      <p><strong>Amount:</strong> ${amount}</p>
+      <p><strong>Status:</strong> ${status}</p>
+      <p><strong>Payment ID:</strong> ${paymentId || 'N/A'}</p>
+      <p><strong>Order ID:</strong> ${orderId || 'N/A'}</p>
+      <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
+    `;
+    await transporter.sendMail({
+      from: adminEmail,
+      to: adminEmail,
+      subject: `Payment ${status}: ${productType} by ${name || 'Customer'}`,
+      html: adminHtml,
+    });
+  } catch (adminErr) {
+    console.error(`Admin ${status} mail send warning:`, adminErr);
+  }
 
   // 2. Send Customer Email with Invoice
   let customerSubject = '';
@@ -115,22 +126,26 @@ export async function handlePaymentNotification(payload: any) {
   }
 
   if (customerMessage && customerEmail !== 'no-reply@organicmushroomsfarm.com') {
-    const pdfBuffer = await generateInvoicePDF(payload);
-    
-    await transporter.sendMail({
-      from: '"Organic Mushroom Farm" <' + adminEmail + '>',
-      replyTo: 'no-reply@organicmushroomsfarm.com',
-      to: customerEmail,
-      subject: customerSubject,
-      html: getCustomerEmailTemplate(customerSubject, customerMessage),
-      attachments: [
-        {
-          filename: 'Invoice_' + (orderId || 'Payment') + '.pdf',
-          content: pdfBuffer,
-          contentType: 'application/pdf'
-        }
-      ]
-    });
+    try {
+      const pdfBuffer = await generateInvoicePDF(payload);
+      
+      await transporter.sendMail({
+        from: '"Organic Mushroom Farm" <' + adminEmail + '>',
+        replyTo: 'no-reply@organicmushroomsfarm.com',
+        to: customerEmail,
+        subject: customerSubject,
+        html: getCustomerEmailTemplate(customerSubject, customerMessage),
+        attachments: [
+          {
+            filename: 'Invoice_' + (orderId || 'Payment') + '.pdf',
+            content: pdfBuffer,
+            contentType: 'application/pdf'
+          }
+        ]
+      });
+    } catch (customerMailErr) {
+      console.error("Customer mail send warning:", customerMailErr);
+    }
   }
 }
 
