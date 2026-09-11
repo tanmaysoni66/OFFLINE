@@ -1,8 +1,9 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { sendClientPaymentNotification } from '@/lib/clientPaymentNotification';
 import { AlertCircle, RefreshCw, ArrowLeft, HeadphonesIcon, HelpCircle, Check, Gift, Clock, Sparkles } from 'lucide-react';
 
 export default function PaymentCancelledClient() {
@@ -17,6 +18,19 @@ export default function PaymentCancelledClient() {
   const phone = searchParams?.get('phone') || '';
   const email = searchParams?.get('email') || '';
   const date = searchParams?.get('date') || '';
+
+  useEffect(() => {
+    if (name && email && email !== 'N/A') {
+      sendClientPaymentNotification({
+        name,
+        phone,
+        email,
+        productType: productName,
+        amount: amountParam.startsWith('₹') ? amountParam : `₹${amountParam}`,
+        status: 'CANCELLED',
+      });
+    }
+  }, [name, phone, email, productName, amountParam]);
 
   const isSiteVisit = productType === 'on_site' || fromPage.includes('on-site');
   const isConsultation = !isSiteVisit && (productType === 'consultant' || fromPage.includes('consultant'));

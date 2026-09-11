@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { sendClientPaymentNotification } from '@/lib/clientPaymentNotification';
 import {
   MapPin,
   Calendar,
@@ -79,23 +80,17 @@ export default function SiteVisitClient() {
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.error || 'Failed to initiate on-site visit session');
 
-      // Send INITIATED notification to owner in background
-      try {
-        fetch('/api/payment-notification', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: formData.name,
-            phone: formData.phone,
-            email: customerEmail,
-            preferredDate: formData.preferredDate,
-            productType: 'On Site Visit Consultation Slot',
-            amount: '₹500',
-            status: 'INITIATED',
-            orderId: payload.order_id,
-          }),
-        }).catch(() => {});
-      } catch (_) {}
+      // Send INITIATED notification to admin
+      sendClientPaymentNotification({
+        name: formData.name,
+        phone: formData.phone,
+        email: customerEmail,
+        preferredDate: formData.preferredDate,
+        productType: 'On Site Visit Consultation Slot',
+        amount: '₹500',
+        status: 'INITIATED',
+        orderId: payload.order_id,
+      });
 
       // Configure Razorpay checkout options
       const options = {
@@ -115,24 +110,18 @@ export default function SiteVisitClient() {
         handler: function (razorpayResponse: any) {
           const paymentId = razorpayResponse.razorpay_payment_id || '';
 
-          // Send DONE notification to owner & dispatch GST invoice to customer
-          try {
-            fetch('/api/payment-notification', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                name: formData.name,
-                phone: formData.phone,
-                email: customerEmail,
-                preferredDate: formData.preferredDate,
-                productType: 'On Site Visit Consultation Slot',
-                amount: '₹500',
-                status: 'DONE',
-                orderId: payload.order_id,
-                paymentId: paymentId,
-              }),
-            }).catch(() => {});
-          } catch (_) {}
+          // Send DONE notification to admin & dispatch GST invoice to customer
+          sendClientPaymentNotification({
+            name: formData.name,
+            phone: formData.phone,
+            email: customerEmail,
+            preferredDate: formData.preferredDate,
+            productType: 'On Site Visit Consultation Slot',
+            amount: '₹500',
+            status: 'DONE',
+            orderId: payload.order_id,
+            paymentId: paymentId,
+          });
 
           // Redirect to /payment-success page
           router.push(
@@ -142,23 +131,17 @@ export default function SiteVisitClient() {
         modal: {
           ondismiss: function () {
             setLoading(false);
-            // Send CANCELLED notification to owner
-            try {
-              fetch('/api/payment-notification', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  name: formData.name,
-                  phone: formData.phone,
-                  email: customerEmail,
-                  preferredDate: formData.preferredDate,
-                  productType: 'On Site Visit Consultation Slot',
-                  amount: '₹500',
-                  status: 'CANCELLED',
-                  orderId: payload.order_id,
-                }),
-              }).catch(() => {});
-            } catch (_) {}
+            // Send CANCELLED notification to admin and customer
+            sendClientPaymentNotification({
+              name: formData.name,
+              phone: formData.phone,
+              email: customerEmail,
+              preferredDate: formData.preferredDate,
+              productType: 'On Site Visit Consultation Slot',
+              amount: '₹500',
+              status: 'CANCELLED',
+              orderId: payload.order_id,
+            });
 
             // Redirect to /payment-cancelled page
             router.push(
@@ -174,24 +157,18 @@ export default function SiteVisitClient() {
           console.error('Payment failed:', err);
           setLoading(false);
 
-          // Send FAILED notification to owner
-          try {
-            fetch('/api/payment-notification', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                name: formData.name,
-                phone: formData.phone,
-                email: customerEmail,
-                preferredDate: formData.preferredDate,
-                productType: 'On Site Visit Consultation Slot',
-                amount: '₹500',
-                status: 'FAILED',
-                orderId: payload.order_id,
-                paymentId: err?.error?.metadata?.payment_id,
-              }),
-            }).catch(() => {});
-          } catch (_) {}
+          // Send FAILED notification
+          sendClientPaymentNotification({
+            name: formData.name,
+            phone: formData.phone,
+            email: customerEmail,
+            preferredDate: formData.preferredDate,
+            productType: 'On Site Visit Consultation Slot',
+            amount: '₹500',
+            status: 'FAILED',
+            orderId: payload.order_id,
+            paymentId: err?.error?.metadata?.payment_id,
+          });
 
           // Redirect to /payment-cancelled page
           router.push(

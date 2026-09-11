@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import { sendClientPaymentNotification } from '@/lib/clientPaymentNotification';
 import { CheckCircle2, MessageCircle, ArrowRight, ShieldCheck, Mail, Phone, Calendar, ArrowLeft } from 'lucide-react';
 
 export default function PaymentSuccessClient() {
@@ -142,6 +143,19 @@ Thank you.`;
   const whatsappUrl = `https://wa.me/919203544140?text=${encodeURIComponent(messageText)}`;
 
   useEffect(() => {
+    // Ensure payment notification and GST invoice are sent reliably
+    if (paymentId && paymentId !== 'N/A' && email && email !== 'N/A') {
+      sendClientPaymentNotification({
+        name,
+        phone,
+        email,
+        productType: courseOrServiceName,
+        amount: amountParam.startsWith('₹') ? amountParam : `₹${amountParam}`,
+        status: 'DONE',
+        paymentId,
+      });
+    }
+
     // Only auto-redirect if we have valid payment details
     if (paymentId !== 'N/A' && autoRedirecting) {
       const interval = setInterval(() => {

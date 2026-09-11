@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { sendClientPaymentNotification } from '@/lib/clientPaymentNotification';
 import {
   CheckCircle2,
   ShieldCheck,
@@ -60,23 +61,17 @@ export default function BookConsultantClient() {
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.error || 'Failed to initiate consultation order');
 
-      // Send initiated notification to owner & prepare repayment follow-up
-      try {
-        fetch('/api/payment-notification', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: formData.name,
-            phone: formData.phone,
-            email: formData.email,
-            preferredDate: formData.preferredDate,
-            productType: 'Expert 1-on-1 Business Consultation Slot',
-            amount: '₹59',
-            status: 'INITIATED',
-            orderId: payload.order_id,
-          }),
-        }).catch(() => {});
-      } catch (_) {}
+      // Send initiated notification to admin
+      sendClientPaymentNotification({
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        preferredDate: formData.preferredDate,
+        productType: 'Expert 1-on-1 Business Consultation Slot',
+        amount: '₹59',
+        status: 'INITIATED',
+        orderId: payload.order_id,
+      });
 
       const options = {
         key: payload.key_id,
@@ -91,24 +86,18 @@ export default function BookConsultantClient() {
         handler: function (razorpayResponse: any) {
           const paymentId = razorpayResponse.razorpay_payment_id || '';
 
-          // Send success notification to owner and invoice to customer
-          try {
-            fetch('/api/payment-notification', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                name: formData.name,
-                phone: formData.phone,
-                email: formData.email,
-                preferredDate: formData.preferredDate,
-                productType: 'Expert 1-on-1 Business Consultation Slot',
-                amount: '₹59',
-                status: 'DONE',
-                orderId: payload.order_id,
-                paymentId: paymentId,
-              }),
-            }).catch(() => {});
-          } catch (_) {}
+          // Send success notification to admin and invoice to customer
+          sendClientPaymentNotification({
+            name: formData.name,
+            phone: formData.phone,
+            email: formData.email,
+            preferredDate: formData.preferredDate,
+            productType: 'Expert 1-on-1 Business Consultation Slot',
+            amount: '₹59',
+            status: 'DONE',
+            orderId: payload.order_id,
+            paymentId: paymentId,
+          });
 
           // Redirect to dedicated /payment-success page
           router.push(
@@ -117,23 +106,17 @@ export default function BookConsultantClient() {
         },
         modal: {
           ondismiss: function () {
-            // Send cancelled notification
-            try {
-              fetch('/api/payment-notification', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  name: formData.name,
-                  phone: formData.phone,
-                  email: formData.email,
-                  preferredDate: formData.preferredDate,
-                  productType: 'Expert 1-on-1 Business Consultation Slot',
-                  amount: '₹59',
-                  status: 'CANCELLED',
-                  orderId: payload.order_id,
-                }),
-              }).catch(() => {});
-            } catch (_) {}
+            // Send cancelled notification to admin and customer
+            sendClientPaymentNotification({
+              name: formData.name,
+              phone: formData.phone,
+              email: formData.email,
+              preferredDate: formData.preferredDate,
+              productType: 'Expert 1-on-1 Business Consultation Slot',
+              amount: '₹59',
+              status: 'CANCELLED',
+              orderId: payload.order_id,
+            });
 
             // Redirect to dedicated /payment-cancelled page
             router.push(
@@ -148,23 +131,17 @@ export default function BookConsultantClient() {
         rzp.on('payment.failed', function (err: any) {
           console.error('Payment failed:', err);
 
-          try {
-            fetch('/api/payment-notification', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                name: formData.name,
-                phone: formData.phone,
-                email: formData.email,
-                preferredDate: formData.preferredDate,
-                productType: 'Expert 1-on-1 Business Consultation Slot',
-                amount: '₹59',
-                status: 'FAILED',
-                orderId: payload.order_id,
-                paymentId: err?.error?.metadata?.payment_id,
-              }),
-            }).catch(() => {});
-          } catch (_) {}
+          sendClientPaymentNotification({
+            name: formData.name,
+            phone: formData.phone,
+            email: formData.email,
+            preferredDate: formData.preferredDate,
+            productType: 'Expert 1-on-1 Business Consultation Slot',
+            amount: '₹59',
+            status: 'FAILED',
+            orderId: payload.order_id,
+            paymentId: err?.error?.metadata?.payment_id,
+          });
 
           // Redirect to dedicated /payment-cancelled page
           router.push(
