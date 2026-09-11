@@ -26,7 +26,7 @@ export default function ContactPage() {
     { title: "Turnkey Mushroom Project", desc: "Looking for complete support for your mushroom farming project? Contact us to discuss your project requirements and get suitable guidance.", icon: Settings, link: "/turnkey-projects", label: "Learn About Turnkey Projects" },
     { title: "Mushroom Spawn", desc: "Contact us for information about mushroom spawn availability, varieties, quantities, and requirements.", icon: TestTube, link: "/spawn", label: "Enquire About Spawn" },
     { title: "Compost Unit", desc: "Learn about mushroom compost requirements and compost unit setup for mushroom cultivation.", icon: Truck, link: "/compost", label: "Explore Compost Solutions" },
-    { title: "Site Visit & Consultation", desc: "Get professional guidance based on your proposed mushroom farming project through site visit and consultation services.", icon: Calendar, link: "/on-site-visit", label: "Book a Consultation" },
+    { title: "Site Visit & Consultation", desc: "Get professional guidance based on your proposed mushroom farming project through site visit and consultation services.", icon: Calendar, link: "/on-site-consultation", label: "Book a Consultation" },
   ];
 
   return (
@@ -200,7 +200,7 @@ export default function ContactPage() {
                 Want to understand mushroom farming beyond theory? You can enquire about visiting our mushroom farming facility in Katangi, Jabalpur, Madhya Pradesh and learn more about mushroom cultivation and farm operations. Please contact us in advance before planning your visit so that we can confirm availability and schedule.
               </p>
               <div className="pt-2">
-                <Link href="/on-site-visit" className="inline-flex items-center justify-center px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold rounded-full transition-colors shadow-sm">
+                <Link href="/on-site-consultation" className="inline-flex items-center justify-center px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold rounded-full transition-colors shadow-sm">
                   Book a Site Visit
                 </Link>
               </div>

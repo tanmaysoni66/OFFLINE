@@ -16,7 +16,7 @@ import {
 
 const MENU_ITEMS = [
   { name: "Home", href: "/", icon: Home, isExternal: false },
-  { name: "Book Consultant", href: "/consultation", icon: Calendar, isExternal: false },
+  { name: "Book Consultant", href: "/book-consultant", icon: Calendar, isExternal: false },
   { name: "Spawn (Seed)", href: "/spawn-seed", icon: Sprout, isExternal: false },
   { name: "Training", href: "/training", icon: BookOpen, isExternal: false },
   { name: "Setup (Turnkey)", href: "/turnkey-projects", icon: Wrench, isExternal: false },

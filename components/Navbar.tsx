@@ -85,7 +85,7 @@ const NAV_ITEMS = [
     icon: PhoneCall,
     subMenu: [
       { name: "Contact Us", href: "/contact" },
-      { name: "On Site Visit", href: "/on-site-visit" },
+      { name: "On Site Visit", href: "/on-site-consultation" },
       { name: "Call Now", href: "tel:+919203544140" },
     ],
   },
