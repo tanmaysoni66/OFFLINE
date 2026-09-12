@@ -1,369 +1,258 @@
 import React from "react";
 import Link from "next/link";
-import type { Metadata } from "next";
-import { Sun, Calendar, Clock, ChevronRight, Phone, Mail, CheckCircle2, Sparkles } from "lucide-react";
-
-export const dynamic = "force-static";
+import { Metadata } from "next";
+import { Phone, Calendar, ArrowRight, CheckCircle2, MapPin, MessageSquare, Sun } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Transforming the Desert: The Rise of Commercial Mushroom Farming in Bikaner, Rajasthan",
+  title: "Mushroom Farming in Bikaner, Rajasthan | Training & Spawn",
   description:
-    "Discover how progressive farmers in Bikaner are turning to highly profitable, climate-proof indoor mushroom farming in the arid Thar desert.",
+    "Discover high-profit indoor mushroom farming in Bikaner, Rajasthan. Water-efficient, climate-proof setups, seasonal varieties, premium spawn, and market linkages.",
   alternates: {
     canonical: "https://organicmushroomsfarm.com/cities/rajasthan/bikaner",
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
   },
   openGraph: {
-    title: "Transforming the Desert: The Rise of Commercial Mushroom Farming in Bikaner, Rajasthan",
+    title: "Mushroom Farming in Bikaner, Rajasthan | Training & Spawn",
     description:
-      "Discover how progressive farmers in Bikaner are turning to highly profitable, climate-proof indoor mushroom farming in the arid Thar desert.",
+      "Discover high-profit indoor mushroom farming in Bikaner, Rajasthan. Water-efficient, climate-proof setups, seasonal varieties, premium spawn, and market linkages.",
     url: "https://organicmushroomsfarm.com/cities/rajasthan/bikaner",
-    siteName: "Organic Mushroom Farm",
     type: "article",
-    locale: "en_IN",
-    publishedTime: "2026-08-12T08:00:00+05:30",
-    modifiedTime: "2026-08-12T08:00:00+05:30",
-    authors: ["Organic Mushroom Farm Editorial Team"],
-    section: "Regional Agriculture",
   },
   twitter: {
     card: "summary",
-    title: "Transforming the Desert: The Rise of Commercial Mushroom Farming in Bikaner, Rajasthan",
+    title: "Mushroom Farming in Bikaner, Rajasthan | Training & Spawn",
     description:
-      "Discover how progressive farmers in Bikaner are turning to highly profitable, climate-proof indoor mushroom farming in the arid Thar desert.",
+      "Discover high-profit indoor mushroom farming in Bikaner, Rajasthan. Water-efficient, climate-proof setups, seasonal varieties, premium spawn, and market linkages.",
   },
 };
 
-export default function BikanerMushroomFarmingPage() {
-  const pageUrl = "https://organicmushroomsfarm.com/cities/rajasthan/bikaner";
-  const publishedDate = "2026-08-12T08:00:00+05:30";
-  const modifiedDate = "2026-08-12T08:00:00+05:30";
-
-  const structuredData = {
+export default function ArticleBikanerTraining() {
+  const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Organization",
         "@id": "https://organicmushroomsfarm.com/#organization",
-        name: "Organic Mushroom Farm",
-        url: "https://organicmushroomsfarm.com",
+        name: "Organic Mushrooms Farm",
+        url: "https://organicmushroomsfarm.com/",
         logo: {
           "@type": "ImageObject",
-          url: "https://organicmushroomsfarm.com/images/logo.png",
-        },
-        contactPoint: {
-          "@type": "ContactPoint",
-          telephone: "+91-9203544140",
-          contactType: "customer service",
-          areaServed: "IN",
-          availableLanguage: ["en", "hi"],
+          url: "https://organicmushroomsfarm.com/icon.png",
         },
       },
       {
         "@type": "WebSite",
         "@id": "https://organicmushroomsfarm.com/#website",
-        url: "https://organicmushroomsfarm.com",
-        name: "Organic Mushroom Farm",
+        url: "https://organicmushroomsfarm.com/",
+        name: "Organic Mushrooms Farm",
         publisher: {
           "@id": "https://organicmushroomsfarm.com/#organization",
         },
       },
       {
         "@type": "WebPage",
-        "@id": `${pageUrl}#webpage`,
-        url: pageUrl,
-        name: "Transforming the Desert: The Rise of Commercial Mushroom Farming in Bikaner, Rajasthan",
-        description:
-          "Discover how progressive farmers in Bikaner are turning to highly profitable, climate-proof indoor mushroom farming in the arid Thar desert.",
+        "@id": "https://organicmushroomsfarm.com/cities/rajasthan/bikaner#webpage",
+        url: "https://organicmushroomsfarm.com/cities/rajasthan/bikaner",
+        name: "Mushroom Farming in Bikaner, Rajasthan | Training & Spawn",
         isPartOf: {
           "@id": "https://organicmushroomsfarm.com/#website",
         },
-        breadcrumb: {
-          "@id": `${pageUrl}#breadcrumb`,
+        about: {
+          "@id": "https://organicmushroomsfarm.com/#organization",
         },
+        description:
+          "Discover high-profit indoor mushroom farming in Bikaner, Rajasthan. Water-efficient, climate-proof setups, seasonal varieties, premium spawn, and market linkages.",
       },
       {
         "@type": "BreadcrumbList",
-        "@id": `${pageUrl}#breadcrumb`,
         itemListElement: [
           {
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://organicmushroomsfarm.com",
+            item: "https://organicmushroomsfarm.com/",
           },
           {
             "@type": "ListItem",
             position: 2,
-            name: "Cities",
-            item: "https://organicmushroomsfarm.com/cities",
+            name: "States",
+            item: "https://organicmushroomsfarm.com/states",
           },
           {
             "@type": "ListItem",
             position: 3,
             name: "Rajasthan",
-            item: "https://organicmushroomsfarm.com/cities/rajasthan",
+            item: "https://organicmushroomsfarm.com/states/rajasthan",
           },
           {
             "@type": "ListItem",
             position: 4,
             name: "Bikaner",
-            item: pageUrl,
+            item: "https://organicmushroomsfarm.com/cities/rajasthan/bikaner",
           },
         ],
       },
       {
         "@type": "Article",
-        "@id": `${pageUrl}#article`,
-        headline: "Transforming the Desert: The Rise of Commercial Mushroom Farming in Bikaner, Rajasthan",
+        headline: "Mushroom Farming in Bikaner, Rajasthan | Training & Spawn",
         description:
-          "Discover how progressive farmers in Bikaner are turning to highly profitable, climate-proof indoor mushroom farming in the arid Thar desert.",
-        datePublished: publishedDate,
-        dateModified: modifiedDate,
-        mainEntityOfPage: {
-          "@id": `${pageUrl}#webpage`,
-        },
+          "Discover high-profit indoor mushroom farming in Bikaner, Rajasthan. Water-efficient, climate-proof setups, seasonal varieties, premium spawn, and market linkages.",
         author: {
           "@type": "Organization",
-          name: "Organic Mushroom Farm Editorial Team",
+          name: "Organic Mushrooms Farm",
         },
         publisher: {
-          "@id": "https://organicmushroomsfarm.com/#organization",
+          "@type": "Organization",
+          name: "Organic Mushrooms Farm",
+          logo: {
+            "@type": "ImageObject",
+            url: "https://organicmushroomsfarm.com/icon.png",
+          },
+        },
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": "https://organicmushroomsfarm.com/cities/rajasthan/bikaner",
         },
       },
     ],
   };
 
+  const faqs = [
+    { q: "1. क्या बीकानेर के गर्म वातावरण में मशरूम उगाना संभव है?", a: "हाँ, बिल्कुल! गर्मियों में हीट-टॉलरेंट मिल्की मशरूम (Milky Mushroom) बिना एसी के आसानी से उगाई जा सकती है। सर्दियों में बटन और ऑयस्टर मशरूम बहुत कम लागत में बंपर पैदावार देती हैं।" },
+    { q: "2. बीकानेर में पानी की कमी की समस्या कैसे दूर होती है?", a: "मशरूम की खेती पूरी तरह से इंडोर होती है और इसमें पारंपरिक फसलों की तुलना में 95% कम पानी की आवश्यकता होती है। पानी केवल हवा में नमी बनाए रखने के लिए स्प्रे किया जाता है।" },
+    { q: "3. तैयार मशरूम बीकानेर में कहाँ बेची जा सकती है?", a: "बीकानेर के हेरिटेज होटलों, रिसॉर्ट्स, शादी-समारोह कैटरर्स, सब्जी मंडियों और स्थानीय सुपरमार्केट्स में ताजी मशरूम की भारी मांग है।" },
+    { q: "4. अच्छी क्वालिटी का बीज (स्पॉन) कहाँ मिलेगा?", a: "Organic Mushrooms Farm द्वारा उच्च गुणवत्ता वाला F1-Gen सर्टिफाइड स्पॉन बीकानेर में सीधा किसानों और उद्यमियों तक डिलीवर किया जाता है।" }
+  ];
+
   return (
-    <main
-      id="bikaner-rajasthan-mushroom-farming-page"
-      className="min-h-screen bg-slate-50 dark:bg-slate-950 pt-20 pb-16 text-slate-800 dark:text-slate-200"
-    >
+    <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-
-      {/* Breadcrumb Navigation */}
-      <nav aria-label="Breadcrumb" className="max-w-4xl mx-auto px-4 sm:px-6 pt-4 pb-2">
-        <ol className="flex items-center flex-wrap gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-medium">
-          <li>
-            <Link href="/" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-              Home
-            </Link>
-          </li>
-          <li aria-hidden="true" className="text-slate-400">
-            <ChevronRight className="w-3.5 h-3.5" />
-          </li>
-          <li>
-            <Link href="/cities" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-              Cities
-            </Link>
-          </li>
-          <li aria-hidden="true" className="text-slate-400">
-            <ChevronRight className="w-3.5 h-3.5" />
-          </li>
-          <li>
-            <Link href="/rajasthan" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-              Rajasthan
-            </Link>
-          </li>
-          <li aria-hidden="true" className="text-slate-400">
-            <ChevronRight className="w-3.5 h-3.5" />
-          </li>
-          <li aria-current="page" className="text-slate-900 dark:text-slate-100 font-semibold truncate max-w-[200px] sm:max-w-none">
-            Bikaner
-          </li>
-        </ol>
-      </nav>
-
-      {/* Main Article Container - Compact Editorial Flow Without Artificial Card Boxes */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6">
-        {/* Header Section */}
-        <header className="mb-4">
-          <div className="flex items-center gap-2 mb-2 flex-wrap">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200/60 dark:border-amber-800/40">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping inline-block" />
-              <Sun className="w-3 h-3 text-amber-600 dark:text-amber-400" /> Regional Guide • Bikaner
-            </span>
-            <span className="inline-flex items-center gap-1 text-[11px] text-slate-500 dark:text-slate-400">
-              <Calendar className="w-3 h-3" /> August 12, 2026
-            </span>
-            <span className="inline-flex items-center gap-1 text-[11px] text-slate-500 dark:text-slate-400">
-              <Clock className="w-3 h-3" /> 5 min read
-            </span>
-          </div>
-
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white leading-tight tracking-tight mb-3">
-            Transforming the Desert: The Rise of Commercial{" "}
-            <span className="gradient-text">Mushroom Farming in Bikaner, Rajasthan</span>
-          </h1>
-
-          <p className="text-xs sm:text-[13.5px] font-medium text-slate-700 dark:text-slate-300 leading-relaxed">
-            When you think of agriculture in Bikaner, you likely picture resilient, drought-resistant crops braving the harsh Thar desert sun. With extremely hot summers, minimal rainfall, and arid soil, traditional farming here has always been a challenge. But a massive shift is happening. Progressive farmers, youth, and agri-entrepreneurs in Rajasthan are moving indoors and discovering a highly profitable, climate-proof alternative: commercial mushroom farming.
-          </p>
-        </header>
-
-        {/* Clean Editorial Flow - No Artificial Boxes, Compact Text Size for Minimal Scrolling */}
-        <div className="space-y-4 text-xs sm:text-[13.5px] leading-relaxed text-slate-700 dark:text-slate-300">
-          <p>
-            If you are in Bikaner, Nokha, Dungargarh, or nearby western Rajasthan belts and looking for a high-return agricultural business, cultivating organic mushrooms represents a transformative opportunity tailored directly for arid ecosystems.
-          </p>
-
-          {/* Section 1 */}
-          <section className="pt-2">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 border-l-4 border-emerald-500 pl-3 flex items-center gap-1.5">
-              1. The Ultimate Low-Water Crop
-            </h2>
-            <p className="mb-2">
-              Water scarcity is the single greatest hurdle for agriculture across Rajasthan. Traditional field crops require thousands of liters of flood irrigation per harvest cycle, losing vast quantities to sandy soil seepage and intense evaporation. Mushroom cultivation, on the other hand, is an extraordinarily water-efficient process.
-            </p>
-            <p>
-              Because mushrooms are grown indoors inside insulated, humidified rooms, water is only utilized to lightly mist the air and maintain relative humidity. There is zero water wasted on soil absorption or surface evaporation, making it the perfect sustainable agri-business for Bikaner&apos;s dry arid climate.
-            </p>
-          </section>
-
-          {/* Section 2 */}
-          <section className="pt-2">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 border-l-4 border-emerald-500 pl-3 flex items-center gap-1.5">
-              2. Beating the Desert Heat (The Seasonal Strategy)
-            </h2>
-            <p className="mb-2">
-              How do growers harvest moisture-loving fungi in an arid desert? By applying a smart, variety-specific seasonal cropping plan:
-            </p>
-
-            <div className="space-y-2 pl-1 mb-2">
-              <div className="flex gap-2 items-start">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900 dark:text-white">The Summer Cash Crop (Milky Mushrooms):</strong>
-                  {" "}When summer temperatures cross 35°C to 42°C, conventional open-field crops wither. However, this is precisely the climate where heat-tolerant{" "}
-                  <Link href="/services/milky-mushroom" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                    Milky Mushrooms (Calocybe indica)
-                  </Link>{" "}
-                  flourish. They thrive in natural warm weather, enabling Bikaner growers to produce bountiful harvests during peak summer with minimal climate-control overhead.
-                </div>
-              </div>
-
-              <div className="flex gap-2 items-start">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900 dark:text-white">The Winter Advantage (Button & Oyster):</strong>
-                  {" "}Bikaner experiences cold, distinct winters from November through February. This natural ambient cooling makes it exceptionally cost-effective to cultivate premium{" "}
-                  <Link href="/services/button-mushroom" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                    White Button Mushrooms
-                  </Link>{" "}
-                  and fast-growing{" "}
-                  <Link href="/services/oyster-mushroom" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                    Oyster Mushrooms
-                  </Link>{" "}
-                  without relying on expensive high-tonnage chillers.
-                </div>
-              </div>
-
-              <div className="flex gap-2 items-start">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900 dark:text-white">Year-Round Controlled Commercial Farming:</strong>
-                  {" "}Growers aiming for continuous supply can install insulated PUF panel rooms paired with standard HVAC and micro-fogging units as detailed in our{" "}
-                  <Link href="/project-specs" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                    commercial farm project specifications
-                  </Link>
-                  , ensuring 365 days of steady commercial output regardless of exterior heatwaves.
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Section 3 */}
-          <section className="pt-2">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 border-l-4 border-emerald-500 pl-3 flex items-center gap-1.5">
-              3. A Massive Pure-Vegetarian Market
-            </h2>
-            <p className="mb-2">
-              Rajasthan boasts one of the highest pure-vegetarian population densities in India, and Bikaner is globally acclaimed for its culinary heritage, savory snacks, and gourmet hospitality. As nutritional awareness expands, consumers actively seek chemical-free, protein-dense vegetarian options.
-            </p>
-            <p>
-              Mushrooms are a superfood powerhouse—delivering complete plant protein, dietary fiber, essential B-vitamins, and minerals with zero cholesterol. Their succulent, meaty texture makes them immensely popular in traditional curries, royal tandoori dishes, and contemporary culinary bistros. Currently, local demand far outstrips regional production, forcing vegetable vendors to import fresh stock from Punjab and Haryana at inflated freight costs.
-            </p>
-          </section>
-
-          {/* Section 4 */}
-          <section className="pt-2">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 border-l-4 border-emerald-500 pl-3 flex items-center gap-1.5">
-              4. Tapping into the Tourism & Hospitality Industry
-            </h2>
-            <p className="mb-2">
-              Bikaner is an iconic international tourist destination, celebrated for its royal palaces, desert safari resorts, and luxury heritage hotels like Junagarh, Gajner, and Lalgarh. These premier hospitality institutions require a daily, dependable supply of grade-A fresh mushrooms for their high-end Indian and continental banquet dining.
-            </p>
-            <p>
-              By establishing an indoor cultivation unit in or around Bikaner, you bypass long-distance transport spoilage, offering farm-fresh harvests directly to executive chefs at premium wholesale rates. You can accurately model your initial setup capital and monthly margins with our{" "}
-              <Link href="/mushroomfarmingcalculators" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                commercial mushroom ROI & CapEx calculator
-              </Link>
-              .
-            </p>
-          </section>
-
-          {/* Section 5 */}
-          <section className="pt-2">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 border-l-4 border-emerald-500 pl-3 flex items-center gap-1.5">
-              5. Start Your Farming Journey in Bikaner
-            </h2>
-            <p className="mb-2">
-              You do not require fertile agricultural acreage to build a flourishing farm enterprise in Rajasthan. With an indoor facility, multi-tier vertical racks, and locally abundant wheat straw (bhusa), entrepreneurs can produce high-density yields in minimal floor space.
-            </p>
-            <p>
-              However, sustained commercial viability requires scientific knowledge—from sterile substrate treatment to securing certified pure-culture{" "}
-              <Link href="/spawn-seeds" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                mushroom spawn (seeds)
-              </Link>
-              . Prospective cultivators across Bikaner can master commercial indoor cultivation through our comprehensive{" "}
-              <Link href="/training" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                mushroom farming training programs
-              </Link>
-              .
-            </p>
-          </section>
-
-          {/* Clean Glass CTA Box (Matching Original React Vite Glass Style) */}
-          <section className="glass p-5 sm:p-6 rounded-2xl border dark:border-white/10 border-slate-200 text-center mt-6 bg-emerald-500/5">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-1.5 flex items-center justify-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-emerald-500" /> Ready to Start Your Farm in Bikaner?
-            </h2>
-            <p className="text-xs text-slate-600 dark:text-slate-300 max-w-xl mx-auto mb-3.5 leading-relaxed">
-              Don&apos;t let the desert climate hold you back. Secure commercial blueprints, certified pure-culture spawn, and hands-on operational mentorship from{" "}
-              <strong className="text-slate-900 dark:text-white">Organic Mushrooms Farm</strong>.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5">
-              <a
-                href="tel:9203544140"
-                className="btn-primary w-full sm:w-auto px-5 py-2 rounded-full font-bold text-xs flex items-center justify-center gap-2 shadow-sm"
-              >
-                <Phone className="w-3.5 h-3.5" /> Call / WhatsApp (+91 9203544140)
-              </a>
-              <Link
-                href="/contact"
-                className="w-full sm:w-auto px-5 py-2 rounded-full font-semibold text-xs border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center justify-center gap-2"
-              >
-                <Mail className="w-3.5 h-3.5" /> Contact Us Online
-              </Link>
-            </div>
-          </section>
+      <main className="pt-24 pb-16 min-h-screen bg-transparent relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none -z-10">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-blue/20 rounded-full blur-[100px] opacity-50 mix-blend-screen" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-500/20 rounded-full blur-[100px] opacity-50 mix-blend-screen" />
         </div>
-      </article>
-    </main>
+
+        <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <header className="mb-12 text-center">
+            <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4">
+              Mushroom Farming in Bikaner (बीकानेर में मशरूम की खेती)
+            </h1>
+            <div className="flex items-center justify-center gap-2 text-brand-blue font-medium text-[12px] mb-8">
+              <Sun size={16} />
+              <span>Transforming the Thar Desert with High-Profit Indoor Agriculture</span>
+            </div>
+          </header>
+
+          <div className="glass p-8 md:p-10 rounded-[2.5rem] border border-black/5 dark:border-white/5 shadow-2xl bg-white/5 dark:bg-white/5 backdrop-blur-md">
+            
+            <p className="text-slate-700 dark:text-slate-300 text-[12px] md:text-[13px] leading-relaxed mb-6 font-medium">
+              राजस्थान के ऐतिहासिक शहर बीकानेर (Bikaner) में परंपरागत कृषि पानी की कमी और अत्यधिक गर्मी के कारण हमेशा एक बड़ी चुनौती रही है। लेकिन आधुनिक इंडोर मशरूम फार्मिंग (Indoor Mushroom Farming) ने रेगिस्तानी क्षेत्र में कृषि का एक नया और बेहद लाभदायक विकल्प तैयार किया है।
+            </p>
+            <p className="text-slate-700 dark:text-slate-300 text-[12px] md:text-[13px] leading-relaxed mb-10 font-medium">
+              मशरूम की खेती में जमीन की उपजाऊ क्षमता या भारी पानी की आवश्यकता नहीं होती। इसे बंद कमरों में लंबवत (Vertical racks) तरीके से उगाया जाता है, जिससे बीकानेर के किसान, युवा और महिलाएं बहुत कम लागत में लाखों का मुनाफा कमा रहे हैं।
+            </p>
+
+            <h2 className="text-[16px] md:text-[18px] font-bold text-slate-900 dark:text-white mb-4 border-l-4 border-brand-blue pl-3">
+              Key Strategic Advantages for Bikaner
+            </h2>
+            <ul className="space-y-4 mb-8">
+              <li className="flex items-start gap-3 text-[12px] md:text-[13px] text-slate-700 dark:text-slate-300">
+                <CheckCircle2 className="text-brand-blue shrink-0 mt-0.5" size={16} />
+                <span><strong>The Ultimate Low-Water Crop:</strong> पारंपरिक फसलों की तुलना में इसमें 95% कम पानी लगता है। बंद कमरे में स्प्रे और फॉगर्स से नमी बनाकर पूरा उत्पादन लिया जाता है।</span>
+              </li>
+              <li className="flex items-start gap-3 text-[12px] md:text-[13px] text-slate-700 dark:text-slate-300">
+                <CheckCircle2 className="text-brand-blue shrink-0 mt-0.5" size={16} />
+                <span><strong>Seasonal Rotation Strategy:</strong> सर्दियों (नवंबर से फरवरी) में बिना एसी के बटन व ढींगरी मशरूम और गर्मियों में 35-40°C पर मिल्की मशरूम उगाकर 365 दिन उत्पादन किया जा सकता है।</span>
+              </li>
+              <li className="flex items-start gap-3 text-[12px] md:text-[13px] text-slate-700 dark:text-slate-300">
+                <CheckCircle2 className="text-brand-blue shrink-0 mt-0.5" size={16} />
+                <span><strong>Tourism & Pure-Veg Demand:</strong> बीकानेर की हेरिटेज हवेलियां, पैलेस होटल्स और राजस्थान की शुद्ध शाकाहारी आबादी में प्रोटीन से भरपूर मशरूम की भारी खपत है।</span>
+              </li>
+            </ul>
+
+            <h2 className="text-[16px] md:text-[18px] font-bold text-slate-900 dark:text-white mb-4 border-l-4 border-brand-blue pl-3">
+              Comprehensive Services We Offer
+            </h2>
+            <div className="space-y-6 mb-8">
+              <div className="bg-black/5 dark:bg-white/5 p-5 rounded-2xl border border-black/5 dark:border-white/5">
+                <h3 className="font-bold text-[14px] text-slate-900 dark:text-white mb-2">1. Hands-on Training in Hindi</h3>
+                <p className="text-[12px] text-slate-700 dark:text-slate-300">
+                  भूसा शोधन (Substrate treatment), स्पॉनिंग, कमरों में नमी नियंत्रण और कीट प्रबंधन का संपूर्ण व्यावहारिक प्रशिक्षण।
+                </p>
+              </div>
+              
+              <div className="bg-black/5 dark:bg-white/5 p-5 rounded-2xl border border-black/5 dark:border-white/5">
+                <h3 className="font-bold text-[14px] text-slate-900 dark:text-white mb-2">2. Certified Mushroom Spawn Supply</h3>
+                <p className="text-[12px] text-slate-700 dark:text-slate-300">
+                  बीकानेर जिले में उच्च पैदावार देने वाले F1-Gen ऑयस्टर, मिल्की और बटन मशरूम स्पॉन की समय पर आपूर्ति।
+                </p>
+              </div>
+
+              <div className="bg-black/5 dark:bg-white/5 p-5 rounded-2xl border border-black/5 dark:border-white/5">
+                <h3 className="font-bold text-[14px] text-slate-900 dark:text-white mb-2">3. Insulated Farm Setup & Subsidies</h3>
+                <p className="text-[12px] text-slate-700 dark:text-slate-300">
+                  रेगिस्तानी गर्मी से बचाव के लिए PUF-पैनल इंसुलेटेड चैंबर डिजाइन, हॉर्टिकल्चर विभाग सब्सिडी सहायता (DPR) और स्थानीय बाजार संपर्क।
+                </p>
+              </div>
+            </div>
+
+            <h2 className="text-[16px] md:text-[18px] font-bold text-slate-900 dark:text-white mb-4 border-l-4 border-brand-blue pl-3">
+              Coverage Across Bikaner District
+            </h2>
+            <p className="text-slate-700 dark:text-slate-300 text-[12px] md:text-[13px] leading-relaxed mb-4">
+              हम बीकानेर शहर और आसपास के सभी उप-खंडों और कस्बों में सेवाएं प्रदान करते हैं:
+            </p>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+              <li className="flex items-start gap-3 text-[12px] md:text-[13px] text-slate-700 dark:text-slate-300 bg-black/5 dark:bg-white/5 p-3 rounded-xl">
+                <MapPin className="text-brand-blue shrink-0 mt-0.5" size={16} />
+                <span><strong>City Hubs:</strong> Kote Gate, Rani Bazar, Sadul Ganj, Pawanpuri, Gangashahr, Tilak Nagar, Nokha Road.</span>
+              </li>
+              <li className="flex items-start gap-3 text-[12px] md:text-[13px] text-slate-700 dark:text-slate-300 bg-black/5 dark:bg-white/5 p-3 rounded-xl">
+                <MapPin className="text-brand-blue shrink-0 mt-0.5" size={16} />
+                <span><strong>Tehsils & Rural Towns:</strong> Nokha, Kolayat, Lunkaransar, Sri Dungargarh, Khajuwala, Deshnoke.</span>
+              </li>
+            </ul>
+
+            <h2 className="text-[16px] md:text-[18px] font-bold text-slate-900 dark:text-white mb-6 border-l-4 border-brand-blue pl-3">
+              Frequently Asked Questions (FAQ)
+            </h2>
+            <div className="space-y-3 mb-12">
+              {faqs.map((faq, index) => (
+                <div key={index} className="p-5 rounded-2xl dark:bg-white/5 bg-black/5 border border-white/5 space-y-2">
+                  <h4 className="font-bold text-slate-900 dark:text-white text-[13px]">
+                    {faq.q}
+                  </h4>
+                  <p className="text-[12px] dark:text-slate-300 text-slate-700 leading-relaxed font-medium">
+                    {faq.a}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA Section */}
+            <div className="bg-black/5 dark:bg-white/5 border border-brand-blue/20 p-6 md:p-8 rounded-2xl text-center mt-10">
+              <h2 className="text-[16px] md:text-[18px] font-bold text-slate-900 dark:text-white mb-6">
+                Ready to Start Your Mushroom Business in Bikaner?
+              </h2>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="https://wa.me/919203544140" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] hover:bg-[#25D366]/90 text-white px-8 py-3 rounded-xl font-bold flex items-center justify-center gap-2 text-[12px] transition-all shadow-lg w-full sm:w-auto">
+                  <MessageSquare size={16} /> WhatsApp Us: 9203544140
+                </a>
+                <Link href="/contact" className="bg-white/10 hover:bg-white/20 text-slate-900 dark:text-white border border-slate-900/10 dark:border-white/20 px-8 py-3 rounded-xl font-bold flex items-center justify-center gap-2 text-[12px] transition-all w-full sm:w-auto">
+                  <Calendar size={14} /> Book Consultation
+                </Link>
+              </div>
+            </div>
+          </div>
+        </article>
+      </main>
+    </>
   );
 }

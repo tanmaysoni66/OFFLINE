@@ -4,9 +4,9 @@ import { Metadata } from "next";
 import { MapPin, ChevronRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Karnataka Mushroom Farming Training & Commercial Setup Resources",
+  title: "Mushroom Farming in Karnataka | Training, Setup & Spawn Suppliers",
   description:
-    "Find the best mushroom farming training, commercial setups, spawn suppliers, and expert advice across cities in Karnataka including Bangalore, Mysuru, and Mangalore.",
+    "Find mushroom farming training, commercial setups, and resources across cities in Karnataka including Bangalore, Mysuru, and Mangalore.",
   alternates: {
     canonical: "https://organicmushroomsfarm.com/states/karnataka",
   },
@@ -15,17 +15,17 @@ export const metadata: Metadata = {
     follow: true,
   },
   openGraph: {
-    title: "Karnataka Mushroom Farming Training & Commercial Setup Resources",
+    title: "Mushroom Farming in Karnataka | Training, Setup & Spawn Suppliers",
     description:
-      "Find the best mushroom farming training, commercial setups, spawn suppliers, and expert advice across cities in Karnataka including Bangalore, Mysuru, and Mangalore.",
+      "Find mushroom farming training, commercial setups, and resources across cities in Karnataka including Bangalore, Mysuru, and Mangalore.",
     url: "https://organicmushroomsfarm.com/states/karnataka",
     type: "website",
   },
   twitter: {
     card: "summary",
-    title: "Karnataka Mushroom Farming Training & Commercial Setup Resources",
+    title: "Mushroom Farming in Karnataka | Training, Setup & Spawn Suppliers",
     description:
-      "Find the best mushroom farming training, commercial setups, spawn suppliers, and expert advice across cities in Karnataka including Bangalore, Mysuru, and Mangalore.",
+      "Find mushroom farming training, commercial setups, and resources across cities in Karnataka including Bangalore, Mysuru, and Mangalore.",
   },
 };
 
@@ -106,7 +106,7 @@ export default function KarnatakaPage() {
         </div>
 
         <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <nav className="mb-6 flex items-center gap-2 text-[10px] text-slate-500 dark:text-slate-400">
+          <nav className="mb-6 flex flex-wrap items-center gap-2 text-[10px] text-slate-500 dark:text-slate-400">
             <Link href="/" className="hover:text-brand-blue transition-colors">
               Home
             </Link>
@@ -123,30 +123,27 @@ export default function KarnatakaPage() {
           <header className="mb-8">
             <h1 className="text-xl md:text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-3 flex items-center gap-2">
               <MapPin className="text-brand-blue" size={24} />
-              Karnataka Mushroom Resources
+              Karnataka Mushroom Cities
             </h1>
           </header>
 
           <section className="glass bg-white/5 dark:bg-white/5 backdrop-blur-md border border-white/10 dark:border-white/10 rounded-2xl p-6 md:p-8 shadow-lg">
             <p className="text-[11px] leading-relaxed text-slate-700 dark:text-slate-300 mb-4">
-              Karnataka is an excellent region for commercial mushroom farming due to its favorable climate, tech-savvy agricultural sector, and high demand in urban centers. We offer extensive resources and support to help you establish highly profitable organic mushroom farms, including both low-cost setups for small entrepreneurs and fully automated commercial units.
+              Karnataka is rapidly emerging as a leading state in India for high-tech, commercial mushroom farming. The state's diverse agro-climatic zones, from the cooler climates of the Western Ghats to the booming urban demand in its IT hubs, create perfect conditions for cultivating Button, Oyster, and Milky mushrooms.
             </p>
 
             <p className="text-[11px] leading-relaxed text-slate-700 dark:text-slate-300 mb-4">
-              For individuals and businesses in the tech capital, you can explore premium mushroom training, cultivation resources, and modern commercial setups in{" "}
-              <Link href="/cities/karnataka/bangalore" className="text-brand-blue font-semibold hover:underline">Bangalore</Link>. 
-              If you are operating in the cultural capital of the state, we provide expert guidance on mushroom farming, professional training, reliable spawn supply, and turnkey mushroom farm setups in{" "}
-              <Link href="/cities/karnataka/mysuru" className="text-brand-blue font-semibold hover:underline">Mysuru</Link>.
-            </p>
-
-            <p className="text-[11px] leading-relaxed text-slate-700 dark:text-slate-300 mb-4">
-              Coastal regions also present unique opportunities for specialized cultivation. You can get specialized mushroom farming support, training, spawn supply, and complete mushroom farm setups in{" "}
+              We provide localized resources and expert guidance across the state. Whether you are looking for advanced mushroom training and commercial setups in{" "}
+              <Link href="/cities/karnataka/bangalore" className="text-brand-blue font-semibold hover:underline">Bangalore</Link>, 
+              exploring spawn supply and farming setup options in the heritage city of{" "}
+              <Link href="/cities/karnataka/mysuru" className="text-brand-blue font-semibold hover:underline">Mysuru</Link>, 
+              or launching a profitable venture in the coastal climate of{" "}
               <Link href="/mushroom-farming-mangalore-karnataka" className="text-brand-blue font-semibold hover:underline">Mangalore</Link>, 
-              where we also offer resources accessible in local Tulu and Kannada languages to ensure better community integration and understanding.
+              our extensive network connects you with the right consultants, climate-control technology, and market linkages.
             </p>
 
             <p className="text-[11px] leading-relaxed text-slate-700 dark:text-slate-300">
-              Whether you are planning to grow Oyster, White Button, Milky, or exotic varieties like Shiitake and Cordyceps, our state-wide network in Karnataka ensures you have access to the best quality seeds (spawn), advanced climate control machinery, reliable market linkages, and continuous agronomic support.
+              Select any of the major hubs linked above to access specific details regarding state subsidies, hands-on training centers, premium spawn availability, and end-to-end turnkey project execution tailored for Karnataka's unique agricultural environment.
             </p>
           </section>
         </article>

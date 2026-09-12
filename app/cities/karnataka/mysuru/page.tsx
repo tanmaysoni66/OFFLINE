@@ -1,355 +1,258 @@
 import React from "react";
 import Link from "next/link";
-import type { Metadata } from "next";
-import {
-  MapPin,
-  Calendar,
-  Clock,
-  ChevronRight,
-  Phone,
-  Mail,
-  Sparkles,
-  CheckCircle2,
-  CloudSun,
-  Wheat,
-  Hotel,
-  Layers,
-  Store,
-} from "lucide-react";
-
-export const dynamic = "force-static";
+import { Metadata } from "next";
+import { Phone, Calendar, ArrowRight, CheckCircle2, MapPin, MessageSquare } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Mushroom Farming in Mysuru: A Royal Opportunity | Organic Mushroom Farm",
+  title: "Mushroom Farming in Mysuru (Mysore), Karnataka | Training & Spawn",
   description:
-    "Discover why Mysuru is uniquely positioned to become a major hub for highly profitable commercial mushroom farming in Karnataka. Learn about climate & local demand.",
+    "Start commercial mushroom farming in Mysuru (Mysore), Karnataka. Moderate climate benefits, Kannada & English training, premium spawn, and Bengaluru market linkages.",
   alternates: {
     canonical: "https://organicmushroomsfarm.com/cities/karnataka/mysuru",
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
   },
   openGraph: {
-    title: "Mushroom Farming in Mysuru: A Royal Opportunity in Karnataka 🍄",
+    title: "Mushroom Farming in Mysuru (Mysore), Karnataka | Training & Spawn",
     description:
-      "Discover why Mysuru is uniquely positioned to become a major hub for highly profitable commercial mushroom farming in Karnataka. Learn about climate & local demand.",
+      "Start commercial mushroom farming in Mysuru (Mysore), Karnataka. Moderate climate benefits, Kannada & English training, premium spawn, and Bengaluru market linkages.",
     url: "https://organicmushroomsfarm.com/cities/karnataka/mysuru",
-    siteName: "Organic Mushroom Farm",
     type: "article",
-    locale: "en_IN",
-    publishedTime: "2026-08-12T08:00:00+05:30",
-    modifiedTime: "2026-08-12T08:00:00+05:30",
-    authors: ["Organic Mushroom Farm Editorial Team"],
-    section: "Regional Guide",
   },
   twitter: {
     card: "summary",
-    title: "Mushroom Farming in Mysuru: A Royal Opportunity in Karnataka 🍄",
+    title: "Mushroom Farming in Mysuru (Mysore), Karnataka | Training & Spawn",
     description:
-      "Discover why Mysuru is uniquely positioned to become a major hub for highly profitable commercial mushroom farming in Karnataka. Learn about climate & local demand.",
+      "Start commercial mushroom farming in Mysuru (Mysore), Karnataka. Moderate climate benefits, Kannada & English training, premium spawn, and Bengaluru market linkages.",
   },
 };
 
-export default function MysuruMushroomFarmingPage() {
-  const pageUrl = "https://organicmushroomsfarm.com/cities/karnataka/mysuru";
-  const publishedDate = "2026-08-12T08:00:00+05:30";
-  const modifiedDate = "2026-08-12T08:00:00+05:30";
-
-  const structuredData = {
+export default function ArticleMysuruTraining() {
+  const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Organization",
         "@id": "https://organicmushroomsfarm.com/#organization",
-        name: "Organic Mushroom Farm",
-        url: "https://organicmushroomsfarm.com",
+        name: "Organic Mushrooms Farm",
+        url: "https://organicmushroomsfarm.com/",
         logo: {
           "@type": "ImageObject",
-          url: "https://organicmushroomsfarm.com/images/logo.png",
-        },
-        contactPoint: {
-          "@type": "ContactPoint",
-          telephone: "+91-9203544140",
-          contactType: "customer service",
-          areaServed: "IN",
-          availableLanguage: ["en", "hi"],
+          url: "https://organicmushroomsfarm.com/icon.png",
         },
       },
       {
         "@type": "WebSite",
         "@id": "https://organicmushroomsfarm.com/#website",
-        url: "https://organicmushroomsfarm.com",
-        name: "Organic Mushroom Farm",
+        url: "https://organicmushroomsfarm.com/",
+        name: "Organic Mushrooms Farm",
         publisher: {
           "@id": "https://organicmushroomsfarm.com/#organization",
         },
       },
       {
         "@type": "WebPage",
-        "@id": `${pageUrl}#webpage`,
-        url: pageUrl,
-        name: "Mushroom Farming in Mysuru: A Royal Opportunity | Organic Mushroom Farm",
-        description:
-          "Discover why Mysuru is uniquely positioned to become a major hub for highly profitable commercial mushroom farming in Karnataka. Learn about climate & local demand.",
+        "@id": "https://organicmushroomsfarm.com/cities/karnataka/mysuru#webpage",
+        url: "https://organicmushroomsfarm.com/cities/karnataka/mysuru",
+        name: "Mushroom Farming in Mysuru (Mysore), Karnataka | Training & Spawn",
         isPartOf: {
           "@id": "https://organicmushroomsfarm.com/#website",
         },
-        breadcrumb: {
-          "@id": `${pageUrl}#breadcrumb`,
+        about: {
+          "@id": "https://organicmushroomsfarm.com/#organization",
         },
+        description:
+          "Start commercial mushroom farming in Mysuru (Mysore), Karnataka. Moderate climate benefits, Kannada & English training, premium spawn, and Bengaluru market linkages.",
       },
       {
         "@type": "BreadcrumbList",
-        "@id": `${pageUrl}#breadcrumb`,
         itemListElement: [
           {
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://organicmushroomsfarm.com",
+            item: "https://organicmushroomsfarm.com/",
           },
           {
             "@type": "ListItem",
             position: 2,
-            name: "Cities",
-            item: "https://organicmushroomsfarm.com/cities",
+            name: "States",
+            item: "https://organicmushroomsfarm.com/states",
           },
           {
             "@type": "ListItem",
             position: 3,
             name: "Karnataka",
-            item: "https://organicmushroomsfarm.com/cities/karnataka",
+            item: "https://organicmushroomsfarm.com/states/karnataka",
           },
           {
             "@type": "ListItem",
             position: 4,
             name: "Mysuru",
-            item: pageUrl,
+            item: "https://organicmushroomsfarm.com/cities/karnataka/mysuru",
           },
         ],
       },
       {
         "@type": "Article",
-        "@id": `${pageUrl}#article`,
-        headline:
-          "Mushroom Farming in Mysuru: Harnessing Heritage, Climate & Demand in Karnataka",
+        headline: "Mushroom Farming in Mysuru (Mysore), Karnataka | Training & Spawn",
         description:
-          "Discover why Mysuru is uniquely positioned to become a major hub for highly profitable commercial mushroom farming in Karnataka. Learn about climate & local demand.",
-        datePublished: publishedDate,
-        dateModified: modifiedDate,
-        mainEntityOfPage: {
-          "@id": `${pageUrl}#webpage`,
-        },
+          "Start commercial mushroom farming in Mysuru (Mysore), Karnataka. Moderate climate benefits, Kannada & English training, premium spawn, and Bengaluru market linkages.",
         author: {
           "@type": "Organization",
-          name: "Organic Mushroom Farm Editorial Team",
+          name: "Organic Mushrooms Farm",
         },
         publisher: {
-          "@id": "https://organicmushroomsfarm.com/#organization",
+          "@type": "Organization",
+          name: "Organic Mushrooms Farm",
+          logo: {
+            "@type": "ImageObject",
+            url: "https://organicmushroomsfarm.com/icon.png",
+          },
+        },
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": "https://organicmushroomsfarm.com/cities/karnataka/mysuru",
         },
       },
     ],
   };
 
+  const faqs = [
+    { q: "1. ಮೈಸೂರಿನಲ್ಲಿ ಅಣಬೆ ಕೃಷಿ ಆರಂಭಿಸಲು ಎಷ್ಟು ಬಂಡವಾಳ ಬೇಕು?", a: "ಸಣ್ಣ ಪ್ರಮಾಣದಲ್ಲಿ ₹5,000 ರಿಂದ ₹10,000 ಸಾಕು. ವಾಣಿಜ್ಯ ಮಟ್ಟದ ಹೈಟೆಕ್ ಫಾರ್ಮ್‌ಗೆ ಜಾಗ ಮತ್ತು ಉತ್ಪಾದನಾ ಸಾಮರ್ಥ್ಯಕ್ಕೆ ತಕ್ಕಂತೆ ಹೂಡಿಕೆ ನಿರ್ಧಾರವಾಗುತ್ತದೆ." },
+    { q: "2. ಮೈಸೂರಿನ ಹವಾಮಾನಕ್ಕೆ ಯಾವ ಅಣಬೆ ಹೆಚ್ಚು ಸೂಕ್ತ?", a: "ಮೈಸೂರಿನ ಸಮಶೀತೋಷ್ಣ ಹವಾಮಾನವು ಸಿಂಪಿ ಅಣಬೆ (Oyster) ಮತ್ತು ಬಟನ್ ಅಣಬೆ (Button Mushroom) ಗಳಿಗೆ ಅತ್ಯಂತ ಪೂರಕವಾಗಿದೆ. ಬೇಸಿಗೆಯಲ್ಲಿ ಮಿಲ್ಕಿ ಅಣಬೆ ಕೂಡ ಚೆನ್ನಾಗಿ ಬೆಳೆಯುತ್ತದೆ." },
+    { q: "3. ಗುಣಮಟ್ಟದ ಬೀಜ (ಸ್ಪಾನ್) ಎಲ್ಲಿ ಸಿಗುತ್ತದೆ?", a: "Organic Mushrooms Farm ವತಿಯಿಂದ ಲ್ಯಾಬ್-ಪರೀಕ್ಷಿತ F1-Gen ಅಧಿಕ ಇಳುವರಿ ನೀಡುವ ಸ್ಪಾನ್ ಮೈಸೂರು ಮತ್ತು ಮಂಡ್ಯ ಪ್ರದೇಶಗಳಿಗೆ ವೇಗವಾಗಿ ರವಾನಿಸಲಾಗುತ್ತದೆ." },
+    { q: "4. ಮೈಸೂರಿನಲ್ಲಿ ಮಾರುಕಟ್ಟೆ ಅವಕಾಶಗಳು ಹೇಗಿವೆ?", a: "ಮೈಸೂರಿನ ಹೆರಿಟೇಜ್ ಹೋಟೆಲ್‌ಗಳು, ರೆಸಾರ್ಟ್‌ಗಳು, ಸೂಪರ್‌ಮಾರ್ಕೆಟ್‌ಗಳು ಮತ್ತು ಮೈಸೂರು-ಬೆಂಗಳೂರು ಎಕ್ಸ್‌ಪ್ರೆಸ್‌ವೇ ಮೂಲಕ ಬೆಂಗಳೂರಿನ ಬೃಹತ್ ಮಾರುಕಟ್ಟೆಗೆ ತಕ್ಷಣ ಪೂರೈಕೆ ಮಾಡಬಹುದು." }
+  ];
+
   return (
-    <main
-      id="mysuru-mushroom-farming-page"
-      className="min-h-screen bg-slate-50 dark:bg-slate-950 pt-20 pb-16 text-slate-800 dark:text-slate-200"
-    >
+    <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <main className="pt-24 pb-16 min-h-screen bg-transparent relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none -z-10">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-blue/20 rounded-full blur-[100px] opacity-50 mix-blend-screen" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-500/20 rounded-full blur-[100px] opacity-50 mix-blend-screen" />
+        </div>
 
-      {/* Breadcrumb Navigation */}
-      <nav aria-label="Breadcrumb" className="max-w-4xl mx-auto px-4 sm:px-6 pt-4 pb-2">
-        <ol className="flex items-center flex-wrap gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-medium">
-          <li>
-            <Link href="/" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-              Home
-            </Link>
-          </li>
-          <li aria-hidden="true" className="text-slate-400">
-            <ChevronRight className="w-3.5 h-3.5" />
-          </li>
-          <li>
-            <span className="text-slate-500 dark:text-slate-400">Cities</span>
-          </li>
-          <li aria-hidden="true" className="text-slate-400">
-            <ChevronRight className="w-3.5 h-3.5" />
-          </li>
-          <li>
-            <span className="text-slate-500 dark:text-slate-400">Karnataka</span>
-          </li>
-          <li aria-hidden="true" className="text-slate-400">
-            <ChevronRight className="w-3.5 h-3.5" />
-          </li>
-          <li aria-current="page" className="text-slate-900 dark:text-slate-100 font-semibold truncate max-w-[200px] sm:max-w-none">
-            Mysuru
-          </li>
-        </ol>
-      </nav>
+        <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <header className="mb-12 text-center">
+            <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4">
+              Mushroom Farming in Mysuru (ಮೈಸೂರಿನಲ್ಲಿ ಅಣಬೆ ಕೃಷಿ)
+            </h1>
+            <div className="flex items-center justify-center gap-2 text-brand-blue font-medium text-[12px] mb-8">
+              <MapPin size={16} />
+              <span>Serving Mysuru, Mandya, Nanjangud, Hunsur & Southern Karnataka</span>
+            </div>
+          </header>
 
-      {/* Main Article Container - Compact Editorial Flow Without Artificial Card Boxes */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6">
-        {/* Header Section */}
-        <header className="mb-4">
-          <div className="flex items-center gap-2 mb-2 flex-wrap">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/40">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping inline-block" />
-              <MapPin className="w-3 h-3 text-emerald-600 dark:text-emerald-400" /> Regional Guide
-            </span>
-            <span className="inline-flex items-center gap-1 text-[11px] text-slate-500 dark:text-slate-400">
-              <Calendar className="w-3 h-3" /> August 12, 2026
-            </span>
-            <span className="inline-flex items-center gap-1 text-[11px] text-slate-500 dark:text-slate-400">
-              <Clock className="w-3 h-3" /> 5 min read
-            </span>
-          </div>
+          <div className="glass p-8 md:p-10 rounded-[2.5rem] border border-black/5 dark:border-white/5 shadow-2xl bg-white/5 dark:bg-white/5 backdrop-blur-md">
+            
+            <p className="text-slate-700 dark:text-slate-300 text-[12px] md:text-[13px] leading-relaxed mb-6 font-medium">
+              ಅರಮನೆ ನಗರಿ ಮೈಸೂರು (Mysuru / Mysore) ಪ್ರವಾಸೋದ್ಯಮ ಮತ್ತು ಸಾಂಸ್ಕೃತಿಕ ವೈಭವಕ್ಕೆ ಮಾತ್ರವಲ್ಲದೆ, ಕೃಷಿ ಮತ್ತು ಆಧುನಿಕ ಆಹಾರೋದ್ಯಮದಲ್ಲೂ ಮುಂಚೂಣಿಯಲ್ಲಿದೆ. ನಗರದ ಹೆರಿಟೇಜ್ ಹೋಟೆಲ್‌ಗಳು, ಐಷಾರಾಮಿ ರೆಸಾರ್ಟ್‌ಗಳು ಮತ್ತು ಆರೋಗ್ಯ ಜಾಗೃತಿ ಹೊಂದಿರುವ ಸಾರ್ವಜನಿಕರಲ್ಲಿ ತಾಜಾ ಸಾವಯವ ಅಣಬೆಗೆ (Organic Mushrooms) ಅತ್ಯಧಿಕ ಬೇಡಿಕೆಯಿದೆ.
+            </p>
+            <p className="text-slate-700 dark:text-slate-300 text-[12px] md:text-[13px] leading-relaxed mb-10 font-medium">
+              ಮೈಸೂರಿನ ಅನುಕೂಲಕರ ವರ್ಷಪೂರ್ತಿ ಸಮಶೀತೋಷ್ಣ ಹವಾಮಾನ ಮತ್ತು ಪಕ್ಕದ ಮಂಡ್ಯ-ಕಾವೇರಿ ಕಣಿವೆಯ ಭತ್ತದ ಒಣಹುಲ್ಲಿನ ಸುಲಭ ಲಭ್ಯತೆಯು ಅಣಬೆ ಕೃಷಿಯನ್ನು (Mushroom Cultivation) ಅತ್ಯಂತ ಲಾಭದಾಯಕ ಉದ್ಯಮವನ್ನಾಗಿ ಮಾಡಿದೆ.
+            </p>
 
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white leading-tight tracking-tight mb-3">
-            Mushroom Farming in Mysuru: <span className="gradient-text">Harnessing Heritage, Climate & Demand in Karnataka</span> 👑
-          </h1>
-
-          <p className="text-xs sm:text-[13.5px] font-medium text-slate-700 dark:text-slate-300 leading-relaxed">
-            Mysuru is known worldwide for its palaces, silk, and vibrant tourism. But beyond its royal heritage, the city is rapidly emerging as a highly lucrative hub for modern, sustainable agriculture—specifically, commercial organic mushroom farming. Let us explore why Mysuru holds such incredible potential.
-          </p>
-        </header>
-
-        {/* Clean Editorial Flow - No Artificial Boxes, Compact Text Size for Minimal Scrolling */}
-        <div className="space-y-4 text-xs sm:text-[13.5px] leading-relaxed text-slate-700 dark:text-slate-300">
-          
-          {/* Section 1 */}
-          <section className="pt-2">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 border-l-4 border-emerald-500 pl-3 flex items-center gap-1.5">
-              <CloudSun className="w-4 h-4 text-emerald-500" /> The Pleasant Year-Round Climate
+            <h2 className="text-[16px] md:text-[18px] font-bold text-slate-900 dark:text-white mb-4 border-l-4 border-brand-blue pl-3">
+              Why Mysuru is Perfectly Suited for Mushroom Farming
             </h2>
-            <p className="mb-2">
-              Temperature control is one of the biggest expenses in commercial mushroom cultivation. Fortunately, Mysuru enjoys a naturally moderate and pleasant climate for most of the year. This moderate weather drastically reduces the electricity costs associated with cooling your farm. During the mild winters and monsoons, growing delicate strains becomes effortless, and even during the warmer months, the heat is easily managed.
-            </p>
-            <p>
-              This climate makes it ideal for cultivating high-demand varieties. You can seamlessly rotate between premium{" "}
-              <Link href="/services/button-mushroom" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                Button mushrooms
-              </Link>{" "}
-              in cooler months, highly forgiving{" "}
-              <Link href="/services/oyster-mushroom" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                Oyster mushrooms
-              </Link>{" "}
-              year-round, and switch to{" "}
-              <Link href="/services/milky-mushroom" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                Milky mushrooms
-              </Link>{" "}
-              during the peak summer heat.
-            </p>
-          </section>
-
-          {/* Section 2 */}
-          <section className="pt-2">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 border-l-4 border-emerald-500 pl-3 flex items-center gap-1.5">
-              <Wheat className="w-4 h-4 text-emerald-500" /> Surrounded by a Rich Agricultural Belt
-            </h2>
-            <p className="mb-2">
-              Mushroom farming requires a steady supply of substrate (the base material mushrooms grow on). Mysuru is strategically located near Mandya and other rich agricultural belts, producing vast quantities of paddy straw and sugarcane bagasse every harvest season.
-            </p>
-            <p>
-              Instead of being burned or discarded, this low-cost agricultural waste can be converted into high-value organic mushrooms right on your farm, ensuring your raw material costs remain incredibly low.
-            </p>
-          </section>
-
-          {/* Section 3 */}
-          <section className="pt-2">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 border-l-4 border-emerald-500 pl-3 flex items-center gap-1.5">
-              <Hotel className="w-4 h-4 text-emerald-500" /> A Booming Hospitality & Culinary Market
-            </h2>
-            <p className="mb-2">
-              The biggest question for any agricultural startup is buyer demand. In Mysuru, the market is built right into the city:
-            </p>
-            <ul className="space-y-2 mt-2 mb-2 pl-2">
-              <li className="flex gap-2 items-start">
-                <CheckCircle2 className="text-emerald-500 shrink-0 mt-0.5" size={16} />
-                <div>
-                  <strong className="text-slate-900 dark:text-white font-semibold">Local Tourism & Hotels:</strong> Thousands of tourists visit Mysuru every week. The city’s heritage hotels, luxury resorts, and popular restaurants require a constant daily supply of fresh mushrooms for continental and gourmet Indian dishes.
-                </div>
+            <ul className="space-y-4 mb-8">
+              <li className="flex items-start gap-3 text-[12px] md:text-[13px] text-slate-700 dark:text-slate-300">
+                <CheckCircle2 className="text-brand-blue shrink-0 mt-0.5" size={16} />
+                <span><strong>Mild Year-Round Climate:</strong> ಮೈಸೂರಿನ ಹಿತಕರ ತಾಪಮಾನದಿಂದಾಗಿ ಹವಾನಿಯಂತ್ರಣ (AC) ಮತ್ತು ವಿದ್ಯುತ್ ವೆಚ್ಚ ತೀರಾ ಕಡಿಮೆ ಇರುತ್ತದೆ.</span>
               </li>
-              <li className="flex gap-2 items-start">
-                <CheckCircle2 className="text-emerald-500 shrink-0 mt-0.5" size={16} />
-                <div>
-                  <strong className="text-slate-900 dark:text-white font-semibold">Proximity to Bengaluru:</strong> Mysuru’s seamless expressway connectivity to Bengaluru opens the door to a massive metropolitan market of millions of health-conscious consumers, organic grocery chains, and food processing startups just a couple of hours away.
-                </div>
+              <li className="flex items-start gap-3 text-[12px] md:text-[13px] text-slate-700 dark:text-slate-300">
+                <CheckCircle2 className="text-brand-blue shrink-0 mt-0.5" size={16} />
+                <span><strong>Rich Agricultural Belt (Mandya-Mysuru):</strong> ಕಾವೇರಿ ಕೃಷಿ ಬೆಲ್ಟ್‌ನಿಂದ ಭತ್ತದ ಒಣಹುಲ್ಲು ಮತ್ತು ಕಬ್ಬಿನ ಸಿಪ್ಪೆ (bagasse) ಅತ್ಯಂತ ಕಡಿಮೆ ಬೆಲೆಗೆ ಲಭ್ಯವಿರುತ್ತದೆ.</span>
+              </li>
+              <li className="flex items-start gap-3 text-[12px] md:text-[13px] text-slate-700 dark:text-slate-300">
+                <CheckCircle2 className="text-brand-blue shrink-0 mt-0.5" size={16} />
+                <span><strong>Bengaluru Expressway Connectivity:</strong> ಮೈಸೂರು-ಬೆಂಗಳೂರು 10-ಲೇನ್ ಎಕ್ಸ್‌ಪ್ರೆಸ್‌ವೇ ಮೂಲಕ ಕೇವಲ 90 ನಿಮಿಷಗಳಲ್ಲಿ ಬೆಂಗಳೂರಿನ ಬೃಹತ್ ಮಾಲ್ ಮತ್ತು ಸೂಪರ್‌ಮಾರ್ಕೆಟ್‌ಗಳಿಗೆ ತಾಜಾ ಅಣಬೆ ಸರಬರಾಜು ಮಾಡಬಹುದು.</span>
               </li>
             </ul>
-          </section>
 
-          {/* Section 4 */}
-          <section className="pt-2">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 border-l-4 border-emerald-500 pl-3 flex items-center gap-1.5">
-              <Layers className="w-4 h-4 text-emerald-500" /> Maximum Profit with Minimum Land
+            <h2 className="text-[16px] md:text-[18px] font-bold text-slate-900 dark:text-white mb-4 border-l-4 border-brand-blue pl-3">
+              Comprehensive Services We Offer
             </h2>
-            <p className="mb-2">
-              Land around Mysuru is valuable. The beauty of mushroom farming is that it does not require acres of traditional farmland. Because it is an indoor, vertical cultivation process, you can stack mushroom bags on multi-tiered racks.
-            </p>
-            <p>
-              By opting for a professional{" "}
-              <Link href="/services/turnkey-setup" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                turnkey setup in insulated rooms
-              </Link>{" "}, a small plot of land or an empty building can produce metric tons of fresh produce every month, maximizing your return on investment per square foot.
-            </p>
-          </section>
+            <div className="space-y-6 mb-8">
+              <div className="bg-black/5 dark:bg-white/5 p-5 rounded-2xl border border-black/5 dark:border-white/5">
+                <h3 className="font-bold text-[14px] text-slate-900 dark:text-white mb-2">1. Hands-on Training in Kannada & English</h3>
+                <p className="text-[12px] text-slate-700 dark:text-slate-300">
+                  ಹುಲ್ಲು ಸಂಸ್ಕರಣೆ, ಬಿತ್ತನೆ (Spawning), ತೇವಾಂಶ ನಿರ್ವಹಣೆ, ರೋಗ ನಿಯಂತ್ರಣ ಮತ್ತು ಕೊಯ್ಲು ಕುರಿತು ಆನ್‌ಲೈನ್ ಮತ್ತು ಪ್ರಾಯೋಗಿಕ ತರಬೇತಿ.
+                </p>
+              </div>
+              
+              <div className="bg-black/5 dark:bg-white/5 p-5 rounded-2xl border border-black/5 dark:border-white/5">
+                <h3 className="font-bold text-[14px] text-slate-900 dark:text-white mb-2">2. Premium Mushroom Spawn Supply</h3>
+                <p className="text-[12px] text-slate-700 dark:text-slate-300">
+                  ಮೈಸೂರು ಮತ್ತು ದಕ್ಷಿಣ ಕರ್ನಾಟಕದ ಜಿಲ್ಲೆಗಳಿಗೆ F1-Gen ಲ್ಯಾಬ್-ಪರೀಕ್ಷಿತ ಹೈ-ಯೀಲ್ಡ್ ಸಿಂಪಿ ಮತ್ತು ಬಟನ್ ಅಣಬೆ ಸ್ಪಾನ್ ಪೂರೈಕೆ.
+                </p>
+              </div>
 
-          {/* Section 5 */}
-          <section className="pt-2">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 border-l-4 border-emerald-500 pl-3 flex items-center gap-1.5">
-              <Store className="w-4 h-4 text-emerald-500" /> Build Your Agricultural Empire in Mysuru
-            </h2>
-            <p className="mb-2">
-              The economic opportunity for organic mushroom farming in Mysuru is clear. However, turning a passion into a reliable, high-yield commercial business requires the right{" "}
-              <Link href="/training" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                technical knowledge and training
-              </Link>{" "}
-              — from proper substrate pasteurization to selecting lab-certified{" "}
-              <Link href="/spawn-seeds" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                premium spawn (seeds)
-              </Link>{" "}
-              and preventing contamination.
-            </p>
-          </section>
-
-          {/* Clean Glass CTA Box (Matching Original React Vite Glass Style) */}
-          <section className="glass p-5 sm:p-6 rounded-2xl border dark:border-white/10 border-slate-200 text-center mt-6 bg-emerald-500/5">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-1.5 flex items-center justify-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-emerald-500" /> Ready to start your farm in Mysuru?
-            </h2>
-            <p className="text-xs text-slate-600 dark:text-slate-300 max-w-xl mx-auto mb-3.5 leading-relaxed">
-              Connect with our experts today for professional training, high-quality spawn, or a complete commercial farm setup in Karnataka.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5">
-              <a
-                href="tel:9203544140"
-                className="btn-primary w-full sm:w-auto px-5 py-2 rounded-full font-bold text-xs flex items-center justify-center gap-2 shadow-sm"
-              >
-                <Phone className="w-3.5 h-3.5" /> Call / WhatsApp
-              </a>
-              <Link
-                href="/contact"
-                className="w-full sm:w-auto px-5 py-2 rounded-full font-semibold text-xs border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center justify-center gap-2"
-              >
-                <Mail className="w-3.5 h-3.5" /> Contact Us Online
-              </Link>
+              <div className="bg-black/5 dark:bg-white/5 p-5 rounded-2xl border border-black/5 dark:border-white/5">
+                <h3 className="font-bold text-[14px] text-slate-900 dark:text-white mb-2">3. Commercial Setups & Marketing Linkages</h3>
+                <p className="text-[12px] text-slate-700 dark:text-slate-300">
+                  ಹವಾಮಾನ ನಿಯಂತ್ರಿತ ಹೈಟೆಕ್ ಫಾರ್ಮ್ ಸೆಟಪ್, ನಬಾರ್ಡ್/ಸರ್ಕಾರಿ ಸಬ್ಸಿಡಿಗಾಗಿ ಡಿಪಿಆರ್ (DPR) ಮತ್ತು ಸ್ಥಳೀಯ ಚಿಲ್ಲರೆ ಮಾರುಕಟ್ಟೆ ನೆಟ್‌ವರ್ಕ್.
+                </p>
+              </div>
             </div>
-          </section>
-        </div>
-      </article>
-    </main>
+
+            <h2 className="text-[16px] md:text-[18px] font-bold text-slate-900 dark:text-white mb-4 border-l-4 border-brand-blue pl-3">
+              Coverage Across Mysuru Region
+            </h2>
+            <p className="text-slate-700 dark:text-slate-300 text-[12px] md:text-[13px] leading-relaxed mb-4">
+              ಮೈಸೂರು ನಗರ ಮತ್ತು ಸುತ್ತಮುತ್ತಲಿನ ಎಲ್ಲಾ ತಾಲ್ಲೂಕುಗಳಲ್ಲಿ ನಮ್ಮ ಸೇವೆಗಳು ಲಭ್ಯವಿದೆ:
+            </p>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+              <li className="flex items-start gap-3 text-[12px] md:text-[13px] text-slate-700 dark:text-slate-300 bg-black/5 dark:bg-white/5 p-3 rounded-xl">
+                <MapPin className="text-brand-blue shrink-0 mt-0.5" size={16} />
+                <span><strong>City Hubs:</strong> Gokulam, Jayalakshmipuram, Vijayanagar, Kuvempunagar, Saraswathipuram, Hebbal, Bogadi, Yadavagiri.</span>
+              </li>
+              <li className="flex items-start gap-3 text-[12px] md:text-[13px] text-slate-700 dark:text-slate-300 bg-black/5 dark:bg-white/5 p-3 rounded-xl">
+                <MapPin className="text-brand-blue shrink-0 mt-0.5" size={16} />
+                <span><strong>Surrounding Towns:</strong> Nanjangud, Hunsur, T. Narasipura, Mandya, Srirangapatna, K.R. Nagar, Bannur.</span>
+              </li>
+            </ul>
+
+            <h2 className="text-[16px] md:text-[18px] font-bold text-slate-900 dark:text-white mb-6 border-l-4 border-brand-blue pl-3">
+              Frequently Asked Questions (FAQ)
+            </h2>
+            <div className="space-y-3 mb-12">
+              {faqs.map((faq, index) => (
+                <div key={index} className="p-5 rounded-2xl dark:bg-white/5 bg-black/5 border border-white/5 space-y-2">
+                  <h4 className="font-bold text-slate-900 dark:text-white text-[13px]">
+                    {faq.q}
+                  </h4>
+                  <p className="text-[12px] dark:text-slate-300 text-slate-700 leading-relaxed font-medium">
+                    {faq.a}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA Section */}
+            <div className="bg-black/5 dark:bg-white/5 border border-brand-blue/20 p-6 md:p-8 rounded-2xl text-center mt-10">
+              <h2 className="text-[16px] md:text-[18px] font-bold text-slate-900 dark:text-white mb-6">
+                Ready to Start Your Mushroom Business in Mysuru?
+              </h2>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="https://wa.me/919203544140" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] hover:bg-[#25D366]/90 text-white px-8 py-3 rounded-xl font-bold flex items-center justify-center gap-2 text-[12px] transition-all shadow-lg w-full sm:w-auto">
+                  <MessageSquare size={16} /> WhatsApp Us: 9203544140
+                </a>
+                <Link href="/contact" className="bg-white/10 hover:bg-white/20 text-slate-900 dark:text-white border border-slate-900/10 dark:border-white/20 px-8 py-3 rounded-xl font-bold flex items-center justify-center gap-2 text-[12px] transition-all w-full sm:w-auto">
+                  <Calendar size={14} /> Book Consultation
+                </Link>
+              </div>
+            </div>
+          </div>
+        </article>
+      </main>
+    </>
   );
 }

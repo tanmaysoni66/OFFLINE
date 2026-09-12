@@ -4,9 +4,9 @@ import { Metadata } from "next";
 import { MapPin, ChevronRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Maharashtra Mushroom Farming Training & Farm Setups",
+  title: "Maharashtra Mushroom Farming | Training & Farm Setup Resources",
   description:
-    "Find the best mushroom farming training, farm setups, and expert advice in Maharashtra. Start your commercial mushroom business today.",
+    "Find the best mushroom farming training, commercial setups, and expert advice across cities in Maharashtra including Mumbai, Pune, Nagpur, Aurangabad, and Nashik.",
   alternates: {
     canonical: "https://organicmushroomsfarm.com/states/maharashtra",
   },
@@ -15,17 +15,17 @@ export const metadata: Metadata = {
     follow: true,
   },
   openGraph: {
-    title: "Maharashtra Mushroom Farming Training & Farm Setups",
+    title: "Maharashtra Mushroom Farming | Training & Farm Setup Resources",
     description:
-      "Find the best mushroom farming training, farm setups, and expert advice in Maharashtra. Start your commercial mushroom business today.",
+      "Find the best mushroom farming training, commercial setups, and expert advice across cities in Maharashtra including Mumbai, Pune, Nagpur, Aurangabad, and Nashik.",
     url: "https://organicmushroomsfarm.com/states/maharashtra",
     type: "website",
   },
   twitter: {
     card: "summary",
-    title: "Maharashtra Mushroom Farming Training & Farm Setups",
+    title: "Maharashtra Mushroom Farming | Training & Farm Setup Resources",
     description:
-      "Find the best mushroom farming training, farm setups, and expert advice in Maharashtra. Start your commercial mushroom business today.",
+      "Find the best mushroom farming training, commercial setups, and expert advice across cities in Maharashtra including Mumbai, Pune, Nagpur, Aurangabad, and Nashik.",
   },
 };
 
@@ -56,7 +56,7 @@ export default function MaharashtraPage() {
         "@type": "WebPage",
         "@id": "https://organicmushroomsfarm.com/states/maharashtra#webpage",
         url: "https://organicmushroomsfarm.com/states/maharashtra",
-        name: "Maharashtra Mushroom Farming Training & Resources",
+        name: "Maharashtra Mushroom Farming Resources",
         isPartOf: {
           "@id": "https://organicmushroomsfarm.com/#website",
         },
@@ -106,7 +106,7 @@ export default function MaharashtraPage() {
         </div>
 
         <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <nav className="mb-6 flex items-center gap-2 text-[10px] text-slate-500 dark:text-slate-400">
+          <nav className="mb-6 flex flex-wrap items-center gap-2 text-[10px] text-slate-500 dark:text-slate-400">
             <Link href="/" className="hover:text-brand-blue transition-colors">
               Home
             </Link>
@@ -129,27 +129,24 @@ export default function MaharashtraPage() {
 
           <section className="glass bg-white/5 dark:bg-white/5 backdrop-blur-md border border-white/10 dark:border-white/10 rounded-2xl p-6 md:p-8 shadow-lg">
             <p className="text-[11px] leading-relaxed text-slate-700 dark:text-slate-300 mb-4">
-              Maharashtra is emerging as one of the most prominent states in India for commercial mushroom farming. With a growing demand for fresh and highly nutritious agricultural products, organic mushroom farming is highly profitable here. Whether you want to start a small-scale oyster mushroom unit or a large-scale automated white button mushroom facility, we provide end-to-end guidance and resources.
+              Maharashtra is a prime state for mushroom farming due to its massive urban markets, well-developed logistics networks, and varying climate zones suitable for year-round production of Button, Oyster, and Milky mushrooms. 
             </p>
 
             <p className="text-[11px] leading-relaxed text-slate-700 dark:text-slate-300 mb-4">
-              For growers based in the financial capital, you can get extensive mushroom training, growing tips, and farm setups in{" "}
-              <Link href="/cities/maharashtra/mumbai" className="text-brand-blue font-semibold hover:underline">Mumbai</Link>. 
-              If you are located closer to the educational and IT hub, we offer comprehensive mushroom training, growing tips, and classes in{" "}
-              <Link href="/locations/pune" className="text-brand-blue font-semibold hover:underline">Pune</Link>.
-            </p>
-
-            <p className="text-[11px] leading-relaxed text-slate-700 dark:text-slate-300 mb-4">
-              Entrepreneurs and farmers in the Vidarbha region can also benefit from our expert networks; you can get mushroom training, growing tips, and farm setups in{" "}
-              <Link href="/cities/maharashtra/nagpur" className="text-brand-blue font-semibold hover:underline">Nagpur</Link>. 
-              Additionally, we have specialized programs aimed at empowering local communities, where you can start a mushroom farm with Women Self-Help Groups in{" "}
-              <Link href="/cities/maharashtra/aurangabad" className="text-brand-blue font-semibold hover:underline">Aurangabad</Link>. 
-              Finally, for those in the agricultural heartlands, you can get mushroom training, seeds, farm setups, and expert advice in{" "}
-              <Link href="/cities/maharashtra/nashik" className="text-brand-blue font-semibold hover:underline">Nashik</Link>.
+              We provide localized resources and expert guidance across the state's major cities. Whether you are looking for advanced mushroom training and commercial setups in{" "}
+              <Link href="/cities/maharashtra/mumbai" className="text-brand-blue font-semibold hover:underline">Mumbai</Link> or{" "}
+              <Link href="/locations/pune" className="text-brand-blue font-semibold hover:underline">Pune</Link>, 
+              exploring cultivation tips and setups in{" "}
+              <Link href="/cities/maharashtra/nagpur" className="text-brand-blue font-semibold hover:underline">Nagpur</Link>, 
+              starting a venture with Women Self-Help Groups in{" "}
+              <Link href="/cities/maharashtra/aurangabad" className="text-brand-blue font-semibold hover:underline">Aurangabad</Link>, 
+              or seeking seeds and expert advice in{" "}
+              <Link href="/cities/maharashtra/nashik" className="text-brand-blue font-semibold hover:underline">Nashik</Link>, 
+              our network connects you with the right support.
             </p>
 
             <p className="text-[11px] leading-relaxed text-slate-700 dark:text-slate-300">
-              Our turnkey solutions encompass everything from high-yield spawn (seeds) to modern climate control systems required for precision farming. We aim to equip you with standard operating procedures (SOPs), marketing support, and the technical know-how to ensure maximum ROI on your commercial mushroom farming business in Maharashtra.
+              Select any of the major hubs linked above to access specific details regarding state subsidies, hands-on training centers, premium spawn availability, and end-to-end turnkey project execution tailored for Maharashtra's agricultural environment.
             </p>
           </section>
         </article>

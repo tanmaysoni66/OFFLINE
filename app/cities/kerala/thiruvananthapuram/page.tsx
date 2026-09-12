@@ -1,353 +1,258 @@
 import React from "react";
 import Link from "next/link";
-import type { Metadata } from "next";
-import { MapPin, Calendar, Clock, ChevronRight, Phone, Mail, CheckCircle2, Sparkles } from "lucide-react";
-
-export const dynamic = "force-static";
+import { Metadata } from "next";
+import { Phone, Calendar, ArrowRight, CheckCircle2, MapPin, MessageSquare } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Mushroom Farming in Thiruvananthapuram: The New Cash Crop of Kerala's Capital",
+  title: "Mushroom Farming in Thiruvananthapuram, Kerala | Training & Spawn",
   description:
-    "Discover why commercial mushroom farming is rapidly emerging as the ultimate high-profit, space-saving business model in Thiruvananthapuram, Kerala.",
+    "Start commercial mushroom farming in Thiruvananthapuram, Kerala. Expert training (Malayalam/English), premium spawn, turnkey farm setups, and buyback/marketing guidance.",
   alternates: {
     canonical: "https://organicmushroomsfarm.com/cities/kerala/thiruvananthapuram",
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
   },
   openGraph: {
-    title: "Mushroom Farming in Thiruvananthapuram: The New Cash Crop of Kerala's Capital",
+    title: "Mushroom Farming in Thiruvananthapuram, Kerala | Training & Spawn",
     description:
-      "Discover why commercial mushroom farming is rapidly emerging as the ultimate high-profit, space-saving business model in Thiruvananthapuram, Kerala.",
+      "Start commercial mushroom farming in Thiruvananthapuram, Kerala. Expert training (Malayalam/English), premium spawn, turnkey farm setups, and buyback/marketing guidance.",
     url: "https://organicmushroomsfarm.com/cities/kerala/thiruvananthapuram",
-    siteName: "Organic Mushroom Farm",
     type: "article",
-    locale: "en_IN",
-    publishedTime: "2026-08-12T08:00:00+05:30",
-    modifiedTime: "2026-08-12T08:00:00+05:30",
-    authors: ["Organic Mushroom Farm Editorial Team"],
-    section: "Regional Agriculture",
   },
   twitter: {
     card: "summary",
-    title: "Mushroom Farming in Thiruvananthapuram: The New Cash Crop of Kerala's Capital",
+    title: "Mushroom Farming in Thiruvananthapuram, Kerala | Training & Spawn",
     description:
-      "Discover why commercial mushroom farming is rapidly emerging as the ultimate high-profit, space-saving business model in Thiruvananthapuram, Kerala.",
+      "Start commercial mushroom farming in Thiruvananthapuram, Kerala. Expert training (Malayalam/English), premium spawn, turnkey farm setups, and buyback/marketing guidance.",
   },
 };
 
-export default function ThiruvananthapuramGuidePage() {
-  const pageUrl = "https://organicmushroomsfarm.com/cities/kerala/thiruvananthapuram";
-  const publishedDate = "2026-08-12T08:00:00+05:30";
-  const modifiedDate = "2026-08-12T08:00:00+05:30";
-
-  const structuredData = {
+export default function ArticleThiruvananthapuramTraining() {
+  const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Organization",
         "@id": "https://organicmushroomsfarm.com/#organization",
-        name: "Organic Mushroom Farm",
-        url: "https://organicmushroomsfarm.com",
+        name: "Organic Mushrooms Farm",
+        url: "https://organicmushroomsfarm.com/",
         logo: {
           "@type": "ImageObject",
-          url: "https://organicmushroomsfarm.com/images/logo.png",
-        },
-        contactPoint: {
-          "@type": "ContactPoint",
-          telephone: "+91-9203544140",
-          contactType: "customer service",
-          areaServed: "IN",
-          availableLanguage: ["en", "hi", "ml"],
+          url: "https://organicmushroomsfarm.com/icon.png",
         },
       },
       {
         "@type": "WebSite",
         "@id": "https://organicmushroomsfarm.com/#website",
-        url: "https://organicmushroomsfarm.com",
-        name: "Organic Mushroom Farm",
+        url: "https://organicmushroomsfarm.com/",
+        name: "Organic Mushrooms Farm",
         publisher: {
           "@id": "https://organicmushroomsfarm.com/#organization",
         },
       },
       {
         "@type": "WebPage",
-        "@id": `${pageUrl}#webpage`,
-        url: pageUrl,
-        name: "Mushroom Farming in Thiruvananthapuram: The New Cash Crop of Kerala's Capital",
-        description:
-          "Discover why commercial mushroom farming is rapidly emerging as the ultimate high-profit, space-saving business model in Thiruvananthapuram, Kerala.",
+        "@id": "https://organicmushroomsfarm.com/cities/kerala/thiruvananthapuram#webpage",
+        url: "https://organicmushroomsfarm.com/cities/kerala/thiruvananthapuram",
+        name: "Mushroom Farming in Thiruvananthapuram, Kerala | Training & Spawn",
         isPartOf: {
           "@id": "https://organicmushroomsfarm.com/#website",
         },
-        breadcrumb: {
-          "@id": `${pageUrl}#breadcrumb`,
+        about: {
+          "@id": "https://organicmushroomsfarm.com/#organization",
         },
+        description:
+          "Start commercial mushroom farming in Thiruvananthapuram, Kerala. Expert training (Malayalam/English), premium spawn, turnkey farm setups, and buyback/marketing guidance.",
       },
       {
         "@type": "BreadcrumbList",
-        "@id": `${pageUrl}#breadcrumb`,
         itemListElement: [
           {
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://organicmushroomsfarm.com",
+            item: "https://organicmushroomsfarm.com/",
           },
           {
             "@type": "ListItem",
             position: 2,
-            name: "Cities",
-            item: "https://organicmushroomsfarm.com/cities",
+            name: "States",
+            item: "https://organicmushroomsfarm.com/states",
           },
           {
             "@type": "ListItem",
             position: 3,
             name: "Kerala",
-            item: "https://organicmushroomsfarm.com/cities/kerala/thiruvananthapuram",
+            item: "https://organicmushroomsfarm.com/states/kerala",
           },
           {
             "@type": "ListItem",
             position: 4,
             name: "Thiruvananthapuram",
-            item: pageUrl,
+            item: "https://organicmushroomsfarm.com/cities/kerala/thiruvananthapuram",
           },
         ],
       },
       {
         "@type": "Article",
-        "@id": `${pageUrl}#article`,
-        headline: "Mushroom Farming in Thiruvananthapuram: The New Cash Crop of Kerala's Capital",
+        headline: "Mushroom Farming in Thiruvananthapuram, Kerala | Training & Spawn",
         description:
-          "Discover why commercial mushroom farming is rapidly emerging as the ultimate high-profit, space-saving business model in Thiruvananthapuram, Kerala.",
-        datePublished: publishedDate,
-        dateModified: modifiedDate,
-        mainEntityOfPage: {
-          "@id": `${pageUrl}#webpage`,
-        },
+          "Start commercial mushroom farming in Thiruvananthapuram, Kerala. Expert training (Malayalam/English), premium spawn, turnkey farm setups, and buyback/marketing guidance.",
         author: {
           "@type": "Organization",
-          name: "Organic Mushroom Farm Editorial Team",
+          name: "Organic Mushrooms Farm",
         },
         publisher: {
-          "@id": "https://organicmushroomsfarm.com/#organization",
+          "@type": "Organization",
+          name: "Organic Mushrooms Farm",
+          logo: {
+            "@type": "ImageObject",
+            url: "https://organicmushroomsfarm.com/icon.png",
+          },
+        },
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": "https://organicmushroomsfarm.com/cities/kerala/thiruvananthapuram",
         },
       },
     ],
   };
 
+  const faqs = [
+    { q: "1. തിരുവനന്തപുരത്ത് മഷ്റൂം ഫാമിംഗ് തുടങ്ങാൻ എത്ര ചിലവ് വരും?", a: "ചെറിയ തോതിൽ ആരംഭിക്കാൻ 5,000-10,000 രൂപ മതിയാകും. കൊമേഴ്‌സ്യൽ ഫാമിംഗിന് കസ്റ്റമൈസ്ഡ് പ്രൊജക്റ്റ് പ്ലാൻ ആവശ്യമാണ്." },
+    { q: "2. ട്രിവാൻഡ്രത്തിന്റെ കാലാവസ്ഥയ്ക്ക് ഏറ്റവും അനുയോജ്യമായ മഷ്റൂം ഏതാണ്?", a: "ഉയർന്ന ഈർപ്പമുള്ള ഉഷ്ണമേഖലാ കാലാവസ്ഥയായതിനാൽ Oyster Mushroom ഉം Milky Mushroom ഉം സ്വാഭാവികമായി തന്നെ മികച്ച വിളവ് തരുന്നു." },
+    { q: "3. ഉയർന്ന ഗുണനിലവാരമുള്ള സ്പോൺ (വിത്ത്) എവിടെ ലഭിക്കും?", a: "Organic Mushrooms Farm-ൽ നിന്ന് F1-Gen, ലാബ്-പരിശോധിച്ച സ്പോൺ തിരുവനന്തപുരത്ത് വേഗത്തിൽ ഡോർസ്റ്റെപ്പിൽ എത്തിച്ചു നൽകുന്നു." },
+    { q: "4. ഉൽപ്പാദിപ്പിച്ച മഷ്റൂം എവിടെ വിൽക്കാൻ സാധിക്കും?", a: "ടെക്നോപാർക്ക് കാമ്പസ്, സൂപ്പർമാർക്കറ്റുകൾ, കോവളം/വർക്കല റിസോർട്ടുകൾ, പ്രീമിയം ഓർഗാനിക് സ്റ്റോറുകൾ എന്നിവയിൽ വലിയ ഡിമാൻഡുണ്ട്. മാർക്കറ്റിംഗ് സപ്പോർട്ടും ഞങ്ങൾ നൽകുന്നു." }
+  ];
+
   return (
-    <main
-      id="thiruvananthapuram-mushroom-guide-page"
-      className="min-h-screen bg-slate-50 dark:bg-slate-950 pt-20 pb-16 text-slate-800 dark:text-slate-200"
-    >
+    <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-
-      {/* Breadcrumb Navigation */}
-      <nav aria-label="Breadcrumb" className="max-w-4xl mx-auto px-4 sm:px-6 pt-4 pb-2">
-        <ol className="flex items-center flex-wrap gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-medium">
-          <li>
-            <Link href="/" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-              Home
-            </Link>
-          </li>
-          <li aria-hidden="true" className="text-slate-400">
-            <ChevronRight className="w-3.5 h-3.5" />
-          </li>
-          <li>
-            <Link href="/cities" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-              Cities
-            </Link>
-          </li>
-          <li aria-hidden="true" className="text-slate-400">
-            <ChevronRight className="w-3.5 h-3.5" />
-          </li>
-          <li aria-current="page" className="text-slate-900 dark:text-slate-100 font-semibold truncate max-w-[220px] sm:max-w-none">
-            Thiruvananthapuram, Kerala
-          </li>
-        </ol>
-      </nav>
-
-      {/* Main Article Container - Compact Editorial Flow Without Artificial Card Boxes */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6">
-        {/* Header Section */}
-        <header className="mb-4">
-          <div className="flex items-center gap-2 mb-2 flex-wrap">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/40">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping inline-block" />
-              <MapPin className="w-3 h-3 text-emerald-600 dark:text-emerald-400" /> Regional Guide • Kerala
-            </span>
-            <span className="inline-flex items-center gap-1 text-[11px] text-slate-500 dark:text-slate-400">
-              <Calendar className="w-3 h-3" /> August 12, 2026
-            </span>
-            <span className="inline-flex items-center gap-1 text-[11px] text-slate-500 dark:text-slate-400">
-              <Clock className="w-3 h-3" /> 5 min read
-            </span>
-          </div>
-
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white leading-tight tracking-tight mb-3">
-            Mushroom Farming in Thiruvananthapuram:{" "}
-            <span className="gradient-text">The New Cash Crop of Kerala&apos;s Capital</span>
-          </h1>
-
-          <p className="text-xs sm:text-[13.5px] font-medium text-slate-700 dark:text-slate-300 leading-relaxed">
-            Thiruvananthapuram (Trivandrum) is celebrated for its pristine coastline, grand heritage temples, and expanding IT corridor. But alongside the bustling tech campuses of Technopark and the world-renowned wellness tourism of Kovalam and Varkala, a quiet agricultural revolution is taking place across southern Kerala.
-          </p>
-        </header>
-
-        {/* Clean Editorial Flow - No Artificial Boxes, Compact Text Size for Minimal Scrolling */}
-        <div className="space-y-4 text-xs sm:text-[13.5px] leading-relaxed text-slate-700 dark:text-slate-300">
-          <p>
-            For forward-thinking entrepreneurs, students, and progressive farmers in southern Kerala, commercial mushroom farming is rapidly emerging as the ultimate high-profit, space-saving business model. If you are looking to start a lucrative agri-business in the capital city, here is why Thiruvananthapuram offers the ideal environment for a mushroom startup.
-          </p>
-
-          {/* Section 1 */}
-          <section className="pt-2">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 border-l-4 border-emerald-500 pl-3 flex items-center gap-1.5">
-              1. Nature&apos;s Superpower: The Tropical Climate
-            </h2>
-            <p className="mb-2">
-              In most parts of northern and central India, commercial mushroom farmers spend heavily on high-pressure misting systems and air humidifiers to maintain fruiting chamber humidity. In Kerala, nature does the heavy lifting for free.
-            </p>
-            <p className="mb-2">
-              Thiruvananthapuram enjoys naturally high relative atmospheric humidity (75%–85%) throughout most of the year. This tropical microclimate provides the exact moisture conditions needed for rapid vegetative mycelium colonization and abundant pinhead formation. By choosing resilient species like{" "}
-              <Link href="/services/oyster-mushroom" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                Oyster Mushrooms (Pleurotus ostreatus)
-              </Link>{" "}
-              and tropical{" "}
-              <Link href="/services/milky-mushroom" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                Milky Mushrooms (Calocybe indica)
-              </Link>
-              , local growers achieve commercial harvests with rock-bottom power consumption.
-            </p>
-          </section>
-
-          {/* Section 2 */}
-          <section className="pt-2">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 border-l-4 border-emerald-500 pl-3 flex items-center gap-1.5">
-              2. A Premium, Health-Conscious Urban Market
-            </h2>
-            <p className="mb-2">
-              The presence of Technopark—one of India&apos;s largest IT parks—combined with high literacy and affluent residential clusters creates an insatiable market for clean, organic produce:
-            </p>
-
-            <div className="space-y-2 pl-1 mb-2">
-              <div className="flex gap-2 items-start">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900 dark:text-white">Tech Professionals &amp; Modern Retail:</strong>
-                  {" "}Working IT professionals actively purchase fresh organic mushrooms for their low-calorie, zero-cholesterol, and protein-rich dietary value from urban supermarkets and direct farm-to-table delivery apps.
-                </div>
-              </div>
-
-              <div className="flex gap-2 items-start">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900 dark:text-white">Ayurvedic Resorts &amp; Coastal Tourism:</strong>
-                  {" "}Luxury wellness centers across Kovalam and Varkala regularly procure premium, chemical-free fresh mushrooms to cater to international health tourists, providing growers with long-term B2B supply contracts at premium margins.
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Section 3 */}
-          <section className="pt-2">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 border-l-4 border-emerald-500 pl-3 flex items-center gap-1.5">
-              3. Abundant, Low-Cost Agricultural By-Products
-            </h2>
-            <p className="mb-2">
-              Mushroom substrate preparation relies on agricultural residues. Thiruvananthapuram and adjoining districts have immediate access to cost-effective raw materials:
-            </p>
-            <p className="mb-2">
-              Paddy straw from local river valleys, dried coconut leaf shreds, and rubber-wood sawdust from regional sawmills are readily available at nominal prices. Converting these abundant local by-products into high-value edible mushrooms slashes operating expenditure (OpEx), directly multiplying your net profit margins.
-            </p>
-          </section>
-
-          {/* Section 4 */}
-          <section className="pt-2">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 border-l-4 border-emerald-500 pl-3 flex items-center gap-1.5">
-              4. High Yields in Dense Urban Footprints
-            </h2>
-            <p className="mb-2">
-              With high land costs and dense settlements across Kerala, conventional farming on acres of open soil is out of reach for most urban residents. Indoor vertical mushroom farming completely solves this limitation.
-            </p>
-            <p className="mb-2">
-              Using multi-tier rack structures, an unused 500 sq ft terrace shed, backyard godown, or spare ground-floor room can accommodate over 400–600 bags, yielding 250–350 kg of fresh mushrooms monthly. You can evaluate commercial returns using our{" "}
-              <Link href="/mushroomfarmingcalculators" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                commercial mushroom ROI calculator
-              </Link>
-              , or review detailed farm layouts in our{" "}
-              <Link href="/project-specs" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                project engineering specifications
-              </Link>
-              .
-            </p>
-          </section>
-
-          {/* Section 5 */}
-          <section className="pt-2">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 border-l-4 border-emerald-500 pl-3 flex items-center gap-1.5">
-              Start Your Agri-Business in God&apos;s Own Country
-            </h2>
-            <p className="mb-2">
-              The local demand in Thiruvananthapuram significantly outpaces current domestic production, with vast quantities still imported from neighboring states. However, high natural humidity also increases the risk of contamination (such as green mold) if hygiene is neglected.
-            </p>
-            <p className="mb-2">
-              Achieving consistent commercial success requires high-vigor, certified{" "}
-              <Link href="/spawn-seeds" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                laboratory mushroom spawn
-              </Link>{" "}
-              and structured practical training. Discover our comprehensive curriculum at our{" "}
-              <Link href="/training" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                mushroom training programs
-              </Link>{" "}
-              or browse other regional models on our{" "}
-              <Link href="/cities" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                all-India cities guide
-              </Link>
-              .
-            </p>
-          </section>
-
-          {/* Clean Glass CTA Box (Matching Original React Vite Glass Style) */}
-          <section className="glass p-5 sm:p-6 rounded-2xl border dark:border-white/10 border-slate-200 text-center mt-6 bg-emerald-500/5">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-1.5 flex items-center justify-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-emerald-500" /> Ready to Grow in Thiruvananthapuram?
-            </h2>
-            <p className="text-xs text-slate-600 dark:text-slate-300 max-w-xl mx-auto mb-3.5 leading-relaxed">
-              Start your commercial mushroom cultivation journey in Kerala. Get pure spawn, scientific SOPs, and complete turnkey setups from{" "}
-              <strong className="text-slate-900 dark:text-white">Organic Mushrooms Farm</strong>.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5">
-              <a
-                href="tel:9203544140"
-                className="btn-primary w-full sm:w-auto px-5 py-2 rounded-full font-bold text-xs flex items-center justify-center gap-2 shadow-sm"
-              >
-                <Phone className="w-3.5 h-3.5" /> Call / WhatsApp (+91 9203544140)
-              </a>
-              <Link
-                href="/contact"
-                className="w-full sm:w-auto px-5 py-2 rounded-full font-semibold text-xs border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center justify-center gap-2"
-              >
-                <Mail className="w-3.5 h-3.5" /> Contact Us Online
-              </Link>
-            </div>
-          </section>
+      <main className="pt-24 pb-16 min-h-screen bg-transparent relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none -z-10">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-blue/20 rounded-full blur-[100px] opacity-50 mix-blend-screen" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-500/20 rounded-full blur-[100px] opacity-50 mix-blend-screen" />
         </div>
-      </article>
-    </main>
+
+        <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <header className="mb-12 text-center">
+            <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4">
+              Mushroom Farming in Thiruvananthapuram (കൂൺ കൃഷി തിരുവനന്തപുരം)
+            </h1>
+            <div className="flex items-center justify-center gap-2 text-brand-blue font-medium text-[12px] mb-8">
+              <MapPin size={16} />
+              <span>Serving Thiruvananthapuram, Technopark, Kazhakkoottam, Kowdiar & South Kerala</span>
+            </div>
+          </header>
+
+          <div className="glass p-8 md:p-10 rounded-[2.5rem] border border-black/5 dark:border-white/5 shadow-2xl bg-white/5 dark:bg-white/5 backdrop-blur-md">
+            
+            <p className="text-slate-700 dark:text-slate-300 text-[12px] md:text-[13px] leading-relaxed mb-6 font-medium">
+              കേരളത്തിന്റെ തലസ്ഥാനമായ തിരുവനന്തപുരം (Trivandrum) ഐടി ഹബ്ബുകൾ, ആയുർവേദ വെൽനസ്സ് സെന്ററുകൾ, കൂടാതെ വർദ്ധിച്ചു വരുന്ന ആരോഗ്യബോധമുള്ള സമൂഹത്താൽ സമ്പന്നമാണ്. ടെക്നോപാർക്കിലെ ഐടി പ്രൊഫഷണലുകൾ മുതൽ കോവളം, വർക്കല തുടങ്ങിയ വിനോദസഞ്ചാര കേന്ദ്രങ്ങളിലെ ഹോട്ടലുകൾ വരെ പ്രീമിയം ഓർഗാനിക് മഷ്റൂമുകൾക്ക് വൻ ഡിമാൻഡാണ് നൽകുന്നത്.
+            </p>
+            <p className="text-slate-700 dark:text-slate-300 text-[12px] md:text-[13px] leading-relaxed mb-10 font-medium">
+              കേരളത്തിന്റെ സവിശേഷമായ ഈർപ്പമുള്ള ഉഷ്ണമേഖലാ കാലാവസ്ഥയും സുലഭമായ വൈക്കോലും കാരണം കുറഞ്ഞ ചിലവിൽ ഉയർന്ന ലാഭം നേടാൻ കൂൺ കൃഷി (Mushroom Farming) ഏറ്റവും മികച്ചൊരു അഗ്രി-ബിസിനസ്സ് സംരംഭമാണ്.
+            </p>
+
+            <h2 className="text-[16px] md:text-[18px] font-bold text-slate-900 dark:text-white mb-4 border-l-4 border-brand-blue pl-3">
+              Key Advantages of Mushroom Farming in Trivandrum
+            </h2>
+            <ul className="space-y-4 mb-8">
+              <li className="flex items-start gap-3 text-[12px] md:text-[13px] text-slate-700 dark:text-slate-300">
+                <CheckCircle2 className="text-brand-blue shrink-0 mt-0.5" size={16} />
+                <span><strong>Natural Humidity Advantage:</strong> ഉയർന്ന സ്വാഭാവിക അന്തരീക്ഷ ഈർപ്പം കാരണം ആർട്ടിഫിഷ്യൽ ഹ്യുമിഡിഫയറുകളുടെ ഉപയോഗവും കറന്റ് ബില്ലും വളരെ കുറവായിരിക്കും.</span>
+              </li>
+              <li className="flex items-start gap-3 text-[12px] md:text-[13px] text-slate-700 dark:text-slate-300">
+                <CheckCircle2 className="text-brand-blue shrink-0 mt-0.5" size={16} />
+                <span><strong>Tech-Savvy & Wellness Consumer Base:</strong> ടെക്നോപാർക്ക് നിവാസികൾ, ജിം ഉപഭോക്താക്കൾ, ആയുർവേദ വെൽനസ്സ് റിസോർട്ടുകൾ എന്നിവർ കെമിക്കൽ-ഫ്രീ ഓർഗാനിക് മഷ്റൂമുകൾക്ക് ഉയർന്ന വില നൽകാൻ താല്പര്യപ്പെടുന്നു.</span>
+              </li>
+              <li className="flex items-start gap-3 text-[12px] md:text-[13px] text-slate-700 dark:text-slate-300">
+                <CheckCircle2 className="text-brand-blue shrink-0 mt-0.5" size={16} />
+                <span><strong>Vertical Space Efficiency:</strong> കേരളത്തിൽ ഭൂമിയുടെ വില കൂടുതലായതിനാൽ അടച്ചിട്ട മുറിയിലോ വീടിന്റെ ടെറസിലോ വെർട്ടിക്കൽ റാക്കുകൾ ഉപയോഗിച്ച് കുറഞ്ഞ സ്ഥലത്ത് വലിയ ഉൽപ്പാദനം നടത്താം.</span>
+              </li>
+            </ul>
+
+            <h2 className="text-[16px] md:text-[18px] font-bold text-slate-900 dark:text-white mb-4 border-l-4 border-brand-blue pl-3">
+              Comprehensive Services We Offer
+            </h2>
+            <div className="space-y-6 mb-8">
+              <div className="bg-black/5 dark:bg-white/5 p-5 rounded-2xl border border-black/5 dark:border-white/5">
+                <h3 className="font-bold text-[14px] text-slate-900 dark:text-white mb-2">1. Hands-on Mushroom Training</h3>
+                <p className="text-[12px] text-slate-700 dark:text-slate-300">
+                  മലയാളത്തിലും ഇംഗ്ലീഷിലും പ്രായോഗിക ഓൺലൈൻ/ഓഫ്‌ലൈൻ ട്രെയിനിംഗ്—വൈക്കോൽ അണുവിമുക്തമാക്കൽ, സ്പോണിംഗ്, ഹ്യുമിഡിറ്റി കൺട്രോൾ, പാക്കിംഗ് എന്നിവ പഠിപ്പിക്കുന്നു.
+                </p>
+              </div>
+              
+              <div className="bg-black/5 dark:bg-white/5 p-5 rounded-2xl border border-black/5 dark:border-white/5">
+                <h3 className="font-bold text-[14px] text-slate-900 dark:text-white mb-2">2. Premium Mushroom Spawn Supply</h3>
+                <p className="text-[12px] text-slate-700 dark:text-slate-300">
+                  ഉയർന്ന വിളവ് ഉറപ്പുനൽകുന്ന F1-Gen, ലാബ് പരിശോധിച്ച ചിപ്പി (Oyster), പാൽക്കൂൺ (Milky) സ്പോണുകൾ വേഗത്തിൽ വിതരണം ചെയ്യുന്നു.
+                </p>
+              </div>
+
+              <div className="bg-black/5 dark:bg-white/5 p-5 rounded-2xl border border-black/5 dark:border-white/5">
+                <h3 className="font-bold text-[14px] text-slate-900 dark:text-white mb-2">3. Commercial Setups & Marketing Support</h3>
+                <p className="text-[12px] text-slate-700 dark:text-slate-300">
+                  വാണിജ്യാടിസ്ഥാനത്തിലുള്ള ഫാം ഡിസൈൻ, പോർട്ടബിൾ ഗ്രോ ചേമ്പറുകൾ, ബാങ്ക് സബ്‌സിഡിക്കുള്ള പ്രോജക്റ്റ് റിപ്പോർട്ടുകൾ (DPR) എന്നിവ നൽകുന്നു.
+                </p>
+              </div>
+            </div>
+
+            <h2 className="text-[16px] md:text-[18px] font-bold text-slate-900 dark:text-white mb-4 border-l-4 border-brand-blue pl-3">
+              Coverage Across Thiruvananthapuram Region
+            </h2>
+            <p className="text-slate-700 dark:text-slate-300 text-[12px] md:text-[13px] leading-relaxed mb-4">
+              നഗര-ഗ്രാമ വ്യത്യാസമില്ലാതെ തിരുവനന്തപുരത്തെ എല്ലാ പ്രദേശങ്ങളിലും ഞങ്ങളുടെ സേവനങ്ങൾ ലഭ്യമാണ്:
+            </p>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+              <li className="flex items-start gap-3 text-[12px] md:text-[13px] text-slate-700 dark:text-slate-300 bg-black/5 dark:bg-white/5 p-3 rounded-xl">
+                <MapPin className="text-brand-blue shrink-0 mt-0.5" size={16} />
+                <span><strong>Urban Belts:</strong> Technopark, Kazhakkoottam, Kowdiar, Pattom, Kesavadasapuram, Sreekaryam, Vazhuthacaud, Peroorkada.</span>
+              </li>
+              <li className="flex items-start gap-3 text-[12px] md:text-[13px] text-slate-700 dark:text-slate-300 bg-black/5 dark:bg-white/5 p-3 rounded-xl">
+                <MapPin className="text-brand-blue shrink-0 mt-0.5" size={16} />
+                <span><strong>Satellite & Rural Towns:</strong> Neyyattinkara, Attingal, Varkala, Kattakada, Nedumangad, Venjaramoodu.</span>
+              </li>
+            </ul>
+
+            <h2 className="text-[16px] md:text-[18px] font-bold text-slate-900 dark:text-white mb-6 border-l-4 border-brand-blue pl-3">
+              Frequently Asked Questions (FAQ)
+            </h2>
+            <div className="space-y-3 mb-12">
+              {faqs.map((faq, index) => (
+                <div key={index} className="p-5 rounded-2xl dark:bg-white/5 bg-black/5 border border-white/5 space-y-2">
+                  <h4 className="font-bold text-slate-900 dark:text-white text-[13px]">
+                    {faq.q}
+                  </h4>
+                  <p className="text-[12px] dark:text-slate-300 text-slate-700 leading-relaxed font-medium">
+                    {faq.a}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA Section */}
+            <div className="bg-black/5 dark:bg-white/5 border border-brand-blue/20 p-6 md:p-8 rounded-2xl text-center mt-10">
+              <h2 className="text-[16px] md:text-[18px] font-bold text-slate-900 dark:text-white mb-6">
+                Ready to Start Your Mushroom Business in Thiruvananthapuram?
+              </h2>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="https://wa.me/919203544140" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] hover:bg-[#25D366]/90 text-white px-8 py-3 rounded-xl font-bold flex items-center justify-center gap-2 text-[12px] transition-all shadow-lg w-full sm:w-auto">
+                  <MessageSquare size={16} /> WhatsApp Us: 9203544140
+                </a>
+                <Link href="/contact" className="bg-white/10 hover:bg-white/20 text-slate-900 dark:text-white border border-slate-900/10 dark:border-white/20 px-8 py-3 rounded-xl font-bold flex items-center justify-center gap-2 text-[12px] transition-all w-full sm:w-auto">
+                  <Calendar size={14} /> Book Consultation
+                </Link>
+              </div>
+            </div>
+          </div>
+        </article>
+      </main>
+    </>
   );
 }

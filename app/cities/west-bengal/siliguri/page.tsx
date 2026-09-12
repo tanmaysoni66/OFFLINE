@@ -1,343 +1,258 @@
 import React from "react";
 import Link from "next/link";
-import type { Metadata } from "next";
-import {
-  MapPin,
-  Calendar,
-  Clock,
-  ChevronRight,
-  Phone,
-  Mail,
-  Sparkles,
-  CheckCircle2,
-  Mountain,
-  CloudRain,
-  Tractor,
-  TrendingUp,
-  Store,
-} from "lucide-react";
-
-export const dynamic = "force-static";
+import { Metadata } from "next";
+import { Phone, Calendar, ArrowRight, CheckCircle2, MapPin, MessageSquare } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Why Siliguri is the Ultimate Hub for Mushroom Farming in West Bengal",
+  title: "Mushroom Farming in Siliguri, West Bengal | Training & Spawn",
   description:
-    "Discover why Siliguri is the perfect location for your mushroom farm, offering a high-profit, low-space business model with an unparalleled strategic advantage.",
+    "Start commercial mushroom farming in Siliguri, Gateway to Northeast India. Expert online/offline training (Bengali/Hindi/English), premium spawn, and turnkey setup.",
   alternates: {
     canonical: "https://organicmushroomsfarm.com/cities/west-bengal/siliguri",
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
   },
   openGraph: {
-    title:
-      "Why Siliguri is the Ultimate Hub for Mushroom Farming in West Bengal 🌿",
+    title: "Mushroom Farming in Siliguri, West Bengal | Training & Spawn",
     description:
-      "Discover why Siliguri is the perfect location for your mushroom farm, offering a high-profit, low-space business model with an unparalleled strategic advantage.",
+      "Start commercial mushroom farming in Siliguri, Gateway to Northeast India. Expert online/offline training (Bengali/Hindi/English), premium spawn, and turnkey setup.",
     url: "https://organicmushroomsfarm.com/cities/west-bengal/siliguri",
-    siteName: "Organic Mushroom Farm",
     type: "article",
-    locale: "en_IN",
-    publishedTime: "2026-08-12T08:00:00+05:30",
-    modifiedTime: "2026-08-12T08:00:00+05:30",
-    authors: ["Organic Mushroom Farm Editorial Team"],
-    section: "Regional Guide",
   },
   twitter: {
     card: "summary",
-    title:
-      "Why Siliguri is the Ultimate Hub for Mushroom Farming in West Bengal 🌿",
+    title: "Mushroom Farming in Siliguri, West Bengal | Training & Spawn",
     description:
-      "Discover why Siliguri is the perfect location for your mushroom farm, offering a high-profit, low-space business model with an unparalleled strategic advantage.",
+      "Start commercial mushroom farming in Siliguri, Gateway to Northeast India. Expert online/offline training (Bengali/Hindi/English), premium spawn, and turnkey setup.",
   },
 };
 
-export default function SiliguriMushroomFarmingPage() {
-  const pageUrl =
-    "https://organicmushroomsfarm.com/cities/west-bengal/siliguri";
-  const publishedDate = "2026-08-12T08:00:00+05:30";
-  const modifiedDate = "2026-08-12T08:00:00+05:30";
-
-  const structuredData = {
+export default function ArticleSiliguriTraining() {
+  const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Organization",
         "@id": "https://organicmushroomsfarm.com/#organization",
-        name: "Organic Mushroom Farm",
-        url: "https://organicmushroomsfarm.com",
+        name: "Organic Mushrooms Farm",
+        url: "https://organicmushroomsfarm.com/",
         logo: {
           "@type": "ImageObject",
-          url: "https://organicmushroomsfarm.com/images/logo.png",
-        },
-        contactPoint: {
-          "@type": "ContactPoint",
-          telephone: "+91-9203544140",
-          contactType: "customer service",
-          areaServed: "IN",
-          availableLanguage: ["en", "hi", "bn"],
+          url: "https://organicmushroomsfarm.com/icon.png",
         },
       },
       {
         "@type": "WebSite",
         "@id": "https://organicmushroomsfarm.com/#website",
-        url: "https://organicmushroomsfarm.com",
-        name: "Organic Mushroom Farm",
+        url: "https://organicmushroomsfarm.com/",
+        name: "Organic Mushrooms Farm",
         publisher: {
           "@id": "https://organicmushroomsfarm.com/#organization",
         },
       },
       {
         "@type": "WebPage",
-        "@id": `${pageUrl}#webpage`,
-        url: pageUrl,
-        name: "Why Siliguri is the Ultimate Hub for Mushroom Farming in West Bengal",
-        description:
-          "Discover why Siliguri is the perfect location for your mushroom farm, offering a high-profit, low-space business model with an unparalleled strategic advantage.",
+        "@id": "https://organicmushroomsfarm.com/cities/west-bengal/siliguri#webpage",
+        url: "https://organicmushroomsfarm.com/cities/west-bengal/siliguri",
+        name: "Mushroom Farming in Siliguri, West Bengal | Training & Spawn",
         isPartOf: {
           "@id": "https://organicmushroomsfarm.com/#website",
         },
-        breadcrumb: {
-          "@id": `${pageUrl}#breadcrumb`,
+        about: {
+          "@id": "https://organicmushroomsfarm.com/#organization",
         },
+        description:
+          "Start commercial mushroom farming in Siliguri, Gateway to Northeast India. Expert online/offline training (Bengali/Hindi/English), premium spawn, and turnkey setup.",
       },
       {
         "@type": "BreadcrumbList",
-        "@id": `${pageUrl}#breadcrumb`,
         itemListElement: [
           {
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://organicmushroomsfarm.com",
+            item: "https://organicmushroomsfarm.com/",
           },
           {
             "@type": "ListItem",
             position: 2,
-            name: "Cities",
-            item: "https://organicmushroomsfarm.com/cities",
+            name: "States",
+            item: "https://organicmushroomsfarm.com/states",
           },
           {
             "@type": "ListItem",
             position: 3,
             name: "West Bengal",
-            item: "https://organicmushroomsfarm.com/cities/west-bengal",
+            item: "https://organicmushroomsfarm.com/states/west-bengal",
           },
           {
             "@type": "ListItem",
             position: 4,
             name: "Siliguri",
-            item: pageUrl,
+            item: "https://organicmushroomsfarm.com/cities/west-bengal/siliguri",
           },
         ],
       },
       {
         "@type": "Article",
-        "@id": `${pageUrl}#article`,
-        headline:
-          "Why Siliguri is the Ultimate Strategic Hub for Commercial Mushroom Farming in West Bengal",
+        headline: "Mushroom Farming in Siliguri, West Bengal | Training & Spawn",
         description:
-          "Discover why Siliguri is the perfect location for your mushroom farm, offering a high-profit, low-space business model with an unparalleled strategic advantage.",
-        datePublished: publishedDate,
-        dateModified: modifiedDate,
-        mainEntityOfPage: {
-          "@id": `${pageUrl}#webpage`,
-        },
+          "Start commercial mushroom farming in Siliguri, Gateway to Northeast India. Expert online/offline training (Bengali/Hindi/English), premium spawn, and turnkey setup.",
         author: {
           "@type": "Organization",
-          name: "Organic Mushroom Farm Editorial Team",
+          name: "Organic Mushrooms Farm",
         },
         publisher: {
-          "@id": "https://organicmushroomsfarm.com/#organization",
+          "@type": "Organization",
+          name: "Organic Mushrooms Farm",
+          logo: {
+            "@type": "ImageObject",
+            url: "https://organicmushroomsfarm.com/icon.png",
+          },
+        },
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": "https://organicmushroomsfarm.com/cities/west-bengal/siliguri",
         },
       },
     ],
   };
 
+  const faqs = [
+    { q: "১. শিলিগুড়িতে মাশরুম চাষ শুরু করতে কত খরচ হয়?", a: "ছোট আকারে শুরু করতে ৫,০০০–১০,০০০ টাকা যথেষ্ট। বাণিজ্যিক খামারের জন্য সেটআপ অনুযায়ী বিনিয়োগ নির্ধারণ করা হয়।" },
+    { q: "২. শিলিগুড়ির আবহাওয়ায় কোন মাশরুম সবচেয়ে ভালো জন্মায়?", a: "সাব-হিমালয়ান আর্দ্র আবহাওয়ার জন্য Oyster মাশরুম সারা বছর দারুণ ফলন দেয়। শীতকালে কম খরচে Button মাশরুম চাষ করা যায়।" },
+    { q: "৩. ভালো মানের স্পন (বীজ) কোথায় পাব?", a: "Organic Mushrooms Farm থেকে F1-Gen, ল্যাব-পরীক্ষিত হাই-ইল্ড স্পন শিলিগুড়ি ও পার্শ্ববর্তী এলাকায় দ্রুত সরবরাহ করা হয়।" },
+    { q: "৪. উৎপাদিত মাশরুম কোথায় বিক্রি করব?", a: "দার্জিলিং, গ্যাংটক, কালিম্পং-এর হোটেল-রিসোর্ট, শিলিগুড়ির লোকাল সুপারমার্কেট ও সিকিম/আসামের পাইকারি বাজারে সরাসরি বিক্রি করা যায়।" }
+  ];
+
   return (
-    <main
-      id="siliguri-mushroom-farming-page"
-      className="min-h-screen bg-slate-50 dark:bg-slate-950 pt-20 pb-16 text-slate-800 dark:text-slate-200"
-    >
+    <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-
-      {/* Breadcrumb Navigation */}
-      <nav aria-label="Breadcrumb" className="max-w-4xl mx-auto px-4 sm:px-6 pt-4 pb-2">
-        <ol className="flex items-center flex-wrap gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-medium">
-          <li>
-            <Link href="/" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-              Home
-            </Link>
-          </li>
-          <li aria-hidden="true" className="text-slate-400">
-            <ChevronRight className="w-3.5 h-3.5" />
-          </li>
-          <li>
-            <span className="text-slate-500 dark:text-slate-400">Cities</span>
-          </li>
-          <li aria-hidden="true" className="text-slate-400">
-            <ChevronRight className="w-3.5 h-3.5" />
-          </li>
-          <li>
-            <span className="text-slate-500 dark:text-slate-400">West Bengal</span>
-          </li>
-          <li aria-hidden="true" className="text-slate-400">
-            <ChevronRight className="w-3.5 h-3.5" />
-          </li>
-          <li aria-current="page" className="text-slate-900 dark:text-slate-100 font-semibold truncate max-w-[200px] sm:max-w-none">
-            Siliguri
-          </li>
-        </ol>
-      </nav>
-
-      {/* Main Article Container - Compact Editorial Flow Without Artificial Card Boxes */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6">
-        {/* Header Section */}
-        <header className="mb-4">
-          <div className="flex items-center gap-2 mb-2 flex-wrap">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/40">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping inline-block" />
-              <MapPin className="w-3 h-3 text-emerald-600 dark:text-emerald-400" /> Regional Guide
-            </span>
-            <span className="inline-flex items-center gap-1 text-[11px] text-slate-500 dark:text-slate-400">
-              <Calendar className="w-3 h-3" /> August 12, 2026
-            </span>
-            <span className="inline-flex items-center gap-1 text-[11px] text-slate-500 dark:text-slate-400">
-              <Clock className="w-3 h-3" /> 5 min read
-            </span>
-          </div>
-
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white leading-tight tracking-tight mb-3">
-            Why Siliguri is the Ultimate Strategic Hub for <span className="gradient-text">Commercial Mushroom Farming in West Bengal</span> 🌿
-          </h1>
-
-          <p className="text-xs sm:text-[13.5px] font-medium text-slate-700 dark:text-slate-300 leading-relaxed">
-            Siliguri is famously known as the Gateway to Northeast India. Bustling with trade, tourism, and rapid urbanization, it is the crucial link connecting West Bengal to Darjeeling, Sikkim, Bhutan, and Nepal. But beyond its booming logistics and tea industries, Siliguri is sitting on a massive, untapped goldmine: commercial organic mushroom farming.
-          </p>
-        </header>
-
-        {/* Clean Editorial Flow - No Artificial Boxes, Compact Text Size for Minimal Scrolling */}
-        <div className="space-y-4 text-xs sm:text-[13.5px] leading-relaxed text-slate-700 dark:text-slate-300">
-          <p>
-            For agri-entrepreneurs, local farmers, and startup founders in North Bengal, cultivating organic mushrooms offers a high-profit, low-space business model with an unparalleled strategic advantage. Let us explore why Siliguri is the perfect location for your mushroom farm.
-          </p>
-
-          {/* Section 1 */}
-          <section className="pt-2">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 border-l-4 border-emerald-500 pl-3 flex items-center gap-1.5">
-              <Mountain className="w-4 h-4 text-emerald-500" /> The Gateway to Premium Tourist Markets
-            </h2>
-            <p className="mb-2">
-              Location is everything in business, and Siliguri has the best placement imaginable. It acts as the primary supply chain hub for the massive tourism industries in Darjeeling, Kalimpong, and Gangtok.
-            </p>
-            <p>
-              The luxury resorts, heritage tea estate bungalows, and high-end cafes in these hill stations require a massive, daily supply of fresh{" "}
-              <Link href="/services/button-mushroom" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                Button mushrooms
-              </Link>{" "}
-              and{" "}
-              <Link href="/services/oyster-mushroom" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                Oyster mushrooms
-              </Link>. By setting up your farm in Siliguri, you can easily dominate this premium hospitality market, supplying fresh produce faster and cheaper than competitors shipping from other states.
-            </p>
-          </section>
-
-          {/* Section 2 */}
-          <section className="pt-2">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 border-l-4 border-emerald-500 pl-3 flex items-center gap-1.5">
-              <CloudRain className="w-4 h-4 text-emerald-500" /> The Perfect Sub-Himalayan Climate
-            </h2>
-            <p className="mb-2">
-              Sitting right at the foothills of the Himalayas, Siliguri enjoys a unique humid subtropical climate. Mushrooms absolutely love high humidity! The natural moisture in the air means you will spend significantly less electricity running artificial foggers and humidifiers compared to farmers in drier regions of India.
-            </p>
-            <p>
-              During the pleasant winters, the temperatures drop to the ideal range for cultivating highly profitable premium strains. And during the warmer, rainy summers, the climate is absolutely perfect for massive yields of forgiving strains and summer-special{" "}
-              <Link href="/services/milky-mushroom" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                Milky mushrooms
-              </Link>.
-            </p>
-          </section>
-
-          {/* Section 3 */}
-          <section className="pt-2">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 border-l-4 border-emerald-500 pl-3 flex items-center gap-1.5">
-              <Tractor className="w-4 h-4 text-emerald-500" /> Unlimited &amp; Dirt-Cheap Raw Materials
-            </h2>
-            <p className="mb-2">
-              Mushroom farming is highly profitable because it converts waste into food. In and around the Siliguri and Jalpaiguri belt, agricultural waste—particularly paddy straw—is abundant and practically free.
-            </p>
-            <p>
-              Because you are surrounded by rural farming belts just outside the city limits, sourcing substrate in bulk is effortless. This keeps your day-to-day production costs incredibly low, directly maximizing your profit margins with every harvest.
-            </p>
-          </section>
-
-          {/* Section 4 */}
-          <section className="pt-2">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 border-l-4 border-emerald-500 pl-3 flex items-center gap-1.5">
-              <TrendingUp className="w-4 h-4 text-emerald-500" /> A Fast-Growing Local Urban Demand
-            </h2>
-            <p className="mb-2">
-              You don&apos;t even have to look at the hill stations to find your buyers. Siliguri itself is a rapidly expanding metropolis. With a rising number of health-conscious consumers, gyms, and modern supermarkets, the local demand for protein-rich, chemical-free organic mushrooms is skyrocketing.
-            </p>
-            <p>
-              Mushrooms are quickly shifting from a niche luxury item to an everyday dietary staple across North Bengal households.
-            </p>
-          </section>
-
-          {/* Section 5 */}
-          <section className="pt-2">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2 border-l-4 border-emerald-500 pl-3 flex items-center gap-1.5">
-              <Store className="w-4 h-4 text-emerald-500" /> Start Your High-Yield Farm in North Bengal
-            </h2>
-            <p className="mb-2">
-              The market gap in Siliguri is huge, and the first movers will capture the biggest profits. However, building a commercial agri-business requires precise{" "}
-              <Link href="/services/turnkey-setup" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                infrastructure planning
-              </Link>, high-quality lab-certified{" "}
-              <Link href="/spawn-seeds" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
-                organic spawn
-              </Link>, and expert disease management to ensure consistent yields.
-            </p>
-          </section>
-
-          {/* Clean Glass CTA Box (Matching Original React Vite Glass Style) */}
-          <section className="glass p-5 sm:p-6 rounded-2xl border dark:border-white/10 border-slate-200 text-center mt-6 bg-emerald-500/5">
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-1.5 flex items-center justify-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-emerald-500" /> Ready to launch your farm in Siliguri?
-            </h2>
-            <p className="text-xs text-slate-600 dark:text-slate-300 max-w-xl mx-auto mb-3.5 leading-relaxed">
-              Connect with our experts today for professional training, high-quality spawn, or a complete commercial farm setup in West Bengal.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5">
-              <a
-                href="tel:9203544140"
-                className="btn-primary w-full sm:w-auto px-5 py-2 rounded-full font-bold text-xs flex items-center justify-center gap-2 shadow-sm"
-              >
-                <Phone className="w-3.5 h-3.5" /> Call / WhatsApp
-              </a>
-              <Link
-                href="/contact"
-                className="w-full sm:w-auto px-5 py-2 rounded-full font-semibold text-xs border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center justify-center gap-2"
-              >
-                <Mail className="w-3.5 h-3.5" /> Contact Us Online
-              </Link>
-            </div>
-          </section>
+      <main className="pt-24 pb-16 min-h-screen bg-transparent relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none -z-10">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-blue/20 rounded-full blur-[100px] opacity-50 mix-blend-screen" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-500/20 rounded-full blur-[100px] opacity-50 mix-blend-screen" />
         </div>
-      </article>
-    </main>
+
+        <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <header className="mb-12 text-center">
+            <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4">
+              Mushroom Farming in Siliguri (শিলিগুড়িতে মাশরুম চাষ)
+            </h1>
+            <div className="flex items-center justify-center gap-2 text-brand-blue font-medium text-[12px] mb-8">
+              <MapPin size={16} />
+              <span>Serving Siliguri, Matigara, Sevoke Road, Bagdogra, Jalpaiguri & North Bengal</span>
+            </div>
+          </header>
+
+          <div className="glass p-8 md:p-10 rounded-[2.5rem] border border-black/5 dark:border-white/5 shadow-2xl bg-white/5 dark:bg-white/5 backdrop-blur-md">
+            
+            <p className="text-slate-700 dark:text-slate-300 text-[12px] md:text-[13px] leading-relaxed mb-6 font-medium">
+              উত্তর-পূর্ব ভারতের প্রবেশদ্বার শিলিগুড়ি (Siliguri) বাণিজ্য ও যোগাযোগের অন্যতম প্রধান কেন্দ্র। হিমালয়ের পাদদেশে অবস্থিত এই শহরের সাব-হিমালয়ান আর্দ্র আবহাওয়া এবং দার্জিলিং, কালিম্পং ও সিকিমের বিশাল পর্যটন বাজারের কারণে শিলিগুড়িতে বাণিজ্যিক মাশরুম চাষের (Mushroom Farming) বিপুল সম্ভাবনা তৈরি হয়েছে।
+            </p>
+            <p className="text-slate-700 dark:text-slate-300 text-[12px] md:text-[13px] leading-relaxed mb-10 font-medium">
+              অল্প বিনিয়োগ, সীমিত জায়গা এবং প্রচুর ধানের খড়ের সহজলভ্যতার কারণে শিলিগুড়ি ও জলপাইগুড়ি অঞ্চলে নতুন কৃষি-উদ্যোক্তাদের জন্য মাশরুম ফার্মিং একটি অতি লাভজনক আধুনিক ব্যবসা।
+            </p>
+
+            <h2 className="text-[16px] md:text-[18px] font-bold text-slate-900 dark:text-white mb-4 border-l-4 border-brand-blue pl-3">
+              Strategic Advantages of Mushroom Farming in Siliguri
+            </h2>
+            <ul className="space-y-4 mb-8">
+              <li className="flex items-start gap-3 text-[12px] md:text-[13px] text-slate-700 dark:text-slate-300">
+                <CheckCircle2 className="text-brand-blue shrink-0 mt-0.5" size={16} />
+                <span><strong>Gateway to Premium Hospitality Markets:</strong> দার্জিলিং, গ্যাংটক ও কালিম্পং-এর বিলাসবহুল রিসোর্ট এবং ক্যাফেগুলোতে প্রতিদিন প্রচুর ফ্রেশ Button ও Oyster মাশরুমের চাহিদা থাকে।</span>
+              </li>
+              <li className="flex items-start gap-3 text-[12px] md:text-[13px] text-slate-700 dark:text-slate-300">
+                <CheckCircle2 className="text-brand-blue shrink-0 mt-0.5" size={16} />
+                <span><strong>Natural Humidity:</strong> হিমালয় সংলগ্ন উচ্চ প্রাকৃতিক আর্দ্রতার কারণে কৃত্রিম হিউমিডিফায়ার বা ফগারের খরচ অনেক কমে যায়।</span>
+              </li>
+              <li className="flex items-start gap-3 text-[12px] md:text-[13px] text-slate-700 dark:text-slate-300">
+                <CheckCircle2 className="text-brand-blue shrink-0 mt-0.5" size={16} />
+                <span><strong>Abundant Substrate (ধানের খড়):</strong> উত্তরবঙ্গের বিশাল ধান উৎপাদন এলাকার কারণে কাঁচামাল অত্যন্ত সস্তায় পাওয়া যায়, যার ফলে উৎপাদন খরচ ন্যূনতম থাকে।</span>
+              </li>
+            </ul>
+
+            <h2 className="text-[16px] md:text-[18px] font-bold text-slate-900 dark:text-white mb-4 border-l-4 border-brand-blue pl-3">
+              Comprehensive Services We Offer
+            </h2>
+            <div className="space-y-6 mb-8">
+              <div className="bg-black/5 dark:bg-white/5 p-5 rounded-2xl border border-black/5 dark:border-white/5">
+                <h3 className="font-bold text-[14px] text-slate-900 dark:text-white mb-2">1. Hands-on Mushroom Training</h3>
+                <p className="text-[12px] text-slate-700 dark:text-slate-300">
+                  অনলাইন ও অফলাইন ব্যবহারিক প্রশিক্ষণ—খড় শোধন, স্পনিং, তাপমাত্রা নিয়ন্ত্রণ এবং রোগ প্রতিরোধ পদ্ধতির সম্পূর্ণ বৈজ্ঞানিক শিক্ষা।
+                </p>
+              </div>
+              
+              <div className="bg-black/5 dark:bg-white/5 p-5 rounded-2xl border border-black/5 dark:border-white/5">
+                <h3 className="font-bold text-[14px] text-slate-900 dark:text-white mb-2">2. Premium Mushroom Spawn Supply</h3>
+                <p className="text-[12px] text-slate-700 dark:text-slate-300">
+                  শিলিগুড়ি, জলপাইগুড়ি এবং কালিম্পং অঞ্চলে F1-Gen, ল্যাব-পরীক্ষিত হাই-ইল্ড স্পন দ্রুত পৌঁছে দেওয়ার নিশ্চয়তা।
+                </p>
+              </div>
+
+              <div className="bg-black/5 dark:bg-white/5 p-5 rounded-2xl border border-black/5 dark:border-white/5">
+                <h3 className="font-bold text-[14px] text-slate-900 dark:text-white mb-2">3. Turnkey Setup & Marketing Network</h3>
+                <p className="text-[12px] text-slate-700 dark:text-slate-300">
+                  বাণিজ্যিক এয়ার-কন্ডিশন্ড মাশরুম ফার্ম ডিজাইন এবং দার্জিলিং ও আসামের পাইকারি বাজারের সাথে সরাসরি যোগাযোগের সুযোগ।
+                </p>
+              </div>
+            </div>
+
+            <h2 className="text-[16px] md:text-[18px] font-bold text-slate-900 dark:text-white mb-4 border-l-4 border-brand-blue pl-3">
+              Coverage Across Siliguri & Surrounding North Bengal
+            </h2>
+            <p className="text-slate-700 dark:text-slate-300 text-[12px] md:text-[13px] leading-relaxed mb-4">
+              আমরা শিলিগুড়ি শহর এবং পার্শ্ববর্তী সমস্ত এলাকায় সেবা প্রদান করি:
+            </p>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+              <li className="flex items-start gap-3 text-[12px] md:text-[13px] text-slate-700 dark:text-slate-300 bg-black/5 dark:bg-white/5 p-3 rounded-xl">
+                <MapPin className="text-brand-blue shrink-0 mt-0.5" size={16} />
+                <span><strong>Siliguri City:</strong> Sevoke Road, Hill Cart Road, Pradhan Nagar, Matigara, Champasari, Salugara, Hakim Para.</span>
+              </li>
+              <li className="flex items-start gap-3 text-[12px] md:text-[13px] text-slate-700 dark:text-slate-300 bg-black/5 dark:bg-white/5 p-3 rounded-xl">
+                <MapPin className="text-brand-blue shrink-0 mt-0.5" size={16} />
+                <span><strong>Surrounding Belts:</strong> Bagdogra, Jalpaiguri, Kurseong, Islampur, Naxalbari, Phansidewa.</span>
+              </li>
+            </ul>
+
+            <h2 className="text-[16px] md:text-[18px] font-bold text-slate-900 dark:text-white mb-6 border-l-4 border-brand-blue pl-3">
+              Frequently Asked Questions (FAQ)
+            </h2>
+            <div className="space-y-3 mb-12">
+              {faqs.map((faq, index) => (
+                <div key={index} className="p-5 rounded-2xl dark:bg-white/5 bg-black/5 border border-white/5 space-y-2">
+                  <h4 className="font-bold text-slate-900 dark:text-white text-[13px]">
+                    {faq.q}
+                  </h4>
+                  <p className="text-[12px] dark:text-slate-300 text-slate-700 leading-relaxed font-medium">
+                    {faq.a}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA Section */}
+            <div className="bg-black/5 dark:bg-white/5 border border-brand-blue/20 p-6 md:p-8 rounded-2xl text-center mt-10">
+              <h2 className="text-[16px] md:text-[18px] font-bold text-slate-900 dark:text-white mb-6">
+                Ready to Start Your Mushroom Business in Siliguri?
+              </h2>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="https://wa.me/919203544140" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] hover:bg-[#25D366]/90 text-white px-8 py-3 rounded-xl font-bold flex items-center justify-center gap-2 text-[12px] transition-all shadow-lg w-full sm:w-auto">
+                  <MessageSquare size={16} /> WhatsApp Us: 9203544140
+                </a>
+                <Link href="/contact" className="bg-white/10 hover:bg-white/20 text-slate-900 dark:text-white border border-slate-900/10 dark:border-white/20 px-8 py-3 rounded-xl font-bold flex items-center justify-center gap-2 text-[12px] transition-all w-full sm:w-auto">
+                  <Calendar size={14} /> Book Consultation
+                </Link>
+              </div>
+            </div>
+          </div>
+        </article>
+      </main>
+    </>
   );
 }
